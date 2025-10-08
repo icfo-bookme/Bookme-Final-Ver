@@ -7,13 +7,11 @@ import { PaginationProvider } from "@/services/tour/usePagination";
 import HeaderWrapper from "./components/HeadWrapper/HeaderWrapper";
 import { UserProvider } from "@/lib/UserContext";
 
-// Font setup at module scope
+
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
-
-// Meta data
 
 
 export default function DashboardLayout({ children }) {
