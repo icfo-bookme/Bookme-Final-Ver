@@ -4,8 +4,7 @@ import * as IoIcons from "react-icons/io5";
 import * as FaIcons from "react-icons/fa";
 import * as PiIcons from "react-icons/pi";
 import * as GoIcons from "react-icons/go";
-import * as MdIcons from "react-icons/md"; // Added for MdEventSeat
-import { FaLocationDot } from 'react-icons/fa6';
+import * as MdIcons from "react-icons/md"; 
 import Link from 'next/link';
 
 export default function CarPropertySummary({ data }) {
@@ -39,30 +38,25 @@ export default function CarPropertySummary({ data }) {
             FaIcons[iconName] ||
             PiIcons[iconName] ||
             GoIcons[iconName] ||
-            MdIcons[iconName] || // Added MdIcons
+            MdIcons[iconName] || 
             null
         );
     };
 
-    // Process summaries to prioritize seating capacity and format values
     const processSummaries = () => {
         if (!data.summaries || !Array.isArray(data.summaries) || data.summaries.length === 0) return [];
         
-        // Create a copy of the summaries array and filter out null/undefined items
         const summaries = [...data.summaries].filter(s => s && typeof s === 'object');
         
-        // Find and prioritize seating capacity
         const seatingIndex = summaries.findIndex(s => 
             s?.name && (s.name.toLowerCase().includes('seat') || s.name === 'Seating Capacity')
         );
         
         if (seatingIndex > -1) {
-            // Remove seating from current position and add to beginning
             const seatingSummary = summaries.splice(seatingIndex, 1)[0];
             summaries.unshift(seatingSummary);
         }
         
-        // Format the display for each summary
         return summaries.map(summary => {
             // Check if the summary has a value property
             const valueKey = Object.keys(summary).find(key => 
@@ -103,7 +97,7 @@ export default function CarPropertySummary({ data }) {
                 displayText: "",
                 showFeature: true
             };
-        }).filter(summary => summary.showFeature); // Filter out features that shouldn't be shown
+        }).filter(summary => summary.showFeature); 
     };
 
     const processedSummaries = processSummaries();

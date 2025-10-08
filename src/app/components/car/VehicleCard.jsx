@@ -47,27 +47,21 @@ const VehicleCard = ({ vehicle }) => {
     ? parseFloat(vehicle.price_upto_4_hours) * 4 + parseFloat(vehicle.kilometer_price) * 40 
     : 0;
 
-  // Process summaries to prioritize seating capacity and format values
+
   const processSummaries = () => {
     if (!vehicle.summaries || !Array.isArray(vehicle.summaries) || vehicle.summaries.length === 0) return [];
-    
-    // Create a copy of the summaries array and filter out null/undefined items
     const summaries = [...vehicle.summaries].filter(s => s && typeof s === 'object');
     
-    // Find and prioritize seating capacity
     const seatingIndex = summaries.findIndex(s => 
       s?.name && (s.name.toLowerCase().includes('seat') || s.name === 'Seating Capacity')
     );
     
     if (seatingIndex > -1) {
-      // Remove seating from current position and add to beginning
       const seatingSummary = summaries.splice(seatingIndex, 1)[0];
       summaries.unshift(seatingSummary);
     }
     
-    // Format the display for each summary
     return summaries.map(summary => {
-      // Check if the summary has a value property
       const valueKey = Object.keys(summary).find(key => 
         key !== 'name' && key !== 'icon_name' && key !== 'icon_import'
       );
@@ -75,7 +69,6 @@ const VehicleCard = ({ vehicle }) => {
       if (valueKey) {
         const value = summary[valueKey];
         
-        // For seating capacity, always show the value
         if (summary.name && (summary.name.toLowerCase().includes('seat') || summary.name === 'Seating Capacity')) {
           return {
             ...summary,
@@ -83,7 +76,6 @@ const VehicleCard = ({ vehicle }) => {
             showFeature: true
           };
         }
-        // For other features, only show if value is "Yes"
         else if (value === "Yes" || value === true) {
           return {
             ...summary,
@@ -91,7 +83,6 @@ const VehicleCard = ({ vehicle }) => {
             showFeature: true
           };
         }
-        // Don't show features with value not "Yes"
         else {
           return {
             ...summary,
@@ -100,7 +91,6 @@ const VehicleCard = ({ vehicle }) => {
         }
       }
       
-      // Default case if no value key found
       return {
         ...summary,
         displayText: "",

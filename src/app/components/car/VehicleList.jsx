@@ -23,7 +23,6 @@ const VehicleList = ({ vehicles, models, brands }) => {
     { value: '9+', label: '9+ Seats' }
   ];
 
-  // Create a map of model IDs to model names for easy lookup
   const modelMap = useMemo(() => {
     const map = {};
     if (models && Array.isArray(models)) {
