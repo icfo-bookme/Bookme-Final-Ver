@@ -24,14 +24,11 @@ export const metadata = {
   description:
     "Book hotels, flights, visas, car rentals, cruises, and tour packages worldwide with BookMe. Find the best travel deals, last-minute discounts, and secure bookings with ease.",
   keywords: [
-    // Primary (Brand + Core Global)
     "BookMe", "online travel booking", "cheap flights", "hotel booking platform",
     "global travel deals", "tour packages", "car rental service", "visa application service",
     "cruise booking", "holiday booking site", "travel agency", "vacation booking",
     "travel deals", "discount travel booking", "worldwide travel services",
     "travel planning platform", "book travel online", "cheap vacation deals",
-
-
   ],
    alternates: {
     canonical: 'https://bookme.com.bd',
