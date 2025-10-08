@@ -3,9 +3,7 @@ import getAllVisa from '@/services/visa/getAllVisa';
 import VisaSearchForm from '../components/visa/visaSearchForm';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaWhatsapp } from 'react-icons/fa';
 import getContactNumber from '@/services/tour/getContactNumber';
-import { TbCurrentLocation } from 'react-icons/tb';
 import VisaAgency from '../components/pre-footer-content/VisaAgency';
 
 export const metadata = {
