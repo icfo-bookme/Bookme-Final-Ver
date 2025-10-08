@@ -9,12 +9,11 @@ import { GoCommentDiscussion } from "react-icons/go";
 import { MdOutlineFreeCancellation } from "react-icons/md";
 import { GiDiamondHard } from "react-icons/gi";
 
-// Helper: Calculate discounted price
+
 function calculateDiscountedPrice(originalPrice, discount) {
     return Math.round(originalPrice * (1 - discount / 100));
 }
 
-// Helper: Find similar package names
 function findSimilarPackages(searchTerm, packages = []) {
     if (!searchTerm) return packages;
 
