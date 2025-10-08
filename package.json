@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@lottiefiles/dotlottie-react": "^0.13.0",
+    "axios": "^1.12.2",
+    "date-fns": "^4.1.0",
+    "flowbite-react": "^0.10.2",
+    "next": "^15.1.6",
+    "next-sitemap": "^4.2.3",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-datepicker": "^8.4.0",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.56.0",
+    "react-icons": "^5.3.0",
+    "react-js-search": "^0.4.0",
+    "react-loader-spinner": "^6.1.6",
+    "react-lottie": "^1.2.10",
+    "react-phone-input-2": "^2.15.1",
+    "react-toastify": "^11.0.3",
+    "react-virtualized-auto-sizer": "^1.0.26",
+    "react-window": "^1.8.11",
+    "swiper": "^8.4.7",
+    "tailwindcss-pseudo-elements": "^2.0.0",
+    "use-debounce": "^10.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.0",
+    "@types/react": "19.1.10",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "postbuild": "next-sitemap"
+  }
+}

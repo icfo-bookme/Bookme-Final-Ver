@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://bookme.com.bd
+
+# Sitemaps
+Sitemap: https://bookme.com.bd/sitemap.xml
