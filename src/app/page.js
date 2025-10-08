@@ -2,7 +2,6 @@ import { Roboto } from "next/font/google";
 import { Suspense } from "react";
 import Banner from "./components/Home/Banner";
 import Sundarban from "./components/Home/sundarban/sundarban";
-
 import getServicesData from "@/services/homepage/getServicesData";
 import HpmepageBlog from "./components/pre-footer-content/Homepage";
 import HotelMain from "./components/Home/Hotel/Main";
@@ -32,59 +31,7 @@ export const metadata = {
     "travel deals", "discount travel booking", "worldwide travel services",
     "travel planning platform", "book travel online", "cheap vacation deals",
 
-  
-    // Flights
-    "book domestic flights", "book international flights", "cheap flight tickets online",
-    "last-minute flight deals", "business class flight booking", "economy class ticket booking",
-    "cheap airfare", "flight booking discounts", "multi-city flight booking",
-    "Dhaka to Dubai flights", "Bangkok to Singapore flights",
-    "air ticket booking platform", "low-cost airline booking",
 
-    // Visa
-    "tourist visa application", "visa service", "US visa assistance",
-    "UK visa application online", "Thailand visa processing",
-    "visa application assistance", "fast visa service", "visa support service",
-    "international visa requirements", "student visa service", "work visa processing",
-    "business visa application", "visa documentation support",
-
-    // Tour Packages
-    "family holiday packages", "Maldives honeymoon packages", "Europe tour deals",
-    "luxury travel packages", "custom travel planning", "group travel packages",
-    "adventure travel deals", "international holiday packages",
-    "budget holiday packages", "honeymoon travel packages",
-    "guided tours", "affordable tour packages", "all-inclusive travel deals",
-
-    // Car Rentals
-    "rent a car near airport", "car rental", "luxury car hire",
-    "luxury car rentals for families", "one-way car rental", "international car rental service",
-    "cheap car hire online", "affordable car rentals", "car rental with driver",
-    "daily car rental service", "monthly car rental service", "car hire for vacation",
-
-    // Ships & Cruises
-    "cruise booking online", "luxury cruise deals", "ferry tickets booking",
-    "family cruise vacations","Sundarban ships Ticket Booking",
-    "river cruise booking", "cheap cruise vacations", "last-minute cruise booking",
-
-    // Long-Tail - High Intent
-    "book cheap hotel near me",
-    "affordable Maldives honeymoon package",
-    "Dhaka to Dubai cheap flight booking online",
-    "book Saint Martin ship ticket online",
-    "last-minute flight deals to Cox'sbazar",
-    "rent a car near International Airport",
-    "best budget hotels near Dhaka, Chittagong",
-    "cheap family cruise vacation in the Cox's bazar",
-    "luxury Europe tour package with flights included",
-    "fast visa processing service for Thailand",
-    "discount Maldives all-inclusive honeymoon deal",
-    "best Sundarban cruise package for family trip",
-    "book cheap domestic flight tickets online",
-    "secure online visa application for Europe",
-    "last-minute luxury hotel booking deals",
-    "cheap group tour package",
-    "discount car rental near Chattogram airport",
-    "affordable beach resort",
-    "guided international holiday tour package",
   ],
    alternates: {
     canonical: 'https://bookme.com.bd',

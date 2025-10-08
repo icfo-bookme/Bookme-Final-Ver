@@ -13,7 +13,6 @@ const inter = Inter({
   display: "swap",
 });
 
-
 export default function DashboardLayout({ children }) {
   return (
     <html lang="en" data-theme="white">
