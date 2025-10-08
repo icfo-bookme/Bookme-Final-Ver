@@ -170,11 +170,3 @@ export default function BookingModal({ selectedPackage, property_id, onClose }) 
     </div>
   );
 }
-
-
-
-
-
-
-
-

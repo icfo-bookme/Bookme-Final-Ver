@@ -1,4 +1,3 @@
-// components/TimeSlotSelector.jsx
 const TimeSlotSelector = ({ value, onChange, className = "" }) => {
   const timeSlots = generateTimeSlots();
 

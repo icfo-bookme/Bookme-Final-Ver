@@ -7,7 +7,6 @@ const GuestSelector = ({ guests, onChange, onClose }) => {
   const updateGuestCount = (type, operation) => {
     const newCount = operation === 'increase' ? guests[type] + 1 : Math.max(0, guests[type] - 1);
     
-    // Ensure at least 1 adult if there are children
     if (type === 'adults' && newCount === 0 && guests.children > 0) {
       onChange({ ...guests, adults: 1 });
       return;
