@@ -7,7 +7,6 @@ export default function useScrollOnClick(offset = 150, maxWidth = 640) {
   const handleClick = () => {
     if (!ref.current) return;
 
-    // Only apply on small screens
     if (window.innerWidth > maxWidth) return;
 
     const elementTop = ref.current.getBoundingClientRect().top + window.scrollY;

@@ -40,7 +40,6 @@ export default function RegisterPage() {
     setError('');
     setLoading(true);
 
-    // Simple password match validation
     if (form.password !== form.confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);

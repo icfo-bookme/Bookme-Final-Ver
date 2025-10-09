@@ -29,8 +29,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
-
 export default async  function Home({ params }) {
   const result = await propertySummary(params.id);
   return (

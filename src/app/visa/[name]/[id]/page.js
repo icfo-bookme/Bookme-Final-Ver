@@ -4,7 +4,7 @@ import getContactNumber from "@/services/tour/getContactNumber";
 import VisaDetails from "@/app/components/visa/VisaDetailsContent";
 
 export async function generateMetadata({ params }) {
-  const { name } = await params; // 'name' is a country name like "USA", "Japan", etc.
+  const { name } = await params; 
 
   const title = `${name} Visa | BookMe`;
 
