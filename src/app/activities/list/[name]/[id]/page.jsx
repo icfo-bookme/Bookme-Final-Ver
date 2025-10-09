@@ -30,7 +30,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
 export default async function PackagesPage({ params }) {
   const { name, id } = await params;
 
