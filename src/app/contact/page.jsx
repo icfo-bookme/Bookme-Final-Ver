@@ -16,9 +16,6 @@ const HotelDealsPage = () => {
             < Banner />
            </div>
       <div className='w-full flex items-center justify-center  bg-white rounded-xl shadow-lg overflow-hidden'>
-
-
-
       <div className="w-full max-w-4xl mx-auto ">
         {/* Header Section */}
         <div className=" pt-16 px-4 md:p-6 text-blue-950">
@@ -30,11 +27,9 @@ const HotelDealsPage = () => {
           </p>
         </div>
 
-        {/* Main Content */}
         <div className="p-6 sm:p-8">
-          {/* Contact Methods - Grid Layout */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {/* Call Button */}
+
             <a 
               href={`tel:${contacts.phone}`}
               className="flex flex-col items-center p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 transition-all duration-300 group"
@@ -46,7 +41,6 @@ const HotelDealsPage = () => {
               <span className="text-sm text-gray-600 mt-1">{contacts.phone}</span>
             </a>
 
-            {/* WhatsApp Button */}
             <a 
               href={`https://wa.me/${contacts.whatsapp}`}
               target="_blank"
@@ -60,9 +54,8 @@ const HotelDealsPage = () => {
               <span className="text-sm text-gray-600 mt-1">{contacts.whatsapp}</span>
             </a>
 
-            {/* Messenger Button (shown only on lg+ screens) */}
             <a 
-              href="https://m.me/yourpage"
+              href="https://m.me/bookmeltd"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden lg:flex flex-col items-center p-4 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-all duration-300 group"
@@ -73,8 +66,6 @@ const HotelDealsPage = () => {
               <span className="mt-2 font-medium text-gray-800">Messenger</span>
               <span className="text-sm text-gray-600 mt-1">Message Us</span>
             </a>
-
-            {/* Email Button (shown only on lg+ screens) */}
             <a 
               href={`mailto:${contacts.email}`}
               className="hidden lg:flex flex-col items-center p-4 bg-purple-50 rounded-lg border border-purple-200 hover:bg-purple-100 transition-all duration-300 group"
@@ -100,7 +91,6 @@ const HotelDealsPage = () => {
             
           </div>
 
-          {/* Messenger Button for small screens */}
           <div className="sm:hidden mt-4">
             <a 
               href="https://m.me/yourpage"
@@ -112,8 +102,6 @@ const HotelDealsPage = () => {
               <span className="font-medium text-gray-800">Message us on Facebook</span>
             </a>
           </div>
-
-          {/* Working Hours */}
           
         </div>
       </div>

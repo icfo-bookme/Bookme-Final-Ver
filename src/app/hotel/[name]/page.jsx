@@ -1,7 +1,5 @@
 import HotelListContent from "../list/HotelListContent";
 
-
-
 export async function generateMetadata({ params }) {
   const { name } = params;
 
@@ -33,8 +31,6 @@ export async function generateMetadata({ params }) {
     keywords: [...dynamicKeywords],
   };
 }
-
-
 
 const fetchHotelsByLocation = async (locationID) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}`);

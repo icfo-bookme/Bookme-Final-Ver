@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
   try {
     const hotelDetails = await getHotelDetails(params.id);
     const hotelName = hotelDetails?.name || "Hotel";
-    const location = hotelDetails?.city || ""; // Adjust based on your actual data structure
+    const location = hotelDetails?.city || ""; 
 
     const title = `${hotelName} | BookMe`;
 
