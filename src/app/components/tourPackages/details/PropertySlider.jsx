@@ -50,8 +50,6 @@ const PropertySlider = ({ images }) => {
 
   return (
     <div className="flex flex-col w-full">
-      {/* Main + Right-side preview */}
-      
       <div className="flex flex-col lg:flex-row w-full gap-2">
         {/* Main Swiper */}
         <div className="w-full lg:w-2/3">
@@ -90,7 +88,6 @@ const PropertySlider = ({ images }) => {
           </Swiper>
         </div>
 
-        {/* Right-Side Previews */}
         <div className="hidden lg:flex lg:w-1/3 flex-col gap-2">
           {images.slice(0, 2).map((image, index) => {
             const isLast = index === 1 && images.length > 2;

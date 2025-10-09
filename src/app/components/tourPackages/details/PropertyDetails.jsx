@@ -9,13 +9,12 @@ import CarPropertySummary from "../../car/CarPropertySummary";
 import CarPropertyFacilities from "../../car/CarPropertyFacilites";
 
 export default async function PropertyDetails({ data }) {
+
+    const { category_id } = data;
+    const relatedPackages = await getRelatedActivities(data.destination_id, data.id);
     if (!data) {
         return <div>No property details available</div>;
     }
-    const { category_id } = data;
-
-    const relatedPackages = await getRelatedActivities(data.destination_id, data.id);
-
     return (
         <div className="container md:w-[93%] w-[98%] mx-auto">
             {category_id == 5 && (

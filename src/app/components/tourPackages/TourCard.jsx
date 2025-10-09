@@ -1,5 +1,4 @@
 'use client';
-
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa";
 import { PiUsersThreeBold } from "react-icons/pi";
@@ -53,10 +52,6 @@ const TourCard = ({ tour }) => {
           <div>
             <div className="flex justify-between items-start">
               <h3 className="font-bold text-xl text-blue-900 mb-1">{tour.property_name}</h3>
-              {/* <div className="flex items-center bg-blue-50 px-2 py-1 rounded-md">
-                <i className="fa-solid fa-star text-yellow-400 text-sm mr-1"></i>
-                <span className="text-sm font-medium">Package</span>
-              </div> */}
             </div>
 
             <div className="flex items-center text-sm text-gray-900 mb-3">

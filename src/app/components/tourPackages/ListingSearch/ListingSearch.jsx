@@ -1,10 +1,8 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { LuMapPin } from "react-icons/lu";
 import SearchButton from "@/utils/SearchButton";
-
 
 const ListingSearchBar = ({
     label = "TOUR DESTINATIONS", 
@@ -84,7 +82,6 @@ const ListingSearchBar = ({
             setFilteredDestinations(data);
         }
     };
-
 
     const selectDestination = (destination) => {
         setSearchQuery(`${destination.name}, ${destination.country}`);

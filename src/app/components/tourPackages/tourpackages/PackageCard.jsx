@@ -11,7 +11,6 @@ function calculateDiscountedPrice(originalPrice, discount) {
     return Math.round(originalPrice * (1 - discount / 100));
 }
 
-// Helper: Find similar package names
 function findSimilarPackages(searchTerm, packages = []) {
     if (!searchTerm) return packages;
 
@@ -88,7 +87,6 @@ const TourPackageCard = ({ packageData = [] }) => {
                 return null;
         }
     };
-
     return (
         <div className="container mx-auto px-4">
             {/* Sticky Search Bar Container */}

@@ -10,7 +10,6 @@ import Link from 'next/link';
 export default function PropertySummary({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const modalRef = useRef(null);
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {

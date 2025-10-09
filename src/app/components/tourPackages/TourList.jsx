@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useMemo } from 'react';
 import TourCard from './TourCard';
 import FilterSidebar from './FilterSidebar';

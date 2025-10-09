@@ -25,7 +25,6 @@ export default function PropertyFacilities({ data }) {
   const [showNext, setShowNext] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile
   useEffect(() => {
     const checkIfMobile = () => setIsMobile(window.innerWidth < 768);
     checkIfMobile();
@@ -33,7 +32,6 @@ export default function PropertyFacilities({ data }) {
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  // Detect visible section on scroll
   useEffect(() => {
     const handleScroll = () => {
       const sections = Object.entries(sectionRefs.current);
@@ -64,7 +62,7 @@ export default function PropertyFacilities({ data }) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // run on mount
+    handleScroll(); 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeCategory]);
 
@@ -102,7 +100,6 @@ export default function PropertyFacilities({ data }) {
     return <div className="p-5 text-gray-500">No property facilities available</div>;
   }
 
-  // Categories order: itineraries second if exists
   const categories = data.facilities ? [...Object.keys(data.facilities)] : [];
   if (data.itineraries) {
     const existingIndex = categories.indexOf("itineraries");
