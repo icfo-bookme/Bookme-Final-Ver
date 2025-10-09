@@ -11,7 +11,6 @@ const BookingReview = ({ onBackToCart, onBackToRooms, onSubmitBooking, hotelId }
         specialRequests: ''
     });
 
-    // Load booking data from localStorage
     useEffect(() => {
         const savedData = localStorage.getItem('bookingData');
         const savedCart = localStorage.getItem('bookingCart');

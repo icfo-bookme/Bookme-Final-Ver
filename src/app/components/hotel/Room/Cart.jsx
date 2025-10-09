@@ -21,7 +21,6 @@ const Cart = ({
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
-
     return {
       checkin: initialCheckin ? new Date(initialCheckin) : today,
       checkout: initialCheckout ? new Date(initialCheckout) : tomorrow

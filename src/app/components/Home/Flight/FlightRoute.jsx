@@ -1,4 +1,3 @@
-// checked
 import getFlightRoutes from "@/services/Flight/getFlightRoute";
 import { Tab } from "../../Flight/Routes/Tab";
 

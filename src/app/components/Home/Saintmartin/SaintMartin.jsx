@@ -14,7 +14,6 @@ import getContactNumber from "@/services/tour/getContactNumber";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
-// Add this component to suppress hydration warnings for specific elements
 const SuppressHydrationWarning = ({ children, suppress = true }) => {
   return (
     <div suppressHydrationWarning={suppress}>
@@ -31,12 +30,10 @@ export default function SaintMartinClient({ data = [] }) {
     const swiperRef = useRef(null);
     const touchTimeoutRef = useRef(null);
 
-    // Set mounted state to handle client-side only rendering
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    // Set loading to false if data is provided from SSR
     useEffect(() => {
         if (data && data.length > 0) {
             setLoading(false);

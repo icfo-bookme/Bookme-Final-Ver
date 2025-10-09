@@ -5,7 +5,6 @@ import { FaMapMarkerAlt, FaPlane, FaPlaneDeparture } from "react-icons/fa"
 import { RiWhatsappFill } from "react-icons/ri"
 
 export const Card = ({ flightRoutes, homepage }) => {
-    // Determine which routes to display
     const displayRoutes = homepage === 'true'
         ? flightRoutes?.slice(0, 6)
         : flightRoutes;

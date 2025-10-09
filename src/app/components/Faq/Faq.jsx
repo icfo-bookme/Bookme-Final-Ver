@@ -1,5 +1,3 @@
-// components/Faq.jsx
-
 import Link from "next/link";
 
 export default function Faq() {

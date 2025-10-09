@@ -1,7 +1,6 @@
 import getPopularSummary from "@/services/tour/getPopularSummary"
 import SaintMartinClient from "./SaintMartin";
 
-
 export default async function SaintMartin() {
   try {
     const locationId = 3;

@@ -10,7 +10,6 @@ import { Roboto } from "next/font/google";
 import { Raleway } from "next/font/google";
 import { getHeroBanners } from "@/services/tour/getHeroBanners";
 
-
 const raleway = Raleway({ subsets: ["latin"] });
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 

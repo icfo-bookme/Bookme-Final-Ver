@@ -5,7 +5,6 @@ import Link from "next/link";
 import { FaStar, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 
-// Helpers
 const calculateDiscountedPrice = (originalPrice, discount) =>
   Math.round(originalPrice * (1 - discount / 100));
 
