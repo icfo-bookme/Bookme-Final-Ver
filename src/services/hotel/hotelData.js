@@ -1,6 +1,5 @@
 export async function fetchHotelListingData(locationID) {
   try {
-    // Fetch hotels
     const apiUrl = `https://bookme.com.bd/admin/api/hotel/listing/${locationID}`;
     const hotelRes = await fetch(apiUrl);
 
@@ -8,8 +7,6 @@ export async function fetchHotelListingData(locationID) {
       throw new Error('Failed to fetch hotels');
     }
     const hotelData = await hotelRes.json();
-
-    // Process all hotels
     const processedHotels = hotelData.map(hotel => {
       const price = hotel.price_after_discount || 0;
       const numericPrice = typeof price === 'string'
@@ -24,13 +21,11 @@ export async function fetchHotelListingData(locationID) {
       };
     });
 
-    // Calculate max price from hotels with prices
     const pricedHotels = processedHotels.filter(hotel => hotel.hasPrice);
     const maxPrice = pricedHotels.length > 0
       ? Math.max(...pricedHotels.map(hotel => hotel.numericPrice))
       : 10000;
 
-    // Fetch amenities
     const amenitiesRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/aminities`);
     const amenitiesData = amenitiesRes.ok ? await amenitiesRes.json() : [];
 

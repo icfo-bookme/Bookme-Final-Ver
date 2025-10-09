@@ -30,7 +30,7 @@ export const metadata = {
     "travel deals", "discount travel booking", "worldwide travel services",
     "travel planning platform", "book travel online", "cheap vacation deals",
   ],
-   alternates: {
+  alternates: {
     canonical: 'https://bookme.com.bd',
   },
 };

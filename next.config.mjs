@@ -1,4 +1,3 @@
-// next.config.js
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -6,25 +5,25 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'bookme.com.bd',
         port: '',
-        pathname: '/admin/**', // API & admin images allow
+        pathname: '/admin/**',
       },
       {
         protocol: 'https',
         hostname: 'www.bookme.com.bd',
         port: '',
-        pathname: '/admin/**', // www version
+        pathname: '/admin/**',
       },
       {
         protocol: 'http',
         hostname: '127.0.0.1',
         port: '',
-        pathname: '/**', // local testing
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'freecvbd.com',
         port: '',
-        pathname: '/**', // other domain if needed
+        pathname: '/**',
       },
     ],
   },

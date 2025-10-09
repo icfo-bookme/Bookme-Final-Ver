@@ -8,14 +8,12 @@ const DatePickerModal = ({
   setShowDatePicker,
   onApply = () => { }
 }) => {
-  // Close modal when clicking on backdrop
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       setShowDatePicker(false);
     }
   };
 
-  // Prevent closing when clicking inside modal
   const handleModalClick = (e) => {
     e.stopPropagation();
   };

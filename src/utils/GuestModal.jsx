@@ -9,14 +9,13 @@ const GuestModal = ({
   setRooms,
   setShowGuestModal
 }) => {
-  // Close modal when clicking on backdrop
+
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       setShowGuestModal(false);
     }
   };
 
-  // Prevent closing when clicking inside modal
   const handleModalClick = (e) => {
     e.stopPropagation();
   };

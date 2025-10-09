@@ -14,20 +14,14 @@ const AnimatedSearch = ({
   },
   buttonText = "Search",
   icon: Icon = LuMapPin,
-  
   showSuggestionsOnFocus = true,
   enableAnimation = true,
-  
   onSearch,
   onItemSelect,
   onSuggestionRender,
-  
   calculateMatchScore,
-  
   formatResultText,
   formatDisplayText,
-  
-  // Router for navigation (optional)
   router,
   resultUrlTemplate = "/{type}/{slug}/{id}"
 }) => {
@@ -46,7 +40,7 @@ const AnimatedSearch = ({
   const [inputRef, handleClick] = useScrollOnClick(150);
   const animationIntervalRef = useRef(null);
 
-  // Default format functions
+
   const defaultFormatResultText = (item) => {
     switch (searchType) {
       case "tour":
@@ -318,7 +312,6 @@ const AnimatedSearch = ({
     );
   };
 
-  // Custom suggestion render
   const renderSuggestion = (item, index) => {
     if (onSuggestionRender) {
       return onSuggestionRender(item, index, searchQuery, highlightMatches);

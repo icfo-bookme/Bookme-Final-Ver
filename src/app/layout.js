@@ -1,4 +1,3 @@
-
 import Footer from "./components/shared/Footer/Footer";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -6,7 +5,6 @@ import { SearchProvider } from "@/SearchContext";
 import { PaginationProvider } from "@/services/tour/usePagination";
 import HeaderWrapper from "./components/HeadWrapper/HeaderWrapper";
 import { UserProvider } from "@/lib/UserContext";
-
 
 const inter = Inter({
   subsets: ["latin"],

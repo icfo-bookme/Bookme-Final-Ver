@@ -1,10 +1,8 @@
 "use client";
 import { createContext, useContext, useState } from "react";
 
-// Create Context
 const SearchContext = createContext();
 
-// Create Provider Component
 export const SearchProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -15,5 +13,4 @@ export const SearchProvider = ({ children }) => {
   );
 };
 
-// Custom hook for consuming context
 export const useSearch = () => useContext(SearchContext);

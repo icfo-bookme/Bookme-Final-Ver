@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // Enables dark mode using the "class" strategy
+  darkMode: 'class', 
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,8 +14,8 @@ module.exports = {
        
     },
       container: {
-        center: true, // Centers the container
-        padding: '0', // Removes default padding
+        center: true, 
+        padding: '0', 
       },
       boxShadow: {
         'custom': 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
