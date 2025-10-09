@@ -9,7 +9,6 @@ import { GoCommentDiscussion } from "react-icons/go";
 import { MdOutlineFreeCancellation } from "react-icons/md";
 import { GiDiamondHard } from "react-icons/gi";
 
-
 function calculateDiscountedPrice(originalPrice, discount) {
     return Math.round(originalPrice * (1 - discount / 100));
 }

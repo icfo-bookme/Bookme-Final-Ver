@@ -3,7 +3,6 @@ export default function BookingSummary({ bookingData }) {
 
     const { cart_session, property, package: packageData } = bookingData;
 
-    // Format date and time
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             weekday: 'long',

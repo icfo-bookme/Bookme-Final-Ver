@@ -19,10 +19,8 @@ const VehicleList = ({ vehicles, models, brands }) => {
     { value: '9+', label: '9+ Seats' }
   ];
 
-  // Filter vehicles based on selected filters
   const filteredVehicles = useMemo(() => {
     return vehicles.filter(vehicle => {
-      // Search filter
       if (filters.search && !vehicle.property_name.toLowerCase().includes(filters.search.toLowerCase())) {
         return false;
       }

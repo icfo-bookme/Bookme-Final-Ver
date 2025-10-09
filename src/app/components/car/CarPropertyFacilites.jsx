@@ -7,8 +7,6 @@ import * as GoIcons from "react-icons/go";
 import * as TbIcons from "react-icons/tb";
 import Itineraries from "../tourPackages/details/itineraries";
 import ContactForm from "../tour/ContactForm/ContactForm";
-// import ContactForm from "../../tour/ContactForm/ContactForm";
-// import Itineraries from "./itineraries";
 
 const getIconComponent = (iconImportString) => {
   if (!iconImportString) return null;
