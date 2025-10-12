@@ -4,7 +4,7 @@ const getPopularSummary = async (locationId) => {
     
     
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/popularPropertySummary/${locationId}`, {
-      cache: "no-store",
+      next: { revalidate: 43200 },
     });
     const data = await res.json();
     return data;

@@ -1,33 +1,21 @@
+export const runtime = 'edge';
 import PromotionsPage from "./PromotionsPage";
+
+export const revalidate = 43200; 
 
 export default async function PromotionsMain() {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/homepage/hot-package`,
-      { 
-        next: { 
-          revalidate: 43200
-        } 
-      } 
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/homepage/hot-package`, {
+      next: { revalidate: 43200 },
+    });
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
-    }
-
-    const result = await response.json();
+    if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`);
+    const result = await res.json();
     const promotions = result.data || [];
 
-    return (
-      <div>
-        <PromotionsPage promotions={promotions} />
-      </div>
-    );
+    return <PromotionsPage promotions={promotions} />;
   } catch (error) {
-    return (
-      <div>
-        <PromotionsPage promotions={[]} error={error.message} />
-      </div>
-    );
+    console.error("Promotion fetch error:", error);
+    return <PromotionsPage promotions={[]} error={error.message} />;
   }
 }

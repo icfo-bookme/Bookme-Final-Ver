@@ -1,7 +1,7 @@
 import HotelListContent from "../list/HotelListContent";
 
 export async function generateMetadata({ params }) {
-  const { name } = params;
+  const { name } = await params;
 
   const title = name ? `${name} Hotels | BookMe` : "Hotels | BookMe";
 
@@ -89,7 +89,7 @@ export default async function HotelListPage({ searchParams }) {
     hotelID,
     rooms = '1',
     adult = '2',
-  } = searchParams;
+  } = await searchParams;
 
   if (!locationID && !hotelID) {
     return <div className="pt-96 text-red-600">Missing location ID or hotel ID in query parameters.</div>;

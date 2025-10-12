@@ -1,3 +1,4 @@
+
 'use client';
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -70,9 +71,9 @@ export default function PromotionsPage({ promotions = [] }) {
   return (
     <div className={`${roboto.className} bg-blue-50 w-full mx-auto max-w-7xl`}>
       <div className="w-full text-center mb-5">
-        <h2 className="text-xl md:text-2xl font-bold text-blue-800 mb-2">
+        <h1 className="text-xl md:text-2xl font-bold text-blue-800 mb-2">
           Hot Package Deals
-        </h2>
+        </h1>
         <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
       </div>
 
@@ -177,7 +178,7 @@ export default function PromotionsPage({ promotions = [] }) {
                       <p className="text-gray-200 text-sm md:text-base line-clamp-2">{promo.subtitle}</p>
                     </div>
                     <div className="mt-4">
-                      <Link
+                      <Link aria-label="package booking button"
                         href={promo.btn_link || "/contact"}
                         className="inline-block bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-6 rounded-full text-sm sm:text-base text-center transition-all duration-300 transform hover:scale-[1.03] shadow-md hover:shadow-lg"
                       >

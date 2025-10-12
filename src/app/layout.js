@@ -12,19 +12,33 @@ const inter = Inter({
 });
 
 export default function DashboardLayout({ children }) {
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "BookMe",
+    url: "https://bookme.com.bd",
+    logo: "https://bookme.com.bd/assets/images/logo.png",
+  };
   return (
     <html lang="en" data-theme="white">
       <head>
-        <link
+         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        <script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(orgSchema),
+          }}
+        />
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>BookMe</title>
+       <title>BookMe - Easy Online Booking for Trips, Hotels & More</title>
       </head>
       <body className={inter.className}>
         <PaginationProvider>

@@ -29,6 +29,7 @@ const staticFacilityTypes = [
 const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
   const [activeIndexes, setActiveIndexes] = useState(["Summary"]);
   const [activeTab, setActiveTab] = useState("Summary");
+  const [windowWidth, setWindowWidth] = useState(null); // ✅ NEW
   const titleRefs = useRef({});
   const accordionRefs = useRef({});
   const contentRefs = useRef({});
@@ -36,6 +37,17 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
   const containerRef = useRef(null);
   const scrollTimeoutRef = useRef(null);
   const isScrollingRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
 
   const groupedFacilities = useMemo(() => {
     return (facilities.facilities || []).reduce((acc, facility) => {
@@ -54,17 +66,11 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
   const toggleAccordion = (facilityType) => {
     setActiveIndexes((prev) => {
       if (facilityType === "Summary") {
-        if (prev.includes("Summary")) {
-          return prev.filter((item) => item !== "Summary");
-        } else {
-          return ["Summary"];
-        }
+        return prev.includes("Summary") ? prev.filter(i => i !== "Summary") : ["Summary"];
       }
-      if (prev.includes(facilityType)) {
-        return prev.filter((item) => item !== facilityType);
-      } else {
-        return [...prev, facilityType];
-      }
+      return prev.includes(facilityType)
+        ? prev.filter(i => i !== facilityType)
+        : [...prev, facilityType];
     });
 
     if (facilityType === "Summary" && activeIndexes.includes("Summary")) {
@@ -76,6 +82,8 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
 
   useEffect(() => {
     const handleScroll = () => {
+      if (!windowWidth) return;
+
       if (isScrollingRef.current) return;
       isScrollingRef.current = true;
 
@@ -100,9 +108,9 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
             stickyTitle.style.willChange = "transform, opacity";
             stickyTitle.style.position = "fixed";
             stickyTitle.style.top = `${
-              tabsHeight + (window.innerWidth <= 500 ? 55 : 63)
+              tabsHeight + (windowWidth <= 500 ? 55 : 85)
             }px`;
-            stickyTitle.style.width = window.innerWidth <= 500 ? "100%" : "56%";
+            stickyTitle.style.width = windowWidth <= 500 ? "100%" : "56%";
             stickyTitle.style.backgroundColor = "white";
             stickyTitle.style.zIndex = "40";
             stickyTitle.style.transition = "none";
@@ -110,67 +118,63 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
             stickyTitle.style.opacity = "1";
             stickyTitle.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
           } else {
-            stickyTitle.style.willChange = "";
-            stickyTitle.style.position = "";
-            stickyTitle.style.top = "";
-            stickyTitle.style.width = "";
-            stickyTitle.style.backgroundColor = "";
-            stickyTitle.style.zIndex = "";
-            stickyTitle.style.transition = "";
-            stickyTitle.style.transform = "";
-            stickyTitle.style.opacity = "";
-            stickyTitle.style.boxShadow = "";
+            stickyTitle.style = ""; // Reset styles
           }
         }
       });
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    if (windowWidth) {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    }
+
     return () => {
       clearTimeout(scrollTimeoutRef.current);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [activeIndexes]);
+  }, [activeIndexes, windowWidth]);
 
   return (
     <div
       className={`${raleway.className} flex flex-col bg-white relative`}
       ref={containerRef}
     >
-      {/* Sticky Tabs - Always stays at top */}
-      <div
-        ref={tabsRef}
-        className="sticky-tabs bg-white w-full border-b"
-        style={{
-          position: "sticky",
-          top: window.innerWidth > 500 ? "63px" : "55px",
-          zIndex: 15,
-          backgroundColor: "white",
-          willChange: "transform",
-        }}
-      >
-        <div className="flex text-blue-900 dark:bg-gray-100 w-full dark:text-gray-800 font-semibold gap-x-[30px] md:gap-x-[40px]">
-          {["Summary", "Description"].map((tab) => (
-            <div
-              key={tab}
-              onClick={() => {
-                setActiveTab(tab);
-                toggleAccordion(tab);
-              }}
-              className={`bg-white flex font-bold mx-[10px] items-center flex-shrink-0 cursor-pointer py-2 transition-colors duration-200${
-                activeTab === tab
-                  ? " bg-white text-[#00026E] md:mr-5"
-                  : " dark:border-gray-300 dark:text-gray-600 md:mr-5"
-              }`}
-              style={{
-                borderBottom: activeTab === tab ? "2px solid blue" : "none",
-              }}
-            >
-              {tab}
-            </div>
-          ))}
+      {/* ✅ Sticky Tabs - Render only when windowWidth is available */}
+      {windowWidth && (
+        <div
+          ref={tabsRef}
+          className="sticky-tabs bg-white w-full border-b"
+          style={{
+            position: "sticky",
+            top: windowWidth > 500 ? "85px" : "55px",
+            zIndex: 15,
+            backgroundColor: "white",
+            willChange: "transform",
+          }}
+        >
+          <div className="flex text-blue-900 dark:bg-gray-100 w-full dark:text-gray-800 font-semibold gap-x-[30px] md:gap-x-[40px]">
+            {["Summary", "Description"].map((tab) => (
+              <div
+                key={tab}
+                onClick={() => {
+                  setActiveTab(tab);
+                  toggleAccordion(tab);
+                }}
+                className={`bg-white flex font-bold mx-[10px] items-center flex-shrink-0 cursor-pointer py-2 transition-colors duration-200${
+                  activeTab === tab
+                    ? " bg-white text-[#00026E] md:mr-5"
+                    : " dark:border-gray-300 dark:text-gray-600 md:mr-5"
+                }`}
+                style={{
+                  borderBottom: activeTab === tab ? "2px solid blue" : "none",
+                }}
+              >
+                {tab}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Accordion Content */}
       <div className="flex flex-wrap gap-4">
@@ -198,26 +202,16 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
                       ) : facilityType === "Description" ? (
                         <RiDiscussFill size={30} style={{ color: "#2a026e" }} />
                       ) : facilityType === "Travel Tips" ? (
-                        <MdTipsAndUpdates
-                          size={30}
-                          style={{ color: "#2a026e" }}
-                        />
+                        <MdTipsAndUpdates size={30} style={{ color: "#2a026e" }} />
                       ) : facilityType === "Policy" ? (
                         <MdPolicy size={30} style={{ color: "#2a026e" }} />
                       ) : facilityType === "Timing" ? (
-                        <MdOutlineWatchLater
-                          size={30}
-                          style={{ color: "#2a026e" }}
-                        />
-                      ) : facilityType === "Additional Information" ? (
-                        <LuInfo size={30} style={{ color: "#2a026e" }} />
-                      ) : facilityType === "Inclusion & Exclusion" ? (
+                        <MdOutlineWatchLater size={30} style={{ color: "#2a026e" }} />
+                      ) : facilityType === "Additional Information" ||
+                        facilityType === "Inclusion & Exclusion" ? (
                         <LuInfo size={30} style={{ color: "#2a026e" }} />
                       ) : facilityType === "Location" ? (
-                        <IoLocationSharp
-                          size={30}
-                          style={{ color: "#2a026e" }}
-                        />
+                        <IoLocationSharp size={30} style={{ color: "#2a026e" }} />
                       ) : null}
                       <span className="text-blue-950 text-xl font-bold ml-2">
                         {facilityType}
@@ -232,12 +226,10 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
                   <Accordion.Content
                     className="overflow-hidden p-[5px]"
                     style={{
-                      transition:
-                        "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                      transition: "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                       maxHeight: isOpen
                         ? `${
-                            contentRefs.current[facilityType]?.current
-                              ?.scrollHeight || 0
+                            contentRefs.current[facilityType]?.current?.scrollHeight || 0
                           }px`
                         : "0px",
                     }}
@@ -268,6 +260,7 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
         })}
       </div>
 
+      {/* Optional: global styles (if needed) */}
       <style jsx global>{`
         .sticky-tabs {
           position: sticky;

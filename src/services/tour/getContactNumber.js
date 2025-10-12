@@ -3,8 +3,8 @@ const getContactNumber = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-attributes `,
       {
-        cache: "no-store", 
-      }
+      next: { revalidate: 43200 },
+    }
     );
     const data = await res.json();
   

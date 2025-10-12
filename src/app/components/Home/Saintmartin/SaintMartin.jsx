@@ -125,9 +125,9 @@ export default function SaintMartinClient({ data = [] }) {
     return (
         <div className={`${roboto.className} bg-blue-50 w-full mx-auto max-w-7xl`}>
             <div className="w-full text-center mb-5">
-                <h2 className="text-xl md:text-2xl font-bold text-[#00026E] mb-2">
+                <h5 className="text-xl md:text-2xl font-bold text-[#00026E] mb-2">
                     Popular Saintmartin Ships
-                </h2>
+                </h5>
                 <div className="w-20 h-1 bg-[#0678B4] mx-auto"></div>
             </div>
 
@@ -229,7 +229,7 @@ export default function SaintMartinClient({ data = [] }) {
                                             />
                                         </div>
                                         <div className="p-4 sm:p-5 md:p-6 flex-grow flex flex-col">
-                                            <Link href={`/Property/${slugify(property.property_name)}/${property.property_id}`} className="cursor-pointer">
+                                            <Link aria-label="Popular Saintmartin Ships" href={`/Property/${slugify(property.property_name)}/${property.property_id}`} className="cursor-pointer">
                                                 <h3 className="text-lg md:text-xl h-[52px] font-bold text-[#00026E] mb-2 hover:text-blue-700 transition-colors line-clamp-2">
                                                     {property.property_name}
                                                 </h3>
@@ -257,7 +257,7 @@ export default function SaintMartinClient({ data = [] }) {
                                                             })()}
                                                         </span>
                                                     </div>
-                                                    <Link
+                                                    <Link aria-label="ship details page"
                                                         href={`/Property/${slugify(property.property_name)}/${property.property_id}`}
                                                         style={{
                                                             background: "linear-gradient(90deg, #313881, #0678B4)",
@@ -291,7 +291,7 @@ export default function SaintMartinClient({ data = [] }) {
 
                         {/* See More Button */}
                         <div className="w-full flex justify-center mt-8 md:mt-10">
-                            <Link
+                            <Link aria-label="see all saintmartin ships"
                                 href="/tour/Saint-martin-ships/3"
                                 style={{
                                     background: "linear-gradient(90deg, #313881, #0678B4)",

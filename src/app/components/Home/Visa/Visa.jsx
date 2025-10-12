@@ -173,7 +173,7 @@ export default function Visa({ data = [] }) {
                     />
                   </div>
                   <div className="p-4 sm:p-5 md:p-6 flex-grow flex flex-col">
-                    <Link href={`/visa/${slugify(country.name)}/${country.id}`}>
+                    <Link aria-label="visa details page" href={`/visa/${slugify(country.name)}/${country.id}`}>
                       <h3 className="text-lg md:text-xl h-16 font-bold text-[#00026E] mb-2 hover:text-blue-700 transition-colors line-clamp-2">
                         {country.name}
                       </h3>
@@ -185,7 +185,7 @@ export default function Visa({ data = [] }) {
                           {Math.round(country?.properties[0]?.property_uinit[0]?.price[0]?.price)} BDT
                         </div>
                       </div>
-                      <Link
+                      <Link aria-label="visa details page"
                         href={`/visa/${slugify(country.name)}/${country.id}`}
                         style={{ background: "linear-gradient(90deg, #313881, #0678B4)" }}
                         className="text-sm px-4 py-2 text-white font-medium rounded-md hover:opacity-90 transition-opacity flex items-center"
@@ -216,7 +216,7 @@ export default function Visa({ data = [] }) {
 
           {/* See More Button */}
           <div className="w-full flex justify-center mt-8 md:mt-10">
-            <Link
+            <Link aria-label="see all visa destinations"
               href="/visa"
               style={{ background: "linear-gradient(90deg, #313881, #0678B4)" }}
               className="px-3 py-1 md:px-8 md:py-3.5 text-white font-medium rounded-md hover:opacity-90 transition-opacity inline-flex items-center"

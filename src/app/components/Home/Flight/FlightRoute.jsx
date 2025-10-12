@@ -10,9 +10,9 @@ export default async function FlightRoute({homepage = 'true'}) {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-7">
           <div className="w-full text-center mb-5">
-            <h2 className="text-xl md:text-2xl font-bold text-[#00026E] mb-2">
+            <h6 className="text-xl md:text-2xl font-bold text-[#00026E] mb-2">
               Top Flight Deals
-            </h2>
+            </h6>
             <div className="w-20 h-1 bg-[#0678B4] mx-auto"></div>
           </div>
 

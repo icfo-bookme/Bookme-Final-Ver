@@ -1,4 +1,3 @@
-
 import getPopularSummary from "@/services/tour/getPopularSummary"
 import Tangour from "./Tangour"
 
