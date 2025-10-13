@@ -4,8 +4,8 @@ import api from './api';
 // Register a user
 export async function register({ name, email, password, phone}) {
   try {
-    const response = await api.post('/api/register', { name, email, password, phone });
-    return response.data; // contains { token }
+    const response = await api.post('/api/register', { name, email, password, phone, type: 'Sign Up'});
+    return response.data;
   } catch (error) {
     if (error.response && error.response.data) {
       throw new Error(error.response.data.message || 'Registration failed');
@@ -18,7 +18,7 @@ export async function register({ name, email, password, phone}) {
 export async function login({ email, password }) {
   try {
     const response = await api.post('/api/login', { email, password });
-    return response.data; // contains { token }
+    return response.data; 
   } catch (error) {
     if (error.response && error.response.data) {
       throw new Error(error.response.data.message || 'Login failed');

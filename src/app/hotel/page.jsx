@@ -5,10 +5,9 @@ import HotelCard from '@/app/components/hotel/Hotel/HotelCard';
 import HotelLoadingSkeleton from '@/app/components/hotel/Hotel/HotelLoadingSkeleton';
 
 export const metadata = {
-  title: "Hotels | BookMe",
-  description: "Explore a wide range of hotels in popular destinations. Find the best deals, compare amenities, and book comfortable stays for families, couples, and solo travelers. Enjoy a hassle-free booking experience with BookMe.",
+  title: "Hotels Booking | Best Deals & Comfortable Stays - BookMe",
+  description: "Explore and book hotels in top destinations with BookMe. Compare amenities, read reviews, and find the best deals for families, couples, and solo travelers. Enjoy hassle-free reservations, comfortable stays, and seamless customer support. From luxury resorts to cozy boutique hotels, BookMe makes planning your perfect trip simple, convenient, and memorable."
 };
-
 
 function calculateDiscountedPrice(originalPrice, discount) {
   return Math.round(originalPrice * (1 - discount / 100));
@@ -17,7 +16,6 @@ function calculateDiscountedPrice(originalPrice, discount) {
 export default async function HotelHome() {
   let hotelData = [];
   let loading = false;
-
   try {
     loading = true;
     const hotelResult = await getAllHotels();

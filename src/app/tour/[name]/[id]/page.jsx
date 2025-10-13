@@ -7,6 +7,8 @@ const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
 
 export default async  function Home({ params }) {
+
+  const {name} = await params;
   const result = await propertySummary(params.id);
   return (
     <main className={`${roboto.className}`}>

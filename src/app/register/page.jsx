@@ -48,7 +48,7 @@ export default function RegisterPage() {
 
     try {
       const { name, email, phone, password } = form;
-      await register({ name, email, phone, password });
+      await register({ name, email, phone, password, });
       router.push('/login');
     } catch (err) {
       setError(err.message);
