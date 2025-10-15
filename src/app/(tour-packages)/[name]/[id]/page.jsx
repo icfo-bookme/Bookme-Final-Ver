@@ -33,7 +33,7 @@ export default async function Page({ params }) {
   }
 
   const data = await getPropertyDetails({ id });
-
+console.log(data);
   const isEmpty =
     !data ||
     (Array.isArray(data) ? data.length === 0 : typeof data === "object" && Object.keys(data).length === 0);
