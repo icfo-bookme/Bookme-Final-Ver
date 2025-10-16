@@ -6,8 +6,7 @@ const getContactNumber = async () => {
       next: { revalidate: 43200 },
     }
     );
-    const data = await res.json();
-  
+    const data = await res.json(); 
     return data;
   } catch (error) {
     return [];

@@ -29,7 +29,7 @@ const staticFacilityTypes = [
 const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
   const [activeIndexes, setActiveIndexes] = useState(["Summary"]);
   const [activeTab, setActiveTab] = useState("Summary");
-  const [windowWidth, setWindowWidth] = useState(null); // ✅ NEW
+  const [windowWidth, setWindowWidth] = useState(null); 
   const titleRefs = useRef({});
   const accordionRefs = useRef({});
   const contentRefs = useRef({});
@@ -108,7 +108,7 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
             stickyTitle.style.willChange = "transform, opacity";
             stickyTitle.style.position = "fixed";
             stickyTitle.style.top = `${
-              tabsHeight + (windowWidth <= 500 ? 55 : 85)
+              tabsHeight + (windowWidth <= 500 ? 55 : 60)
             }px`;
             stickyTitle.style.width = windowWidth <= 500 ? "100%" : "56%";
             stickyTitle.style.backgroundColor = "white";
@@ -118,7 +118,7 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
             stickyTitle.style.opacity = "1";
             stickyTitle.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
           } else {
-            stickyTitle.style = ""; // Reset styles
+            stickyTitle.style = ""; 
           }
         }
       });
@@ -139,14 +139,14 @@ const AccordionBookMe = ({ facilities = { facilities: [] } }) => {
       className={`${raleway.className} flex flex-col bg-white relative`}
       ref={containerRef}
     >
-      {/* ✅ Sticky Tabs - Render only when windowWidth is available */}
+      {/*  Sticky Tabs - Render only when windowWidth is available */}
       {windowWidth && (
         <div
           ref={tabsRef}
           className="sticky-tabs bg-white w-full border-b"
           style={{
             position: "sticky",
-            top: windowWidth > 500 ? "85px" : "55px",
+            top: windowWidth > 500 ? "60px" : "55px",
             zIndex: 15,
             backgroundColor: "white",
             willChange: "transform",

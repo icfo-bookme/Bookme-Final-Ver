@@ -93,7 +93,7 @@ const VisaAgency = () => {
             </div>
 
             <div className="mb-4 p-4 rounded-lg">
-              <h3 className="text-lg font-bold mb-2">✅ Why Choose Our Visa Agency?</h3>
+              <h3 className="text-lg font-bold mb-2"> Why Choose Our Visa Agency?</h3>
               <p className="mb-2">
                 We stand out because:
               </p>
