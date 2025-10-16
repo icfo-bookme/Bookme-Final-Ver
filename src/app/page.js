@@ -1,31 +1,32 @@
 import { Roboto } from "next/font/google";
 import { Suspense } from "react";
-import nextDynamic from "next/dynamic"; 
+import nextDynamic from "next/dynamic";
+
 import Banner from "../components/Home/Banner";
-import getServicesData from "@/services/homepage/getServicesData";
-import LoadingSpinner from "../components/SearchBar/Hotels/LoadingSpinner";
 import TravelBookingTabs from "../components/SearchBar/SearchBar";
 import PromotionsMain from "../components/Home/Promotion/main";
 import LazySection from "../components/shared/LazySection";
+import LoadingSpinner from "../components/SearchBar/Hotels/LoadingSpinner";
 
+import getServicesData from "@/services/homepage/getServicesData";
 
-// Dynamic imports (use nextDynamic)
+// === Dynamic Imports ===
 const VisaMain = nextDynamic(() => import("../components/Home/Visa/Main"), { ssr: true });
 const HotelMain = nextDynamic(() => import("../components/Home/Hotel/Main"), { ssr: true });
 const TangourMain = nextDynamic(() => import("../components/Home/Tangour/Main"), { ssr: true });
-const Sundarban = nextDynamic(() => import("../components/Home/sundarban/sundarban"), { ssr: true });
+const Sundarban = nextDynamic(() => import("../components/Home/sundarban/Main"), { ssr: true });
 const SaintMartin = nextDynamic(() => import("../components/Home/Saintmartin/Main"), { ssr: true });
 const CTASection = nextDynamic(() => import("../components/Home/CTASection/CTASection"), { ssr: true });
 const Faq = nextDynamic(() => import("../components/Faq/Faq"), { ssr: true });
 const FlightRoute = nextDynamic(() => import("../components/Home/Flight/FlightRoute"), { ssr: true });
 const HomepageBlog = nextDynamic(() => import("../components/pre-footer-content/Homepage"), { ssr: true });
 
-export const dynamic = "force-dynamic"; 
+export const dynamic = "force-dynamic"; // Enforces dynamic rendering on server
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata = {
-  title: "BookMe - Book Hotels, Flights & Tour Packages Worldwide", 
+  title: "BookMe - Book Hotels, Flights & Tour Packages Worldwide",
   description:
     "Book hotels, flights, visas, and tours with BookMe. Find top travel deals and secure bookings instantly.",
   keywords: [
@@ -44,8 +45,7 @@ export const metadata = {
   },
   openGraph: {
     title: "BookMe – Your All-in-One Travel Booking Platform",
-    description:
-      "Easily book hotels, flights, and tour packages worldwide with exclusive deals from BookMe.",
+    description: "Easily book hotels, flights, and tour packages worldwide with exclusive deals from BookMe.",
     url: "https://bookme.com.bd",
     siteName: "BookMe",
     images: [
@@ -62,52 +62,58 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "BookMe – Hotels, Flights & Tour Packages Worldwide",
-    description:
-      "Find and book the best hotels, flights, and tours globally with BookMe.",
+    description: "Find and book the best hotels, flights, and tours globally with BookMe.",
     images: ["https://bookme.com.bd/og-image.jpg"],
     creator: "@BookMeBD",
   },
 };
 
 export default async function Home({ searchParams }) {
+  // === Fetch & Prepare Services ===
   let servicesData = [];
+
   try {
     servicesData = await getServicesData();
   } catch (error) {
     console.error("Error fetching services data:", error);
   }
 
-  const sortedServices = [...servicesData].sort((a, b) => {
-    const aSerial = a.serialno ? parseInt(a.serialno) : Infinity;
-    const bSerial = b.serialno ? parseInt(b.serialno) : Infinity;
-    return aSerial - bSerial;
-  });
+  const sortedServices = servicesData
+    .map((service) => ({
+      ...service,
+      serialno: service.serialno ? parseInt(service.serialno) : Infinity,
+    }))
+    .sort((a, b) => a.serialno - b.serialno);
 
-  const visibleServices = sortedServices.filter((s) => s.isShow === "yes");
+  const visibleServices = sortedServices.filter((service) => service.isShow === "yes");
 
+  // === Subcategory Mapping for Ships ===
   const ShipsSubComponents = {
     "Tanguar Haor": TangourMain,
     Sundarban,
     "Saint Martin": SaintMartin,
   };
 
+  // === Main Components Mapping ===
   const mainComponentMap = {
     Visa: VisaMain,
     Hotel: HotelMain,
-    Ships: null,
-    Flight: null,
+    Ships: null, // Rendered conditionally below
+    Flight: null, // Optional in future
   };
 
   return (
     <main className={`${roboto.className} bg-blue-50`}>
-     
+      {/* === Hero Section === */}
       <section className="relative w-full min-h-[60vh]">
+        {/* Background Banner */}
         <div className="absolute inset-0 z-0">
           <Suspense fallback={<div className="h-60 bg-gray-200 animate-pulse" />}>
             <Banner />
           </Suspense>
         </div>
 
+        {/* Search Tabs Overlay */}
         <div className="absolute top-28 inset-0 z-10 flex items-center justify-center px-4">
           <div className="w-full max-w-5xl mx-auto">
             <Suspense fallback={<LoadingSpinner />}>
@@ -120,19 +126,24 @@ export default async function Home({ searchParams }) {
       {/* === Services Section === */}
       <section className="py-10">
         <div className="max-w-screen-xl mx-auto px-4 space-y-10">
-          {servicesData.length > 0 ? (
+          {servicesData.length === 0 ? (
+            <p className="text-center text-red-600 text-lg font-semibold py-12">
+              Failed to load services data. Please try again later.
+            </p>
+          ) : (
             <>
               <PromotionsMain servicesData={servicesData} />
 
               {visibleServices.map((service) => {
-                if (service.category_name === "Ships") {
-                  const ShipsSubCategories = sortedServices.filter(
-                    (s) =>
-                      Object.keys(ShipsSubComponents).includes(s.category_name) &&
-                      s.isShow === "yes"
+                const { category_name } = service;
+
+                // Ships section with subcategories
+                if (category_name === "Ships") {
+                  const shipsToShow = sortedServices.filter(
+                    (s) => ShipsSubComponents[s.category_name] && s.isShow === "yes"
                   );
 
-                  return ShipsSubCategories.map((subCategory) => {
+                  return shipsToShow.map((subCategory) => {
                     const SubComponent = ShipsSubComponents[subCategory.category_name];
                     return (
                       <LazySection
@@ -145,10 +156,11 @@ export default async function Home({ searchParams }) {
                   });
                 }
 
-                const Component = mainComponentMap[service.category_name];
+                // Regular mapped components
+                const Component = mainComponentMap[category_name];
                 return Component ? (
                   <LazySection
-                    key={service.category_name}
+                    key={category_name}
                     placeholder={<div className="h-40 bg-gray-200 animate-pulse rounded-lg" />}
                   >
                     <Component />
@@ -156,15 +168,11 @@ export default async function Home({ searchParams }) {
                 ) : null;
               })}
             </>
-          ) : (
-            <p className="text-center text-red-600 text-lg font-semibold py-12">
-              Failed to load services data. Please try again later.
-            </p>
           )}
         </div>
       </section>
 
-      {/* === Below-the-fold (Lazy Rendered) === */}
+      {/* === Lazy Loaded Below-the-Fold Sections === */}
       <LazySection placeholder={<div className="h-40 bg-gray-200 animate-pulse" />}>
         <FlightRoute />
       </LazySection>

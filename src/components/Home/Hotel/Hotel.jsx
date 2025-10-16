@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { TailSpin } from "react-loader-spinner";
 import { Roboto } from "next/font/google";
+import slugify from "@/utils/slugify";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
@@ -67,14 +68,6 @@ export default function Hotel({ data = [] }) {
       }, 5000);
     }
   };
-
-  const slugify = (str) =>
-    str
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-');
 
   return (
     <div className={`${roboto.className} bg-blue-50 w-full mx-auto max-w-7xl`}>

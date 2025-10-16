@@ -1,4 +1,3 @@
-// checked
 import getAllVisa from "@/services/visa/getAllVisa"
 import Visa from "./Visa"
 

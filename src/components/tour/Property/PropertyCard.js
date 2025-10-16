@@ -6,25 +6,25 @@ import PropertyAmenities from "./PropertyAmenities";
 import PropertyContactButtons from "./PropertyContactButtons";
 
 export default function PropertyCard({ property, index, onCardClick }) {
- const slugify = (str) =>
-  str
-    .trim()
-    .replace(/\s+/g, '-')        
-    .replace(/[^\w\u0980-\u09FF\-\(\)]+/g, '')  
-    .replace(/\-\-+/g, '-')     
+  const slugify = (str) =>
+    str
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\u0980-\u09FF\-\(\)]+/g, '')
+      .replace(/\-\-+/g, '-')
 
-const containsBangla = (text) => /[\u0980-\u09FF]/.test(text);
+  const containsBangla = (text) => /[\u0980-\u09FF]/.test(text);
 
-const propertyName = property.property_name;
+  const propertyName = property.property_name;
 
-const propertySlug = containsBangla(propertyName)
-  ? slugify(propertyName)
-  : slugify(propertyName);
+  const propertySlug = containsBangla(propertyName)
+    ? slugify(propertyName)
+    : slugify(propertyName);
 
   return (
     <div key={property.property_id} data-index={index} className="mb-5">
       <div className="shadow-custom flex flex-col lg:flex-row gap-5 pt-5 pl-5 pr-5 pb-0 rounded bg-white relative">
-        {property.discout && (
+        {property.discout && property.discout !== "0" && (
           <div className="absolute top-5 right-5 lg:top-5 lg:left-[315px] z-10 w-14 h-14 p-2 text-white text-center font-semibold text-sm bg-red-700 rounded-full flex items-center justify-center">
             {property.discout}
           </div>
@@ -69,7 +69,7 @@ const propertySlug = containsBangla(propertyName)
           {property.property_summaries && (
             <div className="flex flex-col gap-3">
               <PropertyAmenities summaries={property.property_summaries} />
-              
+
               <div className="flex flex-row flex-wrap md:justify-between justify-start items-center gap-[5px] sm:gap-[25px]">
                 <div className="flex">
                   <div className="mr-[6px]">
@@ -98,7 +98,7 @@ const propertySlug = containsBangla(propertyName)
                     </Link>
                   </div>
                 </div>
-                
+
                 <PropertyContactButtons contactNumber={property.contactNumber} />
               </div>
             </div>
