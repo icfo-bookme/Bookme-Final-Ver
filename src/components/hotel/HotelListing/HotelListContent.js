@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import SearchBar from '@/app/components/hotel/HotelListingSearch/SearchBar';
+import SearchBar from '@/components/hotel/HotelListingSearch/SearchBar';
 import HotelFilters from './HotelFilters';
 import MobileFilters from './MobileFilters';
 import HotelCard from './HotelCard';

@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Roboto } from "next/font/google";
 import { useForm } from "react-hook-form";
-import { useSearch } from "@/SearchContext";
+import { useSearch } from "@/context/SearchContext";
 import getContactNumber from "@/services/tour/getContactNumber";
 import { FaPhone, FaWhatsapp, FaBars, FaTimes, FaChevronRight, FaChevronDown, FaUser, FaSignOutAlt } from "react-icons/fa";
-import { usePagination } from "@/services/tour/usePagination";
+import { usePagination } from "@/context/usePagination";
 import { useRouter } from "next/navigation";
 import getTourDestination from "@/services/getTourDestination";
 import { Avatar, Dropdown } from "flowbite-react";
-import { useUser } from "@/lib/UserContext";
+import { useUser } from "@/context/UserContext";
 import PrimaryButton from "@/utils/PrimaryButton";
 import slugify from "@/utils/slugify";
 

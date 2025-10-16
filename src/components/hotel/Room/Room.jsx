@@ -5,7 +5,7 @@ import getRooms from "@/services/room/getroom";
 import RoomList from './RoomList';
 import RoomDetailsModal from './RoomDetailsModal';
 import Cart from './Cart';
-import LoadingSpinner from '../../../../utils/LoadingSpinner';
+import LoadingSpinner from '../../../utils/LoadingSpinner';
 import ErrorMessage from './ErrorMessage';
 import NoRoomsAvailable from './NoRoomsAvailable';
 import CartButton from './CartButton';

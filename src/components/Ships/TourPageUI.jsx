@@ -1,12 +1,12 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import ContactForm from "@/app/components/tour/ContactForm/ContactForm";
+import ContactForm from "@/components/tour/ContactForm/ContactForm";
 import ImageCarousel from "@/services/tour/ImageCarousel";
 import { IoLocation } from "react-icons/io5";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AccordionBookMe from "@/app/components/Ships/Accordion";
-import PackageCarousel from "@/app/components/tour/packageCarousel/packageCarousel";
+import AccordionBookMe from "@/components/Ships/Accordion";
+import PackageCarousel from "@/components/tour/packageCarousel/packageCarousel";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });

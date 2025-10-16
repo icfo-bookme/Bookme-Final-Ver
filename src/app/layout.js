@@ -1,10 +1,10 @@
-import Footer from "./components/shared/Footer/Footer";
+import Footer from "../components/shared/Footer/Footer";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { SearchProvider } from "@/SearchContext";
-import { PaginationProvider } from "@/services/tour/usePagination";
-import HeaderWrapper from "./components/HeadWrapper/HeaderWrapper";
-import { UserProvider } from "@/lib/UserContext";
+import { SearchProvider } from "@/context/SearchContext";
+import { PaginationProvider } from "@/context/usePagination";
+import HeaderWrapper from "../components/HeadWrapper/HeaderWrapper";
+import { UserProvider } from "@/context/UserContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,13 +12,7 @@ const inter = Inter({
 });
 
 export default function DashboardLayout({ children }) {
-  const orgSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "BookMe",
-    url: "https://bookme.com.bd",
-    logo: "https://bookme.com.bd/assets/images/logo.png",
-  };
+ 
   return (
     <html lang="en" data-theme="white">
       <head>
@@ -28,13 +22,6 @@ export default function DashboardLayout({ children }) {
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
-        />
-        <script
-          id="schema-org"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(orgSchema),
-          }}
         />
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import SearchBar from '@/app/components/hotel/HotelListingSearch/SearchBar';
+import SearchBar from '@/components/hotel/HotelListingSearch/SearchBar';
 import Link from 'next/link';
-import HotelFilters from '@/app/components/hotel/HotelListing/HotelFilters';
-import HotelCard from '@/app/components/hotel/HotelListing/HotelCard';
+import HotelFilters from '@/components/hotel/HotelListing/HotelFilters';
+import HotelCard from '@/components/hotel/HotelListing/HotelCard';
 import LoadingSpinner from '@/utils/LoadingSpinner';
 
 const HotelListContent = ({

@@ -1,5 +1,5 @@
 import { Roboto } from "next/font/google";
-import PropertyList from "@/app/components/tour/Property/Property";
+import PropertyList from "@/components/tour/Property/Property";
 import propertySummary from "@/services/tour/propertySummary";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });

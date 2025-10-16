@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { login, getUser } from '@/lib/auth';
-import { useUser } from '@/lib/UserContext';
+import { useUser } from '@/context/UserContext';
 import { MdOutlineMailLock } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import LoadingSpinner from '@/utils/LoadingSpinner';

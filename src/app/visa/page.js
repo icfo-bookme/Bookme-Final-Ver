@@ -1,10 +1,10 @@
 import getAllCountry from '@/services/visa/getAllCountry';
 import getAllVisa from '@/services/visa/getAllVisa';
-import VisaSearchForm from '../components/visa/visaSearchForm';
+import VisaSearchForm from '../../components/visa/visaSearchForm';
 import Image from 'next/image';
 import Link from 'next/link';
 import getContactNumber from '@/services/tour/getContactNumber';
-import VisaAgency from '../components/pre-footer-content/VisaAgency';
+import VisaAgency from '../../components/pre-footer-content/VisaAgency';
 
 export const metadata = {
   title: "Visa Information | BookMe",
@@ -24,7 +24,6 @@ export const metadata = {
     "immigration visa guide",
   ],
 };
-
 
 export default async function Home() {
   let countryData = [];
@@ -95,7 +94,6 @@ export default async function Home() {
       </div>
     );
   }
-
 
   return (
     <div className="min-h-screen ">
@@ -255,7 +253,6 @@ export default async function Home() {
               </Link>
             ))}
           </div>
-
         </div>
       </div>
       <VisaAgency />

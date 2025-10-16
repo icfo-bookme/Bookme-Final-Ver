@@ -1,5 +1,5 @@
-import ActivityList from '@/app/components/Activities/ActivityList';
-import ActivityListingSearch from '@/app/components/Activities/ActivitySearch';
+import ActivityList from '@/components/Activities/ActivityList';
+import ActivityListingSearch from '@/components/Activities/ActivitySearch';
 import getActivitiesList from '@/services/Activities/getActivitiesList';
 
 // Dynamic metadata

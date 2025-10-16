@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/lib/UserContext';
+import { useUser } from '@/context/UserContext';
 import LoadingSpinner from '@/utils/LoadingSpinner';
 import BookingHeader from '@/app/booking-review/BookingHeader';
 import BookingForm from './BookingForm';

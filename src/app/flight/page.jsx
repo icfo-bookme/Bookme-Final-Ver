@@ -1,4 +1,4 @@
-import FlightRoute from "../components/Home/Flight/FlightRoute";
+import FlightRoute from "../../components/Home/Flight/FlightRoute";
 
 export const metadata = {
   title: "Flights | BookMe",

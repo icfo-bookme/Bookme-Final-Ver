@@ -1,10 +1,10 @@
 export const revalidate = 60;
 
-import HotelLoadingSkeleton from '@/app/components/hotel/Hotel/HotelLoadingSkeleton';
-import HotelCTA from '@/app/components/hotel/Hotel/HotelCTA';
+import HotelLoadingSkeleton from '@/components/hotel/Hotel/HotelLoadingSkeleton';
+import HotelCTA from '@/components/hotel/Hotel/HotelCTA';
 import getActivities from '@/services/Activities/getActivities';
-import HeroSection from '../components/Activities/ActivitiesPage/HeroSection';
-import ActivitiesCard from '../components/Activities/ActivitiesPage/ActivitiesCard';
+import HeroSection from '../../components/Activities/ActivitiesPage/HeroSection';
+import ActivitiesCard from '../../components/Activities/ActivitiesPage/ActivitiesCard';
 
 export const metadata = {
   title: "Activities & Experiences | BookMe",

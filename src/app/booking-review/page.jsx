@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/lib/UserContext';
+import { useUser } from '@/context/UserContext';
 import LoadingSpinner from '@/utils/LoadingSpinner';
 import BookingForm from './BookingForm';
 import BookingSummary from './BookingSummary';

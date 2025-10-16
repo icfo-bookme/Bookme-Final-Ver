@@ -1,24 +1,24 @@
 import { Roboto } from "next/font/google";
 import { Suspense } from "react";
 import nextDynamic from "next/dynamic"; 
-import Banner from "./components/Home/Banner";
+import Banner from "../components/Home/Banner";
 import getServicesData from "@/services/homepage/getServicesData";
-import LoadingSpinner from "./components/SearchBar/Hotels/LoadingSpinner";
-import TravelBookingTabs from "./components/SearchBar/SearchBar";
-import PromotionsMain from "./components/Home/Promotion/main";
-import LazySection from "./components/shared/LazySection";
+import LoadingSpinner from "../components/SearchBar/Hotels/LoadingSpinner";
+import TravelBookingTabs from "../components/SearchBar/SearchBar";
+import PromotionsMain from "../components/Home/Promotion/main";
+import LazySection from "../components/shared/LazySection";
 
 
 // Dynamic imports (use nextDynamic)
-const VisaMain = nextDynamic(() => import("./components/Home/Visa/Main"), { ssr: true });
-const HotelMain = nextDynamic(() => import("./components/Home/Hotel/Main"), { ssr: true });
-const TangourMain = nextDynamic(() => import("./components/Home/Tangour/Main"), { ssr: true });
-const Sundarban = nextDynamic(() => import("./components/Home/sundarban/sundarban"), { ssr: true });
-const SaintMartin = nextDynamic(() => import("./components/Home/Saintmartin/Main"), { ssr: true });
-const CTASection = nextDynamic(() => import("./components/Home/CTASection/CTASection"), { ssr: true });
-const Faq = nextDynamic(() => import("./components/Faq/Faq"), { ssr: true });
-const FlightRoute = nextDynamic(() => import("./components/Home/Flight/FlightRoute"), { ssr: true });
-const HomepageBlog = nextDynamic(() => import("./components/pre-footer-content/Homepage"), { ssr: true });
+const VisaMain = nextDynamic(() => import("../components/Home/Visa/Main"), { ssr: true });
+const HotelMain = nextDynamic(() => import("../components/Home/Hotel/Main"), { ssr: true });
+const TangourMain = nextDynamic(() => import("../components/Home/Tangour/Main"), { ssr: true });
+const Sundarban = nextDynamic(() => import("../components/Home/sundarban/sundarban"), { ssr: true });
+const SaintMartin = nextDynamic(() => import("../components/Home/Saintmartin/Main"), { ssr: true });
+const CTASection = nextDynamic(() => import("../components/Home/CTASection/CTASection"), { ssr: true });
+const Faq = nextDynamic(() => import("../components/Faq/Faq"), { ssr: true });
+const FlightRoute = nextDynamic(() => import("../components/Home/Flight/FlightRoute"), { ssr: true });
+const HomepageBlog = nextDynamic(() => import("../components/pre-footer-content/Homepage"), { ssr: true });
 
 export const dynamic = "force-dynamic"; 
 
@@ -69,29 +69,7 @@ export const metadata = {
   },
 };
 
-
 export default async function Home({ searchParams }) {
-
-   const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    name: "BookMe",
-    url: "https://bookme.com.bd",
-    logo: "https://bookme.com.bd/logo.png",
-    description:
-      "Book flights, hotels, visas, and tour packages worldwide with BookMe.",
-    sameAs: [
-      "www.facebook.com/bookmeltd",
-    ],
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+8801967776777",
-      contactType: "customer support",
-      areaServed: "BD",
-      availableLanguage: ["English", "Bengali"],
-    },
-  };
-
   let servicesData = [];
   try {
     servicesData = await getServicesData();
@@ -122,13 +100,7 @@ export default async function Home({ searchParams }) {
 
   return (
     <main className={`${roboto.className} bg-blue-50`}>
-      <script
-        id="schema-travelagency"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schemaData),
-        }}
-      />
+     
       <section className="relative w-full min-h-[60vh]">
         <div className="absolute inset-0 z-0">
           <Suspense fallback={<div className="h-60 bg-gray-200 animate-pulse" />}>

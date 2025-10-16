@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaPhone, FaFacebookMessenger, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import Banner from '../components/Home/Banner';
+import Banner from '../../components/Home/Banner';
 
 const HotelDealsPage = () => {
   const contacts = {

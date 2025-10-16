@@ -1,8 +1,8 @@
 import getAllHotels from '@/services/hotel/getAllHotels';
-import HotelHeroSection from '@/app/components/hotel/Hotel/HotelHeroSection';
-import HotelCTA from '@/app/components/hotel/Hotel/HotelCTA';
-import HotelCard from '@/app/components/hotel/Hotel/HotelCard';
-import HotelLoadingSkeleton from '@/app/components/hotel/Hotel/HotelLoadingSkeleton';
+import HotelHeroSection from '@/components/hotel/Hotel/HotelHeroSection';
+import HotelCTA from '@/components/hotel/Hotel/HotelCTA';
+import HotelCard from '@/components/hotel/Hotel/HotelCard';
+import HotelLoadingSkeleton from '@/components/hotel/Hotel/HotelLoadingSkeleton';
 
 export const metadata = {
   title: "Hotels Booking | Best Deals & Comfortable Stays - BookMe",

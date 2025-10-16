@@ -1,4 +1,4 @@
-import HotelLoadingSkeleton from "@/app/components/hotel/Hotel/HotelLoadingSkeleton";
+import HotelLoadingSkeleton from "@/components/hotel/Hotel/HotelLoadingSkeleton";
 
 
 export default function Loading() {

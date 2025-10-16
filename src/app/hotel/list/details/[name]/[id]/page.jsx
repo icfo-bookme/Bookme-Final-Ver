@@ -1,5 +1,5 @@
 
-import HotelHashRoute from "@/app/components/hotel/hotelHashRote";
+import HotelHashRoute from "@/components/hotel/hotelHashRote";
 import getHotelDetails from "@/services/hotel/gethoteldetails";
 
 

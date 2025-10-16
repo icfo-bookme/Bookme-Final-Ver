@@ -1,4 +1,4 @@
-import PropertyDetails from "@/app/components/tourPackages/details/PropertyDetails";
+import PropertyDetails from "@/components/tourPackages/details/PropertyDetails";
 import getPropertyDetails from "@/services/packages/getPropertyDetails";
 
 export async function generateMetadata({ params }) {

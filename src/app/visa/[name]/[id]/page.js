@@ -1,7 +1,7 @@
 
 import getVisaDetails from "@/services/visa/getVisaDeatails";
 import getContactNumber from "@/services/tour/getContactNumber";
-import VisaDetails from "@/app/components/visa/VisaDetailsContent";
+import VisaDetails from "@/components/visa/VisaDetailsContent";
 
 export async function generateMetadata({ params }) {
   const { name } = await params; 
@@ -29,8 +29,6 @@ export async function generateMetadata({ params }) {
     keywords,
   };
 }
-
-
 
 export default async function VisaDetailsSSR({ params }) {
   const { id } = params;

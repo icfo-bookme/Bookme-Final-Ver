@@ -1,14 +1,11 @@
-import PackageListingSearch from '@/app/components/tourPackages/ListingSearch/Search';
-import TourList from '@/app/components/tourPackages/TourList';
+import PackageListingSearch from '@/components/tourPackages/ListingSearch/Search';
+import TourList from '@/components/tourPackages/TourList';
 import getTourList from '@/services/packages/getPropertyList';
 
 export async function generateMetadata({ params }) {
   const { name } = params;
-
   const title = `${name} Tour Packages | BookMe`;
-
   const description = `Explore the best tour packages in ${name} with BookMe. Choose from a variety of curated experiences including sightseeing tours, island trips, river cruises, cultural excursions, and adventure packages. Whether you're planning a family getaway, a solo adventure, or a group trip, our flexible and personalized tour packages ensure an unforgettable journey. Book your ${name} tour package now and make your visit hassle-free, memorable, and truly special.`;
-
   const keywords = [
     `${name} tour packages`,
     `tours in ${name}`,
@@ -28,9 +25,6 @@ export async function generateMetadata({ params }) {
     keywords,
   };
 }
-
-
-
 export default async function PackagesPage({ params }) {
   const { id } = params;
 

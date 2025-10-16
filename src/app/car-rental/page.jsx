@@ -1,7 +1,7 @@
 import Image from "next/image";
 import getCarModel from "@/services/Car/getCarModel";
-import CarHeroSection from "../components/car/car/CarHeroSection";
-import Faq from "../components/car/car/Faq";
+import CarHeroSection from "../../components/car/car/CarHeroSection";
+import Faq from "../../components/car/car/Faq";
 
 export const metadata = {
   title: "Car Rentals | BookMe",

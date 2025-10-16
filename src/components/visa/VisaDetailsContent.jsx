@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaPhone } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
-import ContactForm from "@/app/components/tour/ContactForm/ContactForm";
+import ContactForm from "@/components/tour/ContactForm/ContactForm";
 
 export default function VisaDetails({ visaDetails, contactNumber }) {
   const [showForm, setShowForm] = useState(false);

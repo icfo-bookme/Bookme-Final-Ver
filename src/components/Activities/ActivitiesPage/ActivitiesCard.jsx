@@ -35,6 +35,66 @@ function findSimilarPackages(searchTerm, packages = []) {
     });
 }
 
+// Function to format duration summary
+function formatDuration(durationValue) {
+    if (!durationValue || typeof durationValue !== 'string') {
+        return durationValue;
+    }
+
+    // Check if it matches the duration pattern (e.g., "0h 0m to 4h 30m", "1h 0m to 2h 0m", etc.)
+    const durationPattern = /^(\d+h\s?\d*m?)\s+to\s+(\d+h\s?\d*m?)$/i;
+    const match = durationValue.match(durationPattern);
+
+    if (!match) {
+        return durationValue; // Return original if pattern doesn't match
+    }
+
+    const startTime = match[1].trim();
+    const endTime = match[2].trim();
+
+    // Parse hours and minutes
+    const parseTime = (timeStr) => {
+        const hoursMatch = timeStr.match(/(\d+)h/i);
+        const minutesMatch = timeStr.match(/(\d+)m/i);
+
+        const hours = hoursMatch ? parseInt(hoursMatch[1]) : 0;
+        const minutes = minutesMatch ? parseInt(minutesMatch[1]) : 0;
+
+        return { hours, minutes, totalMinutes: hours * 60 + minutes };
+    };
+
+    const start = parseTime(startTime);
+    const end = parseTime(endTime);
+
+    // If start is 0h 0m, return only end time
+    if (start.totalMinutes === 0) {
+        return formatTime(end.hours, end.minutes);
+    }
+
+    // Format both start and end times
+    const formattedStart = formatTime(start.hours, start.minutes);
+    const formattedEnd = formatTime(end.hours, end.minutes);
+
+    return `${formattedStart} to ${formattedEnd}`;
+}
+
+// Helper function to format time (remove 0 values and simplify)
+function formatTime(hours, minutes) {
+    if (hours === 0 && minutes === 0) {
+        return "0m";
+    }
+
+    if (hours === 0) {
+        return `${minutes}m`;
+    }
+
+    if (minutes === 0) {
+        return `${hours}h`;
+    }
+
+    return `${hours}h ${minutes}m`;
+}
+
 const ActivitiesCard = ({ packageData = [] }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -94,6 +154,14 @@ const ActivitiesCard = ({ packageData = [] }) => {
         }
     };
 
+    // Function to get formatted summary value
+    const getFormattedSummaryValue = (summary) => {
+        if (summary.icon_name === 'FaRegClock' && summary.value) {
+            return formatDuration(summary.value);
+        }
+        return summary.value;
+    };
+
     return (
         <div className="container mx-auto px-4">
             {/* Sticky Search Bar Container */}
@@ -141,11 +209,11 @@ const ActivitiesCard = ({ packageData = [] }) => {
                             const price = Number(pkg?.price) || 0;
                             const discountPercent = Number(pkg?.discount_percent) || 0;
                             const discountAmount = Number(pkg?.discount_amount) || 0;
-                            const finalPrice = pkg?.final_price || 
-                                (discountPercent > 0 
+                            const finalPrice = pkg?.final_price ||
+                                (discountPercent > 0
                                     ? calculateDiscountedPrice(price, discountPercent)
                                     : price - discountAmount);
-                            
+
                             const imageUrl = pkg?.image
                                 ? `${baseUrl}/storage/${pkg.image}`
                                 : "/default-tour.jpg";
@@ -158,12 +226,12 @@ const ActivitiesCard = ({ packageData = [] }) => {
                                     {/* Discount Badge */}
                                     {(discountPercent > 0 || discountAmount > 0) && (
                                         <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-bold z-10">
-                                            {discountPercent > 0 
-                                                ? `${discountPercent}% OFF` 
+                                            {discountPercent > 0
+                                                ? `${discountPercent}% OFF`
                                                 : `${discountAmount} BDT OFF`}
                                         </div>
                                     )}
-                                    
+
                                     <div className="relative h-40 sm:h-48 w-full">
                                         <Image
                                             src={imageUrl}
@@ -193,34 +261,35 @@ const ActivitiesCard = ({ packageData = [] }) => {
                                         </div>
 
                                         {/* Package Summaries */}
-                                        {pkg.summaries && pkg.summaries.length > 0 && (
-                                            <>
-                                                <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
-                                                    {pkg.summaries.slice(0, 2).map((summary, index) => (
-                                                        <div
-                                                            key={index}
-                                                            className="flex items-start col-span-2"
-                                                        >
-                                                            {renderSummaryIcon(summary.icon_name)}
-                                                            <span className="ml-1">{summary.value}</span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                                 <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
-                                                    {pkg.summaries.slice(2, 3).map((summary, index) => (
-                                                        <div
-                                                            key={index}
-                                                            className="flex items-start col-span-4"
-                                                        >
-                                                            {renderSummaryIcon(summary.icon_name)}
-                                                            <span className="ml-1">{summary.value}</span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                               
-                                            </>
-                                        )}
+                                        <div className="h-28">
+                                            {pkg.summaries && pkg.summaries.length > 0 && (
+                                                <>
+                                                    <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
+                                                        {pkg.summaries.slice(0, 2).map((summary, index) => (
+                                                            <div
+                                                                key={index}
+                                                                className="flex items-start col-span-2"
+                                                            >
+                                                                {renderSummaryIcon(summary.icon_name)}
+                                                                <span className="ml-1">{getFormattedSummaryValue(summary)}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
+                                                        {pkg.summaries.slice(2, 3).map((summary, index) => (
+                                                            <div
+                                                                key={index}
+                                                                className="flex items-start col-span-4"
+                                                            >
+                                                                {renderSummaryIcon(summary.icon_name)}
+                                                                <span className="ml-1">{getFormattedSummaryValue(summary)}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
 
+                                                </>
+                                            )}
+                                        </div>
                                         <div className="flex justify-between items-center pt-3 border-t border-gray-100">
                                             <div>
                                                 <p className="text-2xs xs:text-xs text-gray-500">

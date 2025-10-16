@@ -1,10 +1,10 @@
 export const revalidate = 60;
 
-import HotelLoadingSkeleton from '@/app/components/hotel/Hotel/HotelLoadingSkeleton';
-import HeroSection from '@/app/components/tourPackages/tourpackages/HeroSection';
-import HotelCTA from '@/app/components/hotel/Hotel/HotelCTA';
+import HotelLoadingSkeleton from '@/components/hotel/Hotel/HotelLoadingSkeleton';
+import HeroSection from '@/components/tourPackages/tourpackages/HeroSection';
+import HotelCTA from '@/components/hotel/Hotel/HotelCTA';
 import getAllProperty from '@/services/packages/getAllProperty';
-import TourPackageCard from '@/app/components/tourPackages/tourpackages/PackageCard';
+import TourPackageCard from '@/components/tourPackages/tourpackages/PackageCard';
 
 
 export const metadata = {
@@ -27,8 +27,6 @@ export const metadata = {
     "local sightseeing tours"
   ],
 };
-
-
 
 
 function calculateDiscountedPrice(originalPrice, discount) {

@@ -1,4 +1,4 @@
-import BookingClient from '@/app/components/cart/BookingClient';
+import BookingClient from '@/components/cart/BookingClient';
 import getcartsession from '@/services/cart/getcartsession';
 
 export default async function BookingReviewPage({ params }) {

@@ -8,7 +8,7 @@ import TimeSlotSelector from "./TimeSlotSelector";
 import ModalHeader from "./ModalHeader";
 import PackageInfo from "./PackageInfo";
 import GuestSelectorField from "./GuestSelectorField";
-import DateSelector from "../../../../utils/DateSelector";
+import DateSelector from "../../../utils/DateSelector";
 import PickupLocationField from "./PickupLocationField";
 import SubmitButton from "./SubmitButton";
 

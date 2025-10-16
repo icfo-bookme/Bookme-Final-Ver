@@ -3,7 +3,7 @@ import getPropertyDetails from "@/services/tour/getPropertyDetails";
 import { getPropertyImages } from "@/services/tour/getPropertyImages";
 import getPropertyPackages from "@/services/tour/getPropertyPackages";
 import getContactNumber from "@/services/tour/getContactNumber";
-import TourPageUI from "@/app/components/Ships/TourPageUI";
+import TourPageUI from "@/components/Ships/TourPageUI";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

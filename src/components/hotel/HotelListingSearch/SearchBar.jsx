@@ -6,8 +6,8 @@ import getDestination from "@/services/hotel/getDestination";
 import MobileSearchHeader from "./MobileSearchHeader";
 import SearchForm from "./SearchForm";
 import MobileSearchForm from "./MobileSearchForm";
-import DatePickerModal from "../../../../utils/DatePickerModal";
-import GuestModal from "../../../../utils/GuestModal";
+import DatePickerModal from "../../../utils/DatePickerModal";
+import GuestModal from "../../../utils/GuestModal";
 import getAllHotels from "@/services/hotel/getAllHotels";
 import slugify from "@/utils/slugify";
 
