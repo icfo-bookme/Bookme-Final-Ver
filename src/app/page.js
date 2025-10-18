@@ -21,52 +21,11 @@ const Faq = nextDynamic(() => import("../components/Faq/Faq"), { ssr: true });
 const FlightRoute = nextDynamic(() => import("../components/Home/Flight/FlightRoute"), { ssr: true });
 const HomepageBlog = nextDynamic(() => import("../components/pre-footer-content/Homepage"), { ssr: true });
 
-export const dynamic = "force-dynamic"; // Enforces dynamic rendering on server
+export const dynamic = "force-dynamic"; 
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
-export const metadata = {
-  title: "BookMe - Book Hotels, Flights & Tour Packages Worldwide",
-  description:
-    "Book hotels, flights, visas, and tours with BookMe. Find top travel deals and secure bookings instantly.",
-  keywords: [
-    "BookMe",
-    "book hotels online",
-    "cheap flights",
-    "visa services",
-    "tour packages",
-    "global travel deals",
-    "online booking site",
-    "travel agency",
-    "holiday deals",
-  ],
-  alternates: {
-    canonical: "https://bookme.com.bd",
-  },
-  openGraph: {
-    title: "BookMe – Your All-in-One Travel Booking Platform",
-    description: "Easily book hotels, flights, and tour packages worldwide with exclusive deals from BookMe.",
-    url: "https://bookme.com.bd",
-    siteName: "BookMe",
-    images: [
-      {
-        url: "https://bookme.com.bd/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "BookMe Travel Deals and Bookings",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "BookMe – Hotels, Flights & Tour Packages Worldwide",
-    description: "Find and book the best hotels, flights, and tours globally with BookMe.",
-    images: ["https://bookme.com.bd/og-image.jpg"],
-    creator: "@BookMeBD",
-  },
-};
+
 
 export default async function Home({ searchParams }) {
   // === Fetch & Prepare Services ===
@@ -98,8 +57,8 @@ export default async function Home({ searchParams }) {
   const mainComponentMap = {
     Visa: VisaMain,
     Hotel: HotelMain,
-    Ships: null, // Rendered conditionally below
-    Flight: null, // Optional in future
+    Ships: null, 
+    Flight: null, 
   };
 
   return (
