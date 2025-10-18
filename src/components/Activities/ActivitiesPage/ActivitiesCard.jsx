@@ -8,6 +8,8 @@ import { PiUsersThree } from "react-icons/pi";
 import { GoCommentDiscussion } from "react-icons/go";
 import { MdOutlineFreeCancellation } from "react-icons/md";
 import { GiDiamondHard } from "react-icons/gi";
+import LazyLoader from "@/utils/LazyLoader";
+import slugify from "@/utils/slugify";
 
 function calculateDiscountedPrice(originalPrice, discount) {
     return Math.round(originalPrice * (1 - discount / 100));
@@ -46,7 +48,7 @@ function formatDuration(durationValue) {
     const match = durationValue.match(durationPattern);
 
     if (!match) {
-        return durationValue; // Return original if pattern doesn't match
+        return durationValue; 
     }
 
     const startTime = match[1].trim();
@@ -78,7 +80,6 @@ function formatDuration(durationValue) {
     return `${formattedStart} to ${formattedEnd}`;
 }
 
-// Helper function to format time (remove 0 values and simplify)
 function formatTime(hours, minutes) {
     if (hours === 0 && minutes === 0) {
         return "0m";
@@ -100,7 +101,7 @@ const ActivitiesCard = ({ packageData = [] }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-
+    const [visibleCount, setVisibleCount] = useState(12);
     const filteredPackages = useMemo(() => {
         if (!searchTerm) return packageData;
 
@@ -127,13 +128,6 @@ const ActivitiesCard = ({ packageData = [] }) => {
         setShowSuggestions(false);
     };
 
-    const slugify = (str) =>
-        str
-            ?.toLowerCase()
-            ?.trim()
-            ?.replace(/\s+/g, '-')
-            ?.replace(/[^\w\u0980-\u09FF\-]+/g, '')
-            ?.replace(/\-\-+/g, '-') || '';
 
     const renderSummaryIcon = (iconName) => {
         switch (iconName) {
@@ -357,7 +351,15 @@ const ActivitiesCard = ({ packageData = [] }) => {
                     </div>
                 )}
             </div>
+            <LazyLoader
+                totalItems={filteredPackages.length}
+                initialCount={12}
+                increment={12}
+                onVisibleChange={setVisibleCount}
+                loadingText="Loading more packages..."
+            />
         </div>
+
     );
 };
 
