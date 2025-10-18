@@ -49,7 +49,7 @@ export default function HotelCard({ hotelData = [] }) {
             <FaSearch className="absolute right-4 text-gray-400" />
           </div>
 
-          {/* 🔽 Suggestions */}
+          {/* Suggestions */}
           {showSuggestions && filteredHotels.length > 0 && (
             <div className="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 max-h-60 overflow-auto">
               {filteredHotels.slice(0, 8).map((hotel) => (
@@ -73,7 +73,6 @@ export default function HotelCard({ hotelData = [] }) {
         </div>
       </div>
 
-      {/* 🏨 Hotel Grid */}
       <div className="pt-4 pb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {visibleHotels.length > 0 ? (
           visibleHotels.map((hotel) => {
@@ -93,7 +92,7 @@ export default function HotelCard({ hotelData = [] }) {
                 key={hotel.hotel_id}
                 className="bg-white rounded-lg shadow hover:shadow-lg transition duration-300 flex flex-col"
               >
-                {/* 🖼️ Image */}
+                {/* Image */}
                 <div className="relative h-40 sm:h-48 w-full">
                   <Image
                     src={img}
@@ -109,7 +108,7 @@ export default function HotelCard({ hotelData = [] }) {
                   )}
                 </div>
 
-                {/* 📋 Details */}
+                {/* Details */}
                 <div className="p-4 flex flex-col justify-between flex-grow">
                   <div>
                     <div className="flex justify-between items-start mb-2">

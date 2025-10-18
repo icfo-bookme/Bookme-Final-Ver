@@ -9,10 +9,6 @@ export const metadata = {
   description: "Explore and book hotels in top destinations with BookMe. Compare amenities, read reviews, and find the best deals for families, couples, and solo travelers. Enjoy hassle-free reservations, comfortable stays, and seamless customer support. From luxury resorts to cozy boutique hotels, BookMe makes planning your perfect trip simple, convenient, and memorable."
 };
 
-function calculateDiscountedPrice(originalPrice, discount) {
-  return Math.round(originalPrice * (1 - discount / 100));
-}
-
 export default async function HotelHome() {
   let hotelData = [];
   let loading = false;

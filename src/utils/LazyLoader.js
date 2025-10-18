@@ -1,16 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-/**
- * 🔹 Reusable Lazy Loader Component
- *
- * Props:
- * - totalItems: number — total data length
- * - initialCount: number — number of items to show initially
- * - increment: number — number of items to load per scroll
- * - onVisibleChange: function — callback(visibleCount)
- * - loadingText: string — optional text while loading
- */
 export default function LazyLoader({
   totalItems = 0,
   initialCount = 12,
