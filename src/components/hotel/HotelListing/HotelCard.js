@@ -1,5 +1,6 @@
 'use client';
 
+import slugify from '@/utils/slugify';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -19,13 +20,7 @@ const HotelCard = ({
       maximumFractionDigits: 0
     }).format(price).replace('BDT', 'BDT ');
   };
-  const slugify = (str) =>
-    str
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-');
+
 
   return (
     <Link

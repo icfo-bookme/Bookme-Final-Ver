@@ -4,19 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import PropertyAmenities from "./PropertyAmenities";
 import PropertyContactButtons from "./PropertyContactButtons";
+import slugify from "@/utils/slugify";
 
 export default function PropertyCard({ property, index, onCardClick }) {
-  const slugify = (str) =>
-    str
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\u0980-\u09FF\-\(\)]+/g, '')
-      .replace(/\-\-+/g, '-')
-
   const containsBangla = (text) => /[\u0980-\u09FF]/.test(text);
-
   const propertyName = property.property_name;
-
   const propertySlug = containsBangla(propertyName)
     ? slugify(propertyName)
     : slugify(propertyName);

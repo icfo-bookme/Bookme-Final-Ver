@@ -40,7 +40,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
 export default async function TourPage({ params }) {
   const { id } = await params;
 

@@ -10,27 +10,22 @@ export default function BookingSummary({ bookingData, user, calculations }) {
       <h2 className="text-xl font-semibold mb-6 text-gray-800">
         Booking Summary
       </h2>
-
-      {user && <UserInfoSection user={user} />}
-      
+      {user && <UserInfoSection user={user} />} 
       <StayDurationSection 
         checkin={bookingData.checkin} 
         checkout={bookingData.checkout} 
         nights={calculations.nights} 
       />
-      
       <RoomDetailsSection 
         cart={bookingData.cart} 
         calculations={calculations} 
         calculateRoomTotalWithTaxes={calculateRoomTotalWithTaxes} 
       />
-      
       <PriceSummarySection calculations={calculations} />
     </div>
   );
 }
 
-// Sub-components for BookingSummary
 function UserInfoSection({ user }) {
   return (
     <div className="mb-6">

@@ -279,7 +279,7 @@ export default function ActivitiesCarousel({ packages = [], property_id }) {
                           className="flex-1 text-center text-sm px-4 py-2 text-white font-medium rounded-md hover:opacity-90 transition-opacity"
                           style={{ background: "linear-gradient(90deg, #313881, #0678B4)" }}
                         >
-                          See Details
+                          Contact Us
                         </Link>
 
                         {/* Add to Cart Button */}

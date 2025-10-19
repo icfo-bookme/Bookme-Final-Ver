@@ -69,7 +69,7 @@ export default function Faq() {
 						</summary>
 						<div className="px-4 pb-4">
 							<p>
-								Fuel cost is <strong>not included</strong> in the per kilometer and per hour rates. You will not need to refuel the car and not to pay for the fuel used during your rental.
+								Fuel cost is <strong>included</strong> in the per kilometer and per hour rates. You will not need to refuel the car and not to pay for the fuel used during your rental.
 							</p>
 						</div>
 					</details>
@@ -91,7 +91,7 @@ export default function Faq() {
 						</summary>
 						<div className="px-4 pb-4">
 							<p>
-								You can book online through our website or call our hotline. Cancellations are free up to 2 hours before the trip; late cancellations may incur a charge.
+								You can book online through our website or call our hotline. 
 							</p>
 						</div>
 					</details>

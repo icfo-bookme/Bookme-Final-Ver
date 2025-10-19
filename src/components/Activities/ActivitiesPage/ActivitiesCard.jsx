@@ -48,7 +48,7 @@ function formatDuration(durationValue) {
     const match = durationValue.match(durationPattern);
 
     if (!match) {
-        return durationValue; 
+        return durationValue;
     }
 
     const startTime = match[1].trim();
@@ -199,129 +199,131 @@ const ActivitiesCard = ({ packageData = [] }) => {
             <div className="pt-4 pb-6">
                 {filteredPackages?.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                        {filteredPackages?.map(pkg => {
-                            const price = Number(pkg?.price) || 0;
-                            const discountPercent = Number(pkg?.discount_percent) || 0;
-                            const discountAmount = Number(pkg?.discount_amount) || 0;
-                            const finalPrice = pkg?.final_price ||
-                                (discountPercent > 0
-                                    ? calculateDiscountedPrice(price, discountPercent)
-                                    : price - discountAmount);
+                        {filteredPackages
+                            ?.slice(0, visibleCount)  
+                            .map(pkg => {
+                                const price = Number(pkg?.price) || 0;
+                                const discountPercent = Number(pkg?.discount_percent) || 0;
+                                const discountAmount = Number(pkg?.discount_amount) || 0;
+                                const finalPrice = pkg?.final_price ||
+                                    (discountPercent > 0
+                                        ? calculateDiscountedPrice(price, discountPercent)
+                                        : price - discountAmount);
 
-                            const imageUrl = pkg?.image
-                                ? `${baseUrl}/storage/${pkg.image}`
-                                : "/default-tour.jpg";
+                                const imageUrl = pkg?.image
+                                    ? `${baseUrl}/storage/${pkg.image}`
+                                    : "/default-tour.jpg";
 
-                            return (
-                                <div
-                                    key={pkg.id}
-                                    className="bg-gray-100 w-[96%] mx-auto rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 relative"
-                                >
-                                    {/* Discount Badge */}
-                                    {(discountPercent > 0 || discountAmount > 0) && (
-                                        <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-bold z-10">
-                                            {discountPercent > 0
-                                                ? `${discountPercent}% OFF`
-                                                : `${discountAmount} BDT OFF`}
-                                        </div>
-                                    )}
-
-                                    <div className="relative h-40 sm:h-48 w-full">
-                                        <Image
-                                            src={imageUrl}
-                                            alt={pkg.property_name || "Tour Package"}
-                                            fill
-                                            className="object-cover"
-                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                        />
-                                    </div>
-
-                                    <div className="p-3 sm:p-4">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <Link
-                                                href={`/${slugify(pkg.property_name)}/${pkg.id}`}
-                                            >
-                                                <h3 className="text-base sm:text-lg font-bold text-blue-950 hover:text-blue-700 transition-colors">
-                                                    {pkg.property_name || "No Name"}
-                                                </h3>
-                                            </Link>
-                                        </div>
-
-                                        <div className="flex items-start text-gray-600 text-xs sm:text-sm mb-3">
-                                            <FaMapMarkerAlt className="mr-1 mt-0.5 flex-shrink-0" />
-                                            <span className="line-clamp-2">
-                                                {pkg.address || "Unknown location"}
-                                            </span>
-                                        </div>
-
-                                        {/* Package Summaries */}
-                                        <div className="h-28">
-                                            {pkg.summaries && pkg.summaries.length > 0 && (
-                                                <>
-                                                    <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
-                                                        {pkg.summaries.slice(0, 2).map((summary, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className="flex items-start col-span-2"
-                                                            >
-                                                                {renderSummaryIcon(summary.icon_name)}
-                                                                <span className="ml-1">{getFormattedSummaryValue(summary)}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                    <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
-                                                        {pkg.summaries.slice(2, 3).map((summary, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className="flex items-start col-span-4"
-                                                            >
-                                                                {renderSummaryIcon(summary.icon_name)}
-                                                                <span className="ml-1">{getFormattedSummaryValue(summary)}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-
-                                                </>
-                                            )}
-                                        </div>
-                                        <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-                                            <div>
-                                                <p className="text-2xs xs:text-xs text-gray-500">
-                                                    Starting From
-                                                </p>
-                                                <div className="flex items-center">
-                                                    {discountPercent > 0 || discountAmount > 0 ? (
-                                                        <>
-                                                            <p className="text-base sm:text-lg font-bold text-blue-600">
-                                                                {finalPrice.toLocaleString()} BDT
-                                                            </p>
-                                                            {price > 0 && (
-                                                                <p className="text-xs text-gray-500 line-through ml-2">
-                                                                    {price.toLocaleString()} BDT
-                                                                </p>
-                                                            )}
-                                                        </>
-                                                    ) : (
-                                                        <p className="text-base sm:text-lg font-bold text-blue-600">
-                                                            {price > 0 ? `${price.toLocaleString()} BDT` : "Price on request"}
-                                                        </p>
-                                                    )}
-                                                </div>
+                                return (
+                                    <div
+                                        key={pkg.id}
+                                        className="bg-gray-100 w-[96%] mx-auto rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 relative"
+                                    >
+                                        {/* Discount Badge */}
+                                        {(discountPercent > 0 || discountAmount > 0) && (
+                                            <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-bold z-10">
+                                                {discountPercent > 0
+                                                    ? `${discountPercent}% OFF`
+                                                    : `${discountAmount} BDT OFF`}
                                             </div>
-                                            <Link
-                                                href={`/${slugify(pkg.property_name)}/${pkg.id}`}
-                                                style={{
-                                                    background: "linear-gradient(90deg, #313881, #0678B4)",
-                                                }}
-                                                className="px-3 sm:px-4 py-1.5 sm:py-2 hover:opacity-90 text-white text-sm font-medium rounded-lg transition-colors duration-200"
-                                            >
-                                                View Details
-                                            </Link>
+                                        )}
+
+                                        <div className="relative h-40 sm:h-48 w-full">
+                                            <Image
+                                                src={imageUrl}
+                                                alt={pkg.property_name || "Tour Package"}
+                                                fill
+                                                className="object-cover"
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                            />
+                                        </div>
+
+                                        <div className="p-3 sm:p-4">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <Link
+                                                    href={`/${slugify(pkg.property_name)}/${pkg.id}`}
+                                                >
+                                                    <h3 className="text-base sm:text-lg font-bold text-blue-950 hover:text-blue-700 transition-colors">
+                                                        {pkg.property_name || "No Name"}
+                                                    </h3>
+                                                </Link>
+                                            </div>
+
+                                            <div className="flex items-start text-gray-600 text-xs sm:text-sm mb-3">
+                                                <FaMapMarkerAlt className="mr-1 mt-0.5 flex-shrink-0" />
+                                                <span className="line-clamp-2">
+                                                    {pkg.address || "Unknown location"}
+                                                </span>
+                                            </div>
+
+                                            {/* Package Summaries */}
+                                            <div className="h-28">
+                                                {pkg.summaries && pkg.summaries.length > 0 && (
+                                                    <>
+                                                        <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
+                                                            {pkg.summaries.slice(0, 2).map((summary, index) => (
+                                                                <div
+                                                                    key={index}
+                                                                    className="flex items-start col-span-2"
+                                                                >
+                                                                    {renderSummaryIcon(summary.icon_name)}
+                                                                    <span className="ml-1">{getFormattedSummaryValue(summary)}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className="grid grid-cols-4 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
+                                                            {pkg.summaries.slice(2, 3).map((summary, index) => (
+                                                                <div
+                                                                    key={index}
+                                                                    className="flex items-start col-span-4"
+                                                                >
+                                                                    {renderSummaryIcon(summary.icon_name)}
+                                                                    <span className="ml-1">{getFormattedSummaryValue(summary)}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+                                                    </>
+                                                )}
+                                            </div>
+                                            <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+                                                <div>
+                                                    <p className="text-2xs xs:text-xs text-gray-500">
+                                                        Starting From
+                                                    </p>
+                                                    <div className="flex items-center">
+                                                        {discountPercent > 0 || discountAmount > 0 ? (
+                                                            <>
+                                                                <p className="text-base sm:text-lg font-bold text-blue-600">
+                                                                    {finalPrice.toLocaleString()} BDT
+                                                                </p>
+                                                                {price > 0 && (
+                                                                    <p className="text-xs text-gray-500 line-through ml-2">
+                                                                        {price.toLocaleString()} BDT
+                                                                    </p>
+                                                                )}
+                                                            </>
+                                                        ) : (
+                                                            <p className="text-base sm:text-lg font-bold text-blue-600">
+                                                                {price > 0 ? `${price.toLocaleString()} BDT` : "Price on request"}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <Link
+                                                    href={`/${slugify(pkg.property_name)}/${pkg.id}`}
+                                                    style={{
+                                                        background: "linear-gradient(90deg, #313881, #0678B4)",
+                                                    }}
+                                                    className="px-3 sm:px-4 py-1.5 sm:py-2 hover:opacity-90 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                                                >
+                                                    View Details
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
                     </div>
                 ) : (
                     <div className="text-center py-12">

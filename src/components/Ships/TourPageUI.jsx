@@ -33,7 +33,7 @@ export default function TourPageUI({
   }, []);
 
   return (
-    <div className={`${roboto.className} pt-[80px] bg-[#EBF0F4] pb-[20px] md:pb-[200px]`}>
+    <div className={`${roboto.className} pt-[50px] md:pt-[80px] bg-[#EBF0F4] pb-[20px] md:pb-[200px]`}>
       <div className="lg:container w-[98%] md:w-[85%] mx-auto">
         <div className="grid-cols-1 rounded gap-8 lg:grid pr-1 pt-1">
           {/* Property Details */}

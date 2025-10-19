@@ -8,11 +8,8 @@ export const metadata = {
   description: "Find and book reliable car rentals for your trips. Compare prices, vehicle types, and rental options to suit your needs. Enjoy a convenient and hassle-free car rental experience with BookMe and travel with ease.",
 };
 
-
 export default async function Page() {
     const carModels = await getCarModel();
-
-    const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || "";
 
     return (
         <div className="pt-10">

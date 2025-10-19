@@ -1,7 +1,5 @@
 'use client'
-
 import { FaCheck } from "react-icons/fa";
-
 export default function HotelDetails({ hotel }) {
     
     const nearbyLocations = hotel.near_by

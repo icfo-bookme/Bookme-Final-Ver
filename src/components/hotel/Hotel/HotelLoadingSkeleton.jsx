@@ -17,7 +17,7 @@ const HotelLoadingSkeleton = () => {
 
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-8">
-          Best Hotels for Your Next Trip
+          loading.....
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {[...Array(6)].map((_, i) => (

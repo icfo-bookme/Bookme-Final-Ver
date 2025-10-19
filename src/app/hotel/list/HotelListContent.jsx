@@ -1,11 +1,9 @@
 'use client';
-
 import { useState, useEffect, useRef } from 'react';
 import SearchBar from '@/components/hotel/HotelListingSearch/SearchBar';
 import Link from 'next/link';
 import HotelFilters from '@/components/hotel/HotelListing/HotelFilters';
 import HotelCard from '@/components/hotel/HotelListing/HotelCard';
-import LoadingSpinner from '@/utils/LoadingSpinner';
 
 const HotelListContent = ({
   checkin,
@@ -133,7 +131,6 @@ const HotelListContent = ({
   });
 
   const sortedHotels = [...filteredHotels].sort((a, b) => {
-  // When "recommended" is selected, don't sort (keep original order)
   if (sortOption === 'recommended') {
     return 0;
   }

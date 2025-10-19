@@ -62,11 +62,11 @@ export default function PropertyFacilities({ data }) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); 
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeCategory]);
 
-  // Horizontal nav scroll buttons for mobile
+
   useEffect(() => {
     const checkScrollButtons = () => {
       if (navRef.current && isMobile) {
@@ -132,13 +132,11 @@ export default function PropertyFacilities({ data }) {
               <button
                 key={category}
                 onClick={() => handleCategoryClick(category)}
-                className={`px-4 py-2 rounded-md whitespace-nowrap transition-colors ${
-                  isMobile ? "flex-shrink-0 w-[calc(33.333%_-_0.5rem)]" : ""
-                } ${
-                  activeCategory === category
+                className={`px-4 py-2 rounded-md whitespace-nowrap transition-colors ${isMobile ? "flex-shrink-0 w-[calc(33.333%_-_0.5rem)]" : ""
+                  } ${activeCategory === category
                     ? "bg-blue-700 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+                  }`}
               >
                 <span className="truncate block">
                   {category.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -202,7 +200,7 @@ export default function PropertyFacilities({ data }) {
                                 </h3>
                               </div>
                               <div
-                                className="prose max-w-none text-gray-700"
+                                className="[&>ol]:list-decimal [&>ul]:list-disc [&>li]:ml-5 text-gray-700"
                                 dangerouslySetInnerHTML={{ __html: facility.value }}
                               />
                             </div>
@@ -217,7 +215,7 @@ export default function PropertyFacilities({ data }) {
             return null;
           })}
         </div>
-      {/* Contact form section */}
+        {/* Contact form section */}
         <div className="col-span-12 lg:col-span-3 mt-6 lg:mt-0">
           <div className="sticky top-36">
             <ContactForm

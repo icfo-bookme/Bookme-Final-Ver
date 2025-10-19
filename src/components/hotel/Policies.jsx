@@ -16,14 +16,11 @@ export default function HotelPolicies({ Policies }) {
               <i className={`${policy.icon_class} text-blue-500`}></i>
                <h3 className="font-semibold text-gray-800 -mt-1">{policy.name}</h3>
             </div> 
-          )}
-      
+          )}      
             <div 
               className="text-gray-600 col-span-9 mt-1 prose" 
               dangerouslySetInnerHTML={{ __html: policy.value }} 
-            />
-           
-        
+            />       
         </div>
       ))}
     </div>

@@ -21,7 +21,6 @@ export default async function page({ params, searchParams }) {
     throw new Error('Failed to fetch data');
   }
 
-  // Prepare initial parameters for the search bar
   const initialSearchParams = {
     pickupId: parseInt(id),
     dropoffId: parseInt(dropoffId),

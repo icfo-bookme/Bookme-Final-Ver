@@ -49,9 +49,6 @@ export async function generateMetadata({ params }) {
   }
 }
 
-
-
-
 export default async function HotelDetailsPage({ params, searchParams }) {
 
   const hotelDetails = await getHotelDetails(params.id);

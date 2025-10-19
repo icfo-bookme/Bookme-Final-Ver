@@ -3,7 +3,6 @@ import getPropertyDetails from "@/services/packages/getPropertyDetails";
 
 export async function generateMetadata({ params }) {
   const { id } = params;
-
   const activity = await getPropertyDetails({ id });
 
   if (!activity) {
@@ -27,13 +26,11 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { id } = params;
-
   if (!id) {
     throw new Error("No ID provided");
   }
 
   const data = await getPropertyDetails({ id });
-console.log(data);
   const isEmpty =
     !data ||
     (Array.isArray(data) ? data.length === 0 : typeof data === "object" && Object.keys(data).length === 0);
