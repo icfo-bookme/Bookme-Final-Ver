@@ -12,9 +12,7 @@ const inter = Inter({
 });
 export const metadata = {
   title: "BookMe - Book Hotels, Flights & Tour Packages Worldwide",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  
   description:
     "Book hotels, flights, visas, and tours with BookMe. Find top travel deals and secure bookings instantly.",
   keywords: [
@@ -38,7 +36,7 @@ export const metadata = {
     siteName: "BookMe",
     images: [
       {
-        url: "https://bookme.com.bd/og-image.jpg",
+        url: "https://bookme.com.bd/og-image.png",
         width: 1200,
         height: 630,
         alt: "BookMe Travel Deals and Bookings",
@@ -51,7 +49,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "BookMe – Hotels, Flights & Tour Packages Worldwide",
     description: "Find and book the best hotels, flights, and tours globally with BookMe.",
-    images: ["https://bookme.com.bd/og-image.jpg"],
+    images: ["https://bookme.com.bd/og-image.png"],
     creator: "@BookMeBD",
   },
 };
