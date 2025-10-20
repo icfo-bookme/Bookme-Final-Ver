@@ -10,9 +10,9 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
+
 export const metadata = {
   title: "BookMe - Book Hotels, Flights & Tour Packages Worldwide",
-  
   description:
     "Book hotels, flights, visas, and tours with BookMe. Find top travel deals and secure bookings instantly.",
   keywords: [
@@ -36,7 +36,7 @@ export const metadata = {
     siteName: "BookMe",
     images: [
       {
-        url: "https://bookme.com.bd/og-image.png",
+        url: "https://bookme.com.bd/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "BookMe Travel Deals and Bookings",
@@ -49,17 +49,18 @@ export const metadata = {
     card: "summary_large_image",
     title: "BookMe – Hotels, Flights & Tour Packages Worldwide",
     description: "Find and book the best hotels, flights, and tours globally with BookMe.",
-    images: ["https://bookme.com.bd/og-image.png"],
+    images: ["https://bookme.com.bd/og-image.jpg"],
     creator: "@BookMeBD",
   },
 };
 
-
 export default function DashboardLayout({ children }) {
-
   return (
     <html lang="en" data-theme="white">
       <head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -67,10 +68,6 @@ export default function DashboardLayout({ children }) {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32" />
-        <title>BookMe - Easy Online Booking for Trips, Hotels & More</title>
       </head>
       <body className={inter.className}>
         <PaginationProvider>
