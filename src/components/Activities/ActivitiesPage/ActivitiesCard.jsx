@@ -148,7 +148,6 @@ const ActivitiesCard = ({ packageData = [] }) => {
         }
     };
 
-    // Function to get formatted summary value
     const getFormattedSummaryValue = (summary) => {
         if (summary.icon_name === 'FaRegClock' && summary.value) {
             return formatDuration(summary.value);

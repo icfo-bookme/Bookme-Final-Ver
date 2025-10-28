@@ -4,6 +4,7 @@ import { getPropertyImages } from "@/services/tour/getPropertyImages";
 import getPropertyPackages from "@/services/tour/getPropertyPackages";
 import getContactNumber from "@/services/tour/getContactNumber";
 import TourPageUI from "@/components/Ships/TourPageUI";
+import { PreFooter } from "@/components/pre-footer-content/PreFooter";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -58,6 +59,7 @@ export default async function TourPage({ params }) {
   ]);
 
   return (
+    <>
     <TourPageUI
       propertyImages={propertyImages}
       propertyDetails={propertyDetails}
@@ -65,5 +67,7 @@ export default async function TourPage({ params }) {
       propertyPackages={propertyPackages}
       contactNumber={contactNumber}
     />
+    <PreFooter id={id} />
+    </>
   );
 }

@@ -7,6 +7,7 @@ import * as GoIcons from "react-icons/go";
 import * as TbIcons from "react-icons/tb";
 import ContactForm from "../../tour/ContactForm/ContactForm";
 import Itineraries from "./itineraries";
+import { ToastContainer } from "react-toastify";
 
 const getIconComponent = (iconImportString) => {
   if (!iconImportString) return null;
@@ -225,6 +226,7 @@ export default function PropertyFacilities({ data }) {
             />
           </div>
         </div>
+          <ToastContainer />
       </div>
     </div>
   );

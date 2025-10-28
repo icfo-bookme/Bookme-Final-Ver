@@ -35,52 +35,17 @@ const AnimatedSearch = ({
   const [animationClass, setAnimationClass] = useState('');
   const [showPlaceholder, setShowPlaceholder] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
-  
   const searchRef = useRef(null);
   const [inputRef, handleClick] = useScrollOnClick(150);
   const animationIntervalRef = useRef(null);
 
-
-  const defaultFormatResultText = (item) => {
-    switch (searchType) {
-      case "tour":
-      case "activities":
-      case "ships":
-        return `${item.name}, ${item.country}`;
-      case "hotel":
-        return `${item.hotel_name || item.name}, ${item.street_address || item.country}`;
-      case "visa":
-        return item.name
-      default:
-        return item.name;
-    }
-  };
-
-  const defaultFormatDisplayText = (item) => {
-    switch (searchType) {
-      case "tour":
-        return "TOUR DESTINATION";
-      case "activities":
-        return "ACTIVITIES/DESTINATION";
-      case "ships":
-        return "LOCATION/TOUR";
-      case "visa":
-        return "DESTINATION COUNTRY";
-      case "hotel":
-        return "CITY/HOTEL/RESORT/AREA";
-      default:
-        return "SEARCH";
-    }
-  };
-
-  const finalFormatResultText = formatResultText || defaultFormatResultText;
-  const finalFormatDisplayText = formatDisplayText || defaultFormatDisplayText;
+ 
 
   // Default scoring function
   const defaultCalculateMatchScore = (item, query) => {
     if (!query) return 0;
 
-    const itemText = finalFormatResultText(item).toLowerCase();
+    const itemText = formatResultText(item).toLowerCase();
     const queryText = query.toLowerCase().trim();
 
     if (itemText === queryText) return 1000;
@@ -132,14 +97,20 @@ const AnimatedSearch = ({
 
   useEffect(() => {
     if (data?.length) {
-      setTimeout(() => {
-        setShowPlaceholder(true);
-      }, 600);
+      const destinationsOnly = data.filter(item => item.type !== "property");
+      
+      if (destinationsOnly.length > 0) {
+        setTimeout(() => {
+          setShowPlaceholder(true);
+        }, 600);
+      }
     }
   }, [data]);
 
   const startAnimation = useCallback(() => {
-    if (!data?.length || !showPlaceholder || isInputFocused || !enableAnimation) return;
+    const destinationsOnly = data?.filter(item => item.type !== "property") || [];
+    
+    if (!destinationsOnly.length || !showPlaceholder || isInputFocused || !enableAnimation) return;
 
     if (animationIntervalRef.current) {
       clearInterval(animationIntervalRef.current);
@@ -150,7 +121,7 @@ const AnimatedSearch = ({
       
       setTimeout(() => {
         setCurrentItemIndex((prevIndex) => 
-          (prevIndex + 1) % data.length
+          (prevIndex + 1) % destinationsOnly.length
         );
         setAnimationClass('animate-slideInDown');
         
@@ -182,8 +153,13 @@ const AnimatedSearch = ({
 
   const getCurrentItem = () => {
     if (!data?.length) return "";
-    const currentItem = data[currentItemIndex];
-    return finalFormatResultText(currentItem);
+    
+    // Filter out properties for animation
+    const destinationsOnly = data.filter(item => item.type !== "property");
+    if (destinationsOnly.length === 0) return "";
+    
+    const currentDestination = destinationsOnly[currentItemIndex % destinationsOnly.length];
+    return formatResultText(currentDestination);
   };
 
   useEffect(() => {
@@ -212,20 +188,25 @@ const AnimatedSearch = ({
       .filter(item => item.score > 50)
       .sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
-        const aNameMatch = finalFormatResultText(a).toLowerCase().includes(query.toLowerCase());
-        const bNameMatch = finalFormatResultText(b).toLowerCase().includes(query.toLowerCase());
+        const aNameMatch = formatResultText(a).toLowerCase().includes(query.toLowerCase());
+        const bNameMatch = formatResultText(b).toLowerCase().includes(query.toLowerCase());
 
         if (aNameMatch && !bNameMatch) return -1;
         if (!aNameMatch && bNameMatch) return 1;
 
-        const aTextLength = finalFormatResultText(a).length;
-        const bTextLength = finalFormatResultText(b).length;
+        const aTextLength = formatResultText(a).length;
+        const bTextLength = formatResultText(b).length;
         if (aTextLength !== bTextLength) return aTextLength - bTextLength;
 
-        return finalFormatResultText(a).localeCompare(finalFormatResultText(b));
+        return formatResultText(a).localeCompare(formatResultText(b));
       });
 
     setFilteredData(sorted);
+  };
+
+  // Get unique key for each item
+  const getItemKey = (item) => {
+    return item.id || item.hotel_id || item.property_id || `item-${Math.random()}`;
   };
 
   // Event handlers
@@ -260,7 +241,7 @@ const AnimatedSearch = ({
   };
 
   const selectItem = (item) => {
-    setSearchQuery(finalFormatResultText(item));
+    setSearchQuery(formatResultText(item));
     setSelectedItem(item);
     setShowSuggestions(false);
     
@@ -276,22 +257,7 @@ const AnimatedSearch = ({
       alert(`Please select a valid ${searchType} from the list`);
       return;
     }
-
-    if (onSearch) {
-      onSearch(selectedItem);
-    } else if (router && resultUrlTemplate) {
-      const slug = finalFormatResultText(selectedItem)
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '');
-      
-      const url = resultUrlTemplate
-        .replace('{type}', searchType)
-        .replace('{slug}', slug)
-        .replace('{id}', selectedItem.id || selectedItem.hotel_id);
-      
-      router.push(url);
-    }
+    onSearch(selectedItem);
   };
 
   // Highlight matches in text
@@ -317,10 +283,20 @@ const AnimatedSearch = ({
       return onSuggestionRender(item, index, searchQuery, highlightMatches);
     }
 
-    const displayText = finalFormatResultText(item);
+    const displayText = formatResultText(item);
+    const isProperty = item.type === "property";
+    
     return (
       <div className="p-3 hover:bg-blue-50 cursor-pointer text-sm sm:text-base flex justify-between items-center">
-        <div>{highlightMatches(displayText, searchQuery)}</div>
+        <div className="flex items-center gap-2">
+         
+          <div>{highlightMatches(displayText, searchQuery)}</div>
+           {isProperty && (
+            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+               Property
+            </span> 
+          )}
+        </div>
         {index === 0 && item.score > 50 && (
           <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded whitespace-nowrap">
             Best match
@@ -336,7 +312,7 @@ const AnimatedSearch = ({
         <div className="grid grid-cols-1 gap-4 relative">
           <div className="space-y-1 relative">
             <label className="block text-sm text-blue-950 font-medium">
-              {finalFormatDisplayText(selectedItem || data[0])}
+              {formatDisplayText(selectedItem || data[0])}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -358,17 +334,19 @@ const AnimatedSearch = ({
               
               {/* Animated placeholder text */}
               {!searchQuery && (
-                <div className="absolute left-10 top-1/2 -translate-y-1/2 pointer-events-none overflow-hidden h-6 flex items-center">
-                  <div className="flex pl-10  items-center space-x-2">
+                <div className="absolute left-10 top-1/2 -translate-y-1/2 pointer-events-none overflow-hidden h-6 w-[calc(100%-5rem)]">
+                  <div className="flex pl-10 items-center w-full">
                     {placeholderConfig.showPrefix && (
-                      <span className="text-gray-400 hidden  lg:block font-bold">
+                      <span className="text-gray-400 hidden lg:block font-bold pr-2 shrink-0 whitespace-nowrap">
                         {placeholderConfig.prefix}
                       </span>
                     )}
                     {showPlaceholder && data?.length > 0 && (
-                      <span className={`text-gray-400  font-bold transition-all duration-500 ${animationClass}`}>
-                        &quot;{getCurrentItem()}&quot;
-                      </span>
+                      <div className="flex-1 min-w-0 overflow-hidden">
+                        <span className={`text-gray-400 font-bold transition-all duration-500 truncate block w-full ${animationClass}`}>
+                          &quot;{getCurrentItem()}&quot;
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -382,7 +360,7 @@ const AnimatedSearch = ({
               >
                 {filteredData.map((item, index) => (
                   <div
-                    key={item.id || item.hotel_id}
+                    key={getItemKey(item)}
                     onClick={() => selectItem(item)}
                   >
                     {renderSuggestion(item, index)}

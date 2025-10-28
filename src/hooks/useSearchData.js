@@ -3,6 +3,17 @@ import getTourDestination from "@/services/getTourDestination";
 import getCountries from '@/services/visa/getCountries';
 import getActivitiesDestinations from '@/services/Activities/getTourDestinations';
 import getTourDestinations from '@/services/packages/getTourDestinations';
+import getproperties from '@/services/tour/getproperties';
+
+const transformPropertiesData = (properties, typeContext = "Property") => {
+    return (properties || []).map(property => ({
+        id: `${property.property_id}`, 
+        name: property.property_name,
+        country: typeContext,
+        type: "property",
+        originalData: property 
+    }));
+};
 
 export const useSearchData = (dataSource) => {
     const [data, setData] = useState([]);
@@ -17,21 +28,50 @@ export const useSearchData = (dataSource) => {
 
                 switch (dataSource) {
                     case 'tour':
-                        result = await getTourDestinations();
-                        setData(result || []);
+                        const [tourDestinationsRes, tourPropertiesRes] = await Promise.all([
+                            getTourDestinations(),
+                            getproperties(5) 
+                        ]);
+
+                        const tourData = [
+                            ...(tourDestinationsRes || []).map(dest => ({ ...dest, type: "destination" })),
+                            ...transformPropertiesData(tourPropertiesRes, "Tour Property")
+                        ];
+                        setData(tourData);
                         break;
+
                     case 'activities':
-                        result = await getActivitiesDestinations();
-                        setData(result || []);
+                        const [activityDestinationsRes, activityPropertiesRes] = await Promise.all([
+                            getActivitiesDestinations(),
+                            getproperties(6) 
+                        ]);
+
+                        const activitiesData = [
+                            ...(activityDestinationsRes || []).map(dest => ({ ...dest, type: "destination" })),
+                            ...transformPropertiesData(activityPropertiesRes, "Activity Property")
+                        ];
+                        setData(activitiesData);
                         break;
+
                     case 'ships':
-                        result = await getTourDestination();
-                        if (result?.success) {
-                            const filteredData = result.data.filter(item =>
+                        const [destinationsRes, propertiesRes] = await Promise.all([
+                            getTourDestination(),
+                            getproperties(1)
+                        ]);
+
+                        let destinations = [];
+                        if (destinationsRes?.success) {
+                            destinations = destinationsRes.data.filter(item =>
                                 item.isShow === "yes" || item.isShow === undefined
                             ) || [];
-                            setData(filteredData);
                         }
+
+                        const shipsData = [
+                            ...destinations.map(dest => ({ ...dest, type: "destination" })),
+                            ...transformPropertiesData(propertiesRes, "Boat Property")
+                        ];
+
+                        setData(shipsData);
                         break;
 
                     case 'visa':

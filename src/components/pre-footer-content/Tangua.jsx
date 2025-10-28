@@ -1,148 +1,101 @@
-'use client'
-import React, { useState } from 'react';
-import Image from 'next/image';
+import Image from "next/image";
+import Link from "next/link";
 
-const TanguarHaorHouseboat = () => {
-  const [showFullContent, setShowFullContent] = useState(false);
+const houseboatCards = [
+  {
+    id: 1,
+    title: "Luxury Houseboats in Tanguar Haor",
+    image: "/assets/tangua/4.jpg",
+    description: (
+      <>
+        Your <strong>Tanguar Haor journey</strong> begins at <strong>Sunamganj Boat Ghat</strong>, where you&apos;ll board a private luxury houseboat and glide into the calm, beautiful waters of Tanguar Haor. This UNESCO Ramsar site offers an unforgettable <strong>Bangladesh houseboat experience</strong> perfect for nature lovers and adventure seekers. For those seeking the <strong>best houseboats in Tanguar Haor</strong>, premium options like the{" "}
+        <Link href="http://bojraboat.com/" className="text-blue-700 underline" target="_blank" rel="noopener noreferrer">
+          Bojra Houseboat
+        </Link>{" "},
 
-  const toggleContent = () => {
-    setShowFullContent(!showFullContent);
-  };
+        <Link href="/Property/ফ্যালকন-Falcon-The-Iconic-houseboat/206" className="text-blue-700 underline">
+          Falcon Houseboat
+        </Link>, and{" "}
+        <Link href="/Property/হাওরের-সুলতান-০২-Haorer-Sultan-2-A-Luxurious-Water-Cruise-at-TanguaAC/199" className="text-blue-700 underline">
+          Sultan Houseboat
+        </Link> provide exceptional comfort and service. The <strong>Tanguar Haor houseboat rental</strong> experience includes all meals—enjoy delicious local Bangladeshi cuisine with breakfast, lunch, and dinner freshly prepared and served onboard. Easy <Link href="https://traveltangua.com/" className="text-blue-700 underline" target="_blank" rel="noopener noreferrer">
+          houseboat booking Tanguar Haor
+        </Link> options make planning your trip simple. Complete <Link href="/tour-packages" className="text-blue-700 underline">
+          Tanguar Haor tour packages
+        </Link> include guided tours, ensuring you don&apos;t miss any of the haor&apos;s natural wonders.
+      </>
+    ),
+  },
+  {
+    id: 2,
+    title: "Explore Scenic Spots & Overnight Stay",
+    image: "/assets/tangua/5.jpg",
+    description: (
+      <>
+        Discover the most beautiful spots in Tanguar Haor with convenient <strong>houseboat tours Sunamganj</strong>. Climb the <strong>Watch Tower</strong> for breathtaking panoramic views of the entire haor landscape. Your overnight stay at <strong>Tekherghat</strong> offers perfect tranquility on the water. Nearby, visit the famous <strong>Niladri Lake</strong> with its stunning blue waters and even catch a view of the Indian border from this unique location. Explore the vibrant <strong>Shimul Bagan</strong> with its magnificent red silk cotton trees, cruise along the pristine <strong>Jadukata River</strong> with its clean flowing waters, and visit the peaceful green hills of <strong>Barikka Tila</strong>. Each destination showcases a different aspect of Tanguar Haor&apos;s incredible natural beauty. Affordable <strong>Tanguar Haor houseboat rental</strong> options range from budget-friendly <Link href="/boats/nouka" className="text-blue-700 underline">
+          nouka boats
+        </Link> for day trips to luxury vessels like the{" "}
+        <Link href="/Property/ফ্যালকন-Falcon-The-Iconic-houseboat/206" className="text-blue-700 underline">
+          Falcon Houseboat
+        </Link> and{" "}
+        <Link href="/Property/হাওরের-সুলতান-০২-Haorer-Sultan-2-A-Luxurious-Water-Cruise-at-TanguaAC/199t" className="text-blue-700 underline">
+          Sultan Houseboat
+        </Link>. Flexible <Link href="/refund-policy" className="text-blue-700 underline">
+          cancelation policies for Tanguar Haor houseboat rentals
+        </Link> ensure peace of mind when booking your adventure.
+      </>
+    ),
+  },
+  {
+    id: 3,
+    title: "Comfortable Stay & Memorable Experience",
+    image: "/assets/tangua/2.jpg",
+    description: (
+      <>
+        Experience the ultimate <strong>private houseboat Tanguar Haor</strong> stay with comfortable overnight accommodation on spacious, well-equipped boats. Your floating home provides everything needed for a safe and peaceful retreat in nature, docked at serene locations like Tekherghat. This <strong>Tanguar Haor floating hotel</strong> experience combines adventure with relaxation in Bangladesh&apos;s largest freshwater wetland. The journey covers all key attractions including <strong>Sunamganj Boat Ghat</strong>, <strong>Watch Tower</strong>, <strong>Tekherghat</strong>, <strong>Niladri Lake</strong>, <strong>Shimul Bagan</strong>, <strong>Jadukata River</strong>, and <strong>Barikka Tila</strong>. Perfect for <strong>Tanguar Haor wildlife tours</strong> and birdwatching, the experience focuses on pure nature, peace, and creating wonderful memories. It&apos;s the ideal escape from everyday city noise, offering authentic <strong>Bangladesh houseboat experience</strong> with <strong>eco-friendly houseboats in Sunamganj</strong>. As your journey concludes, the boat returns you to Sunamganj, leaving you with beautiful, calm memories of one of Bangladesh&apos;s most spectacular natural wonders. Book your <Link href="https://traveltangua.com/" className="text-blue-700 underline" target="_blank" rel="noopener noreferrer">
+          Tanguar Haor tour packages
+        </Link> today for an unforgettable floating adventure.
+      </>
+    ),
+  },
+];
 
+export default function TanguarHaorHouseboats() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Tanguar Haor Stories title */}
-      <h2 className="text-lg md:text-3xl pb-4 pt-[50px] font-semibold text-[#00026E] mb-2 text-center">
-        Tanguar Haor Stories
+    <section className="py-12 bg-gray-50">
+      <h2 className="text-4xl font-bold text-center text-blue-900 mb-12">
+        Luxury Houseboats in Tanguar Haor – Your Ultimate Floating Experience
       </h2>
-      
-      {/* Full-width image at the top */}
-      <div className="w-full lg:h-96 h-44 relative rounded-lg overflow-hidden mb-8">
-        <Image
-          src="/tour-details-banner.png"
-          alt="Luxury houseboat in Tanguar Haor"
-          fill
-          className="object-cover"
-          quality={100}
-          priority
-        />
-      </div>
-
-      {/* Main title */}
-      <h1 className="text-xl md:text-[28px] font-bold text-gray-900 mb-6 text-center">
-        Discover the Best Houseboats in Tanguar Haor – A Luxurious Floating Experience in Nature
-      </h1>
-
-      {/* Content */}
-      <div className="prose prose-lg px-4 mx-auto text-gray-700">
-        <p className="mb-4">
-          If you&apos;re dreaming of a serene getaway surrounded by crystal-clear water, breathtaking landscapes, and unique biodiversity, Tanguar Haor in Bangladesh should be at the top of your travel list. Nestled in the Sunamganj district, this vast wetland is a UNESCO-recognized ecological hotspot. What makes Tanguar Haor even more special? The rising popularity of luxury houseboats that let you live on water in style. Whether you&apos;re looking for a romantic escape, a family retreat, or an adventurous journey with friends, a Tanguar Haor houseboat is an unforgettable experience.
-        </p>
-<div className="mb-4 p-4 rounded-lg">
-              <h3 className="text-lg font-bold mb-2">🚤 Best Houseboats in Tanguar Haor</h3>
-              <p className="mb-4">
-                When it comes to choosing the best houseboat in Tanguar Haor, options are plentiful. Among the top-rated ones:
-              </p>
-              <p className="font-semibold mb-1">Bojra Houseboat</p>
-              <p className="mb-3">A traditional yet elegant boat offering modern amenities with a vintage design. Perfect for group tours.</p>
-              
-              <p className="font-semibold mb-1">Falcon Houseboat</p>
-              <p className="mb-3">Known for its sleek design, spacious rooms, and rooftop lounging area with a stunning view of the haor.</p>
-              
-              <p className="font-semibold mb-1">Sultan Houseboat</p>
-              <p className="mb-3">A premium houseboat combining luxury, safety, and comfort. Ideal for those who want an elite experience.</p>
-              
-              <p className="mb-0">
-                These houseboats come equipped with air-conditioned rooms, onboard dining, clean washrooms, and even Wi-Fi in some cases.
-              </p>
-            </div>
-        {showFullContent && (
-          <>
-            
-
-            <div className="mb-4 p-4 rounded-lg">
-              <h3 className="text-lg font-bold mb-2">💰 Tanguar Haor Houseboat Price & Boat Rent</h3>
-              <p className="mb-4">
-                The Tanguar Haor houseboat price varies depending on size, facilities, and season. On average:
-              </p>
-              <ul className="list-disc pl-6 mb-4 space-y-1">
-                <li><span className="font-semibold">Standard Boats:</span> ৳8,000–৳15,000 per day</li>
-                <li><span className="font-semibold">Premium Houseboats:</span> ৳20,000–৳40,000+ per day</li>
-                <li><span className="font-semibold">Luxury Boats like Bojra, Falcon, or Sultan:</span> ৳40,000–৳70,000+ per night for group packages</li>
-              </ul>
-              <p className="mb-0">
-                For Tanguar Haor boat rent, you can also hire smaller local boats (called nouka or dinghy boats) for half-day or full-day trips at much lower rates.
-              </p>
-            </div>
-
-            <div className="mb-4 p-4 rounded-lg">
-              <h3 className="text-lg font-bold mb-2">📦 Tanguar Haor Tour Package</h3>
-              <p className="mb-2">
-                Looking for a stress-free trip? Many tour operators offer all-inclusive Tanguar Haor tour packages that include:
-              </p>
-              <ul className="list-disc pl-6 mb-2 space-y-1">
-                <li>Round-trip transport from Dhaka/Sylhet</li>
-                <li>Houseboat stay (standard to luxury options)</li>
-                <li>Local meals</li>
-                <li>Campfire at night</li>
-                <li>Guided haor exploration and birdwatching</li>
-              </ul>
-              <p className="mb-0">
-                Custom packages can also be arranged based on your group size, travel dates, and budget.
-              </p>
-            </div>
-
-            <div className="mb-4 p-4 rounded-lg">
-              <h3 className="text-lg font-bold mb-2">🌊 Why Choose a Luxury or Premium Houseboat?</h3>
-              <p className="mb-2">
-                Unlike regular boat trips, staying on a premium houseboat offers:
-              </p>
-              <ul className="list-disc pl-6 mb-2 space-y-1">
-                <li>Privacy and comfort</li>
-                <li>Chef-cooked local meals onboard</li>
-                <li>Nighttime haor views under the stars</li>
-                <li>Clean and secure lodging in the middle of the haor</li>
-                <li>Access to hidden parts of the wetland</li>
-              </ul>
-              <p className="mb-0">
-                If you&apos;re looking for a Bojra Houseboat, Falcon Houseboat, or Sultan Houseboat, booking early is recommended—especially during peak season (June to August).
-              </p>
-            </div>
-
-            <div className="mb-4 p-4 rounded-lg">
-              <h3 className="text-lg font-bold mb-2">🌿 Explore টাঙ্গুয়ার হাওর (Tanguar Haor) Like Never Before</h3>
-              <p className="mb-0">
-                The local name, টাঙ্গুয়ার হাওর, represents more than just a location—it&apos;s a cultural and environmental treasure. Rich in migratory birds, freshwater fish, and rural life, it&apos;s a magical escape from the busy city. Whether you choose a standard boat or a luxury houseboat, the haor will leave you speechless.
-              </p>
-            </div>
-
-            <div className="mb-4 p-4 rounded-lg">
-              <h3 className="text-lg font-bold mb-2">🛥️ Final Words</h3>
-              <p className="mb-2">
-                A trip to Tanguar Haor isn&apos;t complete without experiencing a houseboat stay. From the majestic Bojra houseboat to the deluxe Sultan houseboat, every vessel offers a unique slice of heaven on water. Whether you&apos;re looking for a budget boat or the best houseboat of Tanguar Haor, the options are diverse and unforgettable.
-              </p>
-              <p className="mb-0">
-                Planning a serene escape to Tanguar Haor? Discover the beauty of nature aboard the best houseboat in Tanguar Haor. Whether you&apos;re looking for a luxury houseboat or a budget-friendly option, traveltangua.com has you covered. Compare the Tanguar Haor houseboat price, explore top-rated boats, and enjoy hassle-free booking—all in one place. From the best houseboat of Tanguar Haor to personalized tour packages, we bring you the ultimate wetland adventure. Don&apos;t miss out on this unique floating experience. Visit traveltangua.com today and plan your dream trip with ease and confidence!
-              </p>
-            </div>
-          </>
-        )}
-
-        {/* Read More/Less button */}
-        <div className="text-center mt-6">
-          <button
-            onClick={toggleContent}
-            style={{
-              background: "linear-gradient(90deg, #313881, #0678B4)",
-            }}
-            className="px-6 py-2 text-white rounded-md hover:bg-[#1E2D75] transition-colors duration-300"
-          >
-            {showFullContent ? 'Read Less' : 'Read More'}
-          </button>
+      <div className="container mx-auto px-6 max-w-7xl">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {houseboatCards.map(({ id, title, image, description }) => (
+            <article
+              key={id}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
+            >
+              <div className="relative w-full h-64">
+                <Image
+                  src={image}
+                  alt={title}
+                  fill
+                  className="object-cover"
+                  quality={80}
+                  priority={id === 1}
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">{title}</h3>
+                <div className="text-gray-700 text-base leading-relaxed flex-grow">
+                  {description}
+                </div>
+                <Link href="/ships/Tanguar-Haor/1" className="inline-block mt-6 text-blue-700 font-semibold underline">
+                  View All Tanguar Haor Tour Packages
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
-};
-
-export default TanguarHaorHouseboat;
+}

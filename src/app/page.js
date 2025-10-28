@@ -25,10 +25,8 @@ export const dynamic = "force-dynamic";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
-
-
 export default async function Home({ searchParams }) {
-  // === Fetch & Prepare Services ===
+  
   let servicesData = [];
 
   try {
@@ -46,14 +44,13 @@ export default async function Home({ searchParams }) {
 
   const visibleServices = sortedServices.filter((service) => service.isShow === "yes");
 
-  // === Subcategory Mapping for Ships ===
   const ShipsSubComponents = {
     "Tanguar Haor": TangourMain,
     Sundarban,
     "Saint Martin": SaintMartin,
   };
 
-  // === Main Components Mapping ===
+  //  Main Components Mapping
   const mainComponentMap = {
     Visa: VisaMain,
     Hotel: HotelMain,
@@ -63,7 +60,7 @@ export default async function Home({ searchParams }) {
 
   return (
     <main className={`${roboto.className} bg-blue-50`}>
-      {/* === Hero Section === */}
+      {/* Hero Section */}
       <section className="relative w-full min-h-[60vh]">
         {/* Background Banner */}
         <div className="absolute inset-0 z-0">
@@ -82,7 +79,7 @@ export default async function Home({ searchParams }) {
         </div>
       </section>
 
-      {/* === Services Section === */}
+      {/*  Services Section  */}
       <section className="py-10">
         <div className="max-w-screen-xl mx-auto px-4 space-y-10">
           {servicesData.length === 0 ? (
@@ -131,7 +128,7 @@ export default async function Home({ searchParams }) {
         </div>
       </section>
 
-      {/* === Lazy Loaded Below-the-Fold Sections === */}
+      {/* Lazy Loaded Below-the-Fold Sections  */}
       <LazySection placeholder={<div className="h-40 bg-gray-200 animate-pulse" />}>
         <FlightRoute />
       </LazySection>

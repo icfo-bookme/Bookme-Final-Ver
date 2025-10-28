@@ -1,6 +1,9 @@
 import { Roboto } from "next/font/google";
 import PropertyList from "@/components/tour/Property/Property";
 import propertySummary from "@/services/tour/propertySummary";
+import TanguarHaorHouseboatListing from "@/components/pre-footer-content/Tangua";
+import SundarbanCruiseShips from "@/components/pre-footer-content/sundarbanShips";
+import SaintMartinShips from "@/components/pre-footer-content/saintMartinShips";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
@@ -41,6 +44,16 @@ export default async function Home({ params }) {
           </div>
         </div>
       </div>
+      {
+        id==1 && <TanguarHaorHouseboatListing />
+      }
+      {
+        id==2 && <SundarbanCruiseShips />
+      }
+       {
+        id==3 && <SaintMartinShips />
+      }
+    
     </main>
   );
 }

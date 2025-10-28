@@ -6,6 +6,7 @@ import Link from "next/link";
 import { FaPhone } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 import ContactForm from "@/components/tour/ContactForm/ContactForm";
+import { VisaType } from "./VisaType";
 
 export default function VisaDetails({ visaDetails, contactNumber }) {
   const [showForm, setShowForm] = useState(false);
@@ -31,7 +32,9 @@ export default function VisaDetails({ visaDetails, contactNumber }) {
         <div className="lg:col-span-7 xl:col-span-8">
           <h3 className="p-2 font-semibold w-full rounded-lg">{visaDetails?.country?.name}</h3>
           <h1 className="lg:text-4xl text-3xl font-normal mt-1">{visaDetails?.property_name}</h1>
-
+          <div className="block md:hidden">
+            <VisaType visaDetails={visaDetails} />
+          </div>
           {/* Property Summaries */}
           <div className="flex items-center lg:gap-4 mt-4">
             {visaDetails?.property_summaries?.slice().reverse().map((details, index) => (
@@ -94,7 +97,9 @@ export default function VisaDetails({ visaDetails, contactNumber }) {
               </Link>
             </div>
           </div>
-
+          <div className="md:block hidden">
+            <VisaType visaDetails={visaDetails} />
+          </div>
           {/* Contact Form */}
           <div className="hidden md:block shadow-md">
             <ContactForm category={"visa"} propertyDetails={visaDetails?.property_name} headline={"Request Visa Assistance"} />

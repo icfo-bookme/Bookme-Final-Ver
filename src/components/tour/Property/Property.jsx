@@ -37,7 +37,7 @@ export default function PropertyList({ id, initialData }) {
         try {
           setLoading(true);
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/popularPropertySummary/1`
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/popularPropertySummary/${id}`
           );
           const result = await response.json();
           setPopularData(result);

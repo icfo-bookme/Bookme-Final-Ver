@@ -14,10 +14,10 @@ const HeroSection = () => {
         
         {/* Hero Content */}
         <div className="relative h-full flex flex-col justify-center items-center text-center text-white px-4">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 sm:mb-4 drop-shadow-lg">
+          <h1 className="text-2xl hidden md:block md:text-3xl font-bold mb-2 sm:mb-4 drop-shadow-lg">
             Discover Your Perfect Tour Package
           </h1>
-          <p className="text-sm md:text-md max-w-2xl mx-auto drop-shadow-md">
+          <p className="text-sm hidden md:block md:text-md max-w-2xl mx-auto drop-shadow-md">
             Explore breathtaking destinations with our carefully curated tour packages
           </p>
         </div>

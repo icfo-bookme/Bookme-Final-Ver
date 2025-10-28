@@ -29,29 +29,6 @@ export const metadata = {
   alternates: {
     canonical: "https://bookme.com.bd",
   },
-  openGraph: {
-    title: "BookMe – Your All-in-One Travel Booking Platform",
-    description: "Easily book hotels, flights, and tour packages worldwide with exclusive deals from BookMe.",
-    url: "https://bookme.com.bd",
-    siteName: "BookMe",
-    images: [
-      {
-        url: "https://bookme.com.bd/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "BookMe Travel Deals and Bookings",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "BookMe – Hotels, Flights & Tour Packages Worldwide",
-    description: "Find and book the best hotels, flights, and tours globally with BookMe.",
-    images: ["https://bookme.com.bd/og-image.jpg"],
-    creator: "@BookMeBD",
-  },
 };
 
 export default function DashboardLayout({ children }) {
