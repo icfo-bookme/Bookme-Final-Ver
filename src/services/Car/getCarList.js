@@ -1,6 +1,6 @@
 export default async function getCarList({ id }) {
   try {
-    const res = await fetch(`https://bookme.com.bd/admin/api/car/propertyList/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/car/propertyList/${id}`);
 
     if (!res.ok) {
       console.error(`Failed to fetch car list: ${res.status} ${res.statusText}`);

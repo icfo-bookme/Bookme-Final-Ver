@@ -1,5 +1,5 @@
 export default async function getTourDestinations() {
-  const res = await fetch(`https://bookme.com.bd/admin/api/tourpackages/destinations`,
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tourpackages/destinations`,
     { 
         next: { 
           revalidate: 1800 

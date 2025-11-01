@@ -26,7 +26,7 @@ const PickupLocationSelector = ({
       
       try {
         const response = await fetch(
-          `https://bookme.com.bd/admin/api/pickup/destinations/${property_id}`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/pickup/destinations/${property_id}`
         );
 
         if (response.ok) {

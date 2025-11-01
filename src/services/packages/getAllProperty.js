@@ -1,5 +1,5 @@
 export default async function getAllProperty() {
-  const res = await fetch(`https://bookme.com.bd/admin/api/tourpackages/properties`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tourpackages/properties`);
   const packages = await res.json();
   return packages;
 }

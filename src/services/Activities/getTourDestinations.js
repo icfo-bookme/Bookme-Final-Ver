@@ -1,5 +1,5 @@
 export default async function getActivitiesDestinations() {
-  const res = await fetch(`https://bookme.com.bd/admin/api/activities/destinations`,
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/activities/destinations`,
     { 
         next: { 
           revalidate: 1800 

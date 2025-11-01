@@ -1,6 +1,6 @@
 export async function fetchHotelListingData(locationID) {
   try {
-    const apiUrl = `https://bookme.com.bd/admin/api/hotel/listing/${locationID}`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}`;
     const hotelRes = await fetch(apiUrl);
 
     if (!hotelRes.ok) {
