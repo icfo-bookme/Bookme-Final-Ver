@@ -108,7 +108,7 @@ export default function PropertySearch({
           htmlFor="property-search"
           className="block  font-medium text-gray-700 mb-1"
         >
-          Search properties by name
+          Search property by name
         </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -131,7 +131,7 @@ export default function PropertySearch({
             }}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            placeholder="Type property name..."
+            placeholder="Type property name here..."
             autoComplete="off"
           />
           {searchTerm && (

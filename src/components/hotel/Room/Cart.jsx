@@ -11,6 +11,7 @@ const Cart = ({
   onClose, 
   onRemoveItem, 
   hotel_id,
+  hotelDetails,
   checkin: initialCheckin, 
   checkout: initialCheckout, 
   onDatesChange = () => {},
@@ -53,11 +54,13 @@ const Cart = ({
     const bookingData = {
       cart,
       hotel_id: hotel_id,
+      hotelDetails: hotelDetails,
       checkin: checkin.toISOString(),
       checkout: checkout.toISOString(),
       lastUpdated: new Date().toISOString(),
     };
 
+    
 
     localStorage.setItem('bookingData', JSON.stringify(bookingData));
   }, [cart, checkin, checkout]);
@@ -102,25 +105,50 @@ const Cart = ({
     setTempCheckout(end);
   };
 
-  const applyDateChanges = () => {
-    if (!tempCheckin || !tempCheckout) return;
+const applyDateChanges = () => {
+  if (!tempCheckin || !tempCheckout) return;
 
-    setCheckin(tempCheckin);
-    setCheckout(tempCheckout);
-    onDatesChange(tempCheckin, tempCheckout);
+  const BDT_OFFSET = 6 * 60;
 
-    const bookingData = {
-      cart,
-      hotel_id: hotel_id,
-      checkin: tempCheckin.toISOString(),
-      checkout: tempCheckout.toISOString(),
-      lastUpdated: new Date().toISOString(),
-    };
-
-    localStorage.setItem('bookingData', JSON.stringify(bookingData));
-
-    setShowDatePickerModal(false);
+  const toBangladeshTime = (date) => {
+    const utc = date.getTime() + date.getTimezoneOffset() * 60000;
+    return new Date(utc + BDT_OFFSET * 60000);
   };
+
+  const formatBDT = (date) => {
+    const d = toBangladeshTime(date);
+    // YYYY-MM-DDTHH:mm:ss format (Bangladesh local time)
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+  };
+
+  const checkinBDT = toBangladeshTime(tempCheckin);
+  const checkoutBDT = toBangladeshTime(tempCheckout);
+
+  setCheckin(checkinBDT);
+  setCheckout(checkoutBDT);
+  onDatesChange(checkinBDT, checkoutBDT);
+
+  const bookingData = {
+    cart,
+    hotel_id: hotel_id,
+    checkin: formatBDT(tempCheckin),   // use formatted BDT
+    checkout: formatBDT(tempCheckout), // use formatted BDT
+    lastUpdated: formatBDT(new Date()),
+  };
+
+  console.log(bookingData);
+  localStorage.setItem('bookingData', JSON.stringify(bookingData));
+
+  setShowDatePickerModal(false);
+};
+
+
 
   const handleProceedToCheckout = () => {
     if (onProceedToCheckout) onProceedToCheckout();
@@ -196,8 +224,12 @@ const Cart = ({
                 <p className="text-xs text-gray-600">{item.adults} Adults, {item.children} Children</p>
                 <p className="text-xs text-gray-600">Breakfast: {item.breakfast}</p>
                 <p className="text-xs mt-1">
-                  <span className="font-medium">BDT {item.price}</span> × {calculateNights()} nights
+                  <span className="font-medium">Room: BDT {item.price}</span> × {calculateNights()} nights
                 </p>
+                <p className="text-xs mt-1">
+                  <span className="font-medium">Govt. Tax: BDT {item.taxes}</span> × {calculateNights()} nights
+                </p>
+                
               </div>
               <div className="text-right">
                 <p className="font-bold text-sm">BDT {calculateItemTotal(item)}</p>

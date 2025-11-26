@@ -4,12 +4,19 @@ export default function BookingSummary({ bookingData, user, calculations }) {
     const roomTaxes = (item.taxes || 0) * calculations.nights;
     return roomTotal + roomTaxes;
   };
-
+console.log(bookingData);
   return (
-    <div className="bg-gray-50 p-6 rounded-lg">
-      <h2 className="text-xl font-semibold mb-6 text-gray-800">
+    <div className="bg-gray-50 px-6 rounded-lg">
+      <div className="mb-3">
+        <p className="text-lg font-semibold text-blue-800 text-center bg-blue-50 py-3 px-4 rounded-lg border border-blue-100">
+          {bookingData.hotelDetails.name}
+        </p>
+      </div>
+      <h2 className="text-lg text-center font-bold text-gray-700  border-b border-gray-100">
         Booking Summary
       </h2>
+      
+      
       {user && <UserInfoSection user={user} />} 
       <StayDurationSection 
         checkin={bookingData.checkin} 
@@ -55,7 +62,7 @@ function StayDurationSection({ checkin, checkout, nights }) {
         <div className="grid grid-cols-2 gap-4 mb-3">
           <div>
             <div className="text-sm text-gray-600">Check-in</div>
-            <div className="font-semibold">
+            <div className="font-semibold text-black">
               {new Date(checkin).toLocaleDateString('en-US', {
                 weekday: 'short',
                 month: 'short',
@@ -66,7 +73,7 @@ function StayDurationSection({ checkin, checkout, nights }) {
           </div>
           <div>
             <div className="text-sm text-gray-600">Check-out</div>
-            <div className="font-semibold">
+            <div className="font-semibold text-black">
               {new Date(checkout).toLocaleDateString('en-US', {
                 weekday: 'short',
                 month: 'short',
@@ -109,7 +116,7 @@ function RoomDetailsSection({ cart, calculations, calculateRoomTotalWithTaxes })
                   <span>BDT {item.price * calculations.nights}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Taxes & Fees:</span>
+                  <span>Govt. Taxes & Fees:</span>
                   <span>BDT {(item.taxes || 0) * calculations.nights}</span>
                 </div>
               </div>
@@ -125,19 +132,19 @@ function PriceSummarySection({ calculations }) {
   return (
     <div className="bg-white p-4 rounded-lg border border-gray-200">
       <h3 className="font-semibold text-gray-700 mb-3">Price Summary</h3>
-      <div className="space-y-2">
+      <div className="space-y-2 text-gray-700 ">
         <div className="flex justify-between text-sm">
           <span>Room Total ({calculations.nights} nights)</span>
           <span>BDT {calculations.roomTotal}</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span>Taxes & Fees</span>
+          <span>Govt. Taxes & Fees</span>
           <span>BDT {calculations.totalTaxes}</span>
         </div>
         <div className="border-t border-gray-200 pt-2 mt-2">
-          <div className="flex justify-between font-semibold text-lg">
+          <div className="flex justify-between font-semibold text-lg text-blue-900">
             <span>Total Amount</span>
-            <span className="text-blue-900">BDT {calculations.grandTotal}</span>
+            <span className="">BDT {calculations.grandTotal}</span>
           </div>
         </div>
       </div>

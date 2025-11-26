@@ -145,7 +145,6 @@ const Footer = () => {
                                 © {new Date().getFullYear()} Bookme. All rights reserved.
                             </p>
                             <div className="flex space-x-6">
-                                <Link href="/terms" className="text-gray-200 hover:text-white text-sm transition">Terms of Service</Link>
                                 <Link href="/privacy-policy" className="text-gray-200 hover:text-white text-sm transition">Privacy Policy</Link>
                                 <Link href="/cookie-policy" className="text-gray-200 hover:text-white text-sm transition">Cookie Policy</Link>
                             </div>

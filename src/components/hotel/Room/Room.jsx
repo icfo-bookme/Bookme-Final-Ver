@@ -10,7 +10,7 @@ import ErrorMessage from './ErrorMessage';
 import NoRoomsAvailable from './NoRoomsAvailable';
 import CartButton from './CartButton';
 
-const RoomComponent = ({ hotel_id, checkin, checkout }) => {
+const RoomComponent = ({ hotelDetails, hotel_id, checkin, checkout }) => {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -78,7 +78,12 @@ const RoomComponent = ({ hotel_id, checkin, checkout }) => {
     // Add room to cart
     const addToCart = (room) => {
         const discountedPrice = Math.round(room.price - (room.price * room.discount / 100));
-        const taxes = Math.round(discountedPrice * 0.265);
+        let taxes = 0;
+        if (hotelDetails.destination_id != 702 && hotelDetails.destination_id != 1) {
+            taxes = Math.round(discountedPrice * 0.265);
+        }
+
+
         const totalPrice = discountedPrice + taxes;
 
         const cartItem = {
@@ -118,10 +123,11 @@ const RoomComponent = ({ hotel_id, checkin, checkout }) => {
             alert("Please add at least one room to proceed.");
             return;
         }
-    
+
         const bookingData = {
             cart,
             hotel_id,
+            hotelDetails,
             checkin,
             checkout
         };
@@ -170,6 +176,7 @@ const RoomComponent = ({ hotel_id, checkin, checkout }) => {
             {/* Cart Component */}
             {showCart && cart.length > 0 && (
                 <Cart
+                    hotelDetails={hotelDetails}
                     hotel_id={hotel_id}
                     cart={cart}
                     isLargeScreen={isLargeScreen}

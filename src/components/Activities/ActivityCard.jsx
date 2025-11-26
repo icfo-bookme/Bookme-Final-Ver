@@ -12,7 +12,6 @@ import { AiOutlineUser, AiOutlineClockCircle } from "react-icons/ai";
 import Image from 'next/image';
 import Link from 'next/link';
 
-
 const iconMapping = {
   IoLocationOutline: IoLocationOutline,
   FaRegClock: FaRegClock,
@@ -50,23 +49,47 @@ const ActivityCard = ({ activity }) => {
       .replace(/[^\w\-]+/g, '')
       .replace(/\-\-+/g, '-');
 
-
+  // Improved formatTimeDisplay function
   const formatTimeDisplay = (timeString) => {
     if (!timeString) return '';
 
-    return timeString
-      .replace(/\b0h\s?/g, '')
-      .replace(/\s0m\b/g, '')
-      .replace(/\s+to\s+/, ' to ');
+    // Function to clean individual time parts
+    const cleanTimePart = (part) => {
+      return part
+        .replace(/\b0h\s?/g, '')
+        .replace(/\b0m\b/g, '')
+        .replace(/\s0min\b/g, '')
+        .replace(/\s0m\b/g, '')
+        .trim();
+    };
+
+    // Check if it contains "to" (range)
+    if (timeString.includes(' to ')) {
+      const [start, end] = timeString.split(' to ');
+      const cleanedStart = cleanTimePart(start);
+      const cleanedEnd = cleanTimePart(end);
+      
+      // If both parts are empty after cleaning, return empty
+      if (!cleanedStart && !cleanedEnd) return '';
+      
+      // If one part is empty, return only the other part
+      if (!cleanedStart) return cleanedEnd;
+      if (!cleanedEnd) return cleanedStart;
+      
+      // If both parts have content, join them with " to "
+      return `${cleanedStart} to ${cleanedEnd}`;
+    } else {
+      // Single time value
+      const cleaned = cleanTimePart(timeString);
+      return cleaned || '';
+    }
   };
 
   const renderIcon = (iconName) => {
-
     const cleanIconName = iconName ? iconName.replace(/['"]/g, '').trim() : '';
     const IconComponent = iconMapping[cleanIconName] || iconMapping.default;
     return <IconComponent className="text-blue-500 text-xs" />;
   };
-
 
   const getSummaryText = (summary) => {
     const validKeys = Object.keys(summary).filter(key =>
@@ -79,7 +102,8 @@ const ActivityCard = ({ activity }) => {
     if (validKeys.length > 0) {
       const text = summary[validKeys[0]];
       if (validKeys[0] === 'Duration' || text.includes('h') || text.includes('m')) {
-        return formatTimeDisplay(text);
+        const formattedTime = formatTimeDisplay(text);
+        return formattedTime || ''; // Return empty if formatted time is empty
       }
       return text;
     }
@@ -188,7 +212,6 @@ const ActivityCard = ({ activity }) => {
 
               <p className="text-xs text-gray-500 mt-1">for entire package</p>
             </div>
-
           </div>
         </div>
       </div>

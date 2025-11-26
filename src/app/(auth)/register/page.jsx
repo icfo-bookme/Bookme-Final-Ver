@@ -82,7 +82,7 @@ export default function RegisterPage() {
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name
               </label>
-              <div className="relative">
+              <div className="relative text-blue-950">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                  <FaRegUser />
                 </div>
@@ -94,7 +94,7 @@ export default function RegisterPage() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                  className="w-full pl-10  pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
                 />
               </div>
             </div>
@@ -103,7 +103,7 @@ export default function RegisterPage() {
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
-              <div className="relative">
+              <div className="relative text-blue-950">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                  <MdOutlineMailLock />
                 </div>
@@ -124,7 +124,7 @@ export default function RegisterPage() {
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 Phone Number
               </label>
-              <div className="relative">
+              <div className="relative text-blue-950">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <MdOutlinePhoneInTalk />
                 </div>
@@ -145,7 +145,7 @@ export default function RegisterPage() {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
-              <div className="relative">
+              <div className="relative text-blue-950">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <RiLockPasswordLine />
                 </div>
@@ -183,7 +183,7 @@ export default function RegisterPage() {
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
                 Confirm Password
               </label>
-              <div className="relative">
+              <div className="relative text-blue-950">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <IoShieldCheckmarkOutline />
                 </div>

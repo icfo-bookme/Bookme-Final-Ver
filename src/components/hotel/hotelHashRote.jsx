@@ -219,7 +219,7 @@ export default function HotelHashRoute({ hotelId, initialHotelDetails, checkin, 
             <i className="fa-solid fa-bed text-blue-600"></i>
             Available Rooms
           </h2>
-          <RoomComponent hotel_id={hotelId} checkin={checkin} checkout={checkout} />
+          <RoomComponent hotelDetails={hotelDetails} hotel_id={hotelId} checkin={checkin} checkout={checkout} />
         </div>
       </section>
 

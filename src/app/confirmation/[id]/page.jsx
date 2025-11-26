@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-export default async function ConfirmationPage({searchParams}) {
-    const orderno = await searchParams.orderno;
+export default async function ConfirmationPage({params}) {
+    const orderno = await params.id;
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6 text-center">

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,14 +25,73 @@ const slugify = (text = "") =>
         .trim()
         .replace(/[\s\W-]+/g, "-");
 
+// Improved formatTimeDisplay function
+const formatTimeDisplay = (timeString) => {
+    if (!timeString) return '';
 
-const formatDuration = (value) => {
-    if (!value) return "";
-    const parts = value.split(" ");
-    return parts
-        .filter((part) => !part.startsWith("0"))
-        .join(" ")
-        .trim();
+    // Function to clean individual time parts
+    const cleanTimePart = (part) => {
+        return part
+            .replace(/\b0h\s?/g, '')
+            .replace(/\b0m\b/g, '')
+            .replace(/\s0min\b/g, '')
+            .replace(/\s0m\b/g, '')
+            .trim();
+    };
+
+    // Check if it contains "to" (range)
+    if (timeString.includes(' to ')) {
+        const [start, end] = timeString.split(' to ');
+        const cleanedStart = cleanTimePart(start);
+        const cleanedEnd = cleanTimePart(end);
+        
+        // If both parts are empty after cleaning, return empty
+        if (!cleanedStart && !cleanedEnd) return '';
+        
+        // If one part is empty, return only the other part
+        if (!cleanedStart) return cleanedEnd;
+        if (!cleanedEnd) return cleanedStart;
+        
+        // If both parts have content, join them with " to "
+        return `${cleanedStart} to ${cleanedEnd}`;
+    } else {
+        // Single time value
+        const cleaned = cleanTimePart(timeString);
+        return cleaned || '';
+    }
+};
+
+// Get summary text (same as ActivityCard)
+const getSummaryText = (summary) => {
+    const validKeys = Object.keys(summary).filter(key =>
+        key !== 'icon_name' &&
+        key !== 'icon_import' &&
+        summary[key] &&
+        summary[key].trim() !== ''
+    );
+
+    if (validKeys.length > 0) {
+        const text = summary[validKeys[0]];
+        if (validKeys[0] === 'Duration' || text.includes('h') || text.includes('m')) {
+            const formattedTime = formatTimeDisplay(text);
+            return formattedTime || ''; // Return empty if formatted time is empty
+        }
+        return text;
+    }
+
+    return '';
+};
+
+// Get summary key (same as ActivityCard)
+const getSummaryKey = (summary) => {
+    const validKeys = Object.keys(summary).filter(key =>
+        key !== 'icon_name' &&
+        key !== 'icon_import' &&
+        summary[key] &&
+        summary[key].trim() !== ''
+    );
+
+    return validKeys.length > 0 ? validKeys[0] : '';
 };
 
 const RelatedActivities = ({ packages = [] }) => {
@@ -64,35 +123,24 @@ const RelatedActivities = ({ packages = [] }) => {
                             </h3>
                             <p className="text-sm text-gray-500 mb-3 line-clamp-1">{pkg.address}</p>
 
-                            <div className="grid grid-cols-2 gap-4 mb-4">
-                                {pkg.summaries?.slice(0, 2).map((summary, index) => {
-                                    const isClock = summary.icon_name === "FaRegClock";
-                                    const value = isClock ? formatDuration(summary.value) : summary.value;
-                                    if (!value) return null;
+                            {/* Updated summary display using the same logic as ActivityCard */}
+                            <div className="flex flex-wrap gap-2 mb-4">
+                                {pkg.summaries && pkg.summaries.slice(0, 4).map((summary, i) => {
+                                    const summaryText = getSummaryText(summary);
+                                    const summaryKey = getSummaryKey(summary);
+                                    if (!summaryText) return null;
 
                                     return (
-                                        <div key={index} className="flex items-center gap-2 text-sm text-gray-700">
-                                            <span className="w-5 h-5 flex items-center justify-center">
+                                        <span
+                                            key={i}
+                                            className="flex items-start text-xs text-gray-700 bg-gray-50 border border-gray-200 px-3 py-1 rounded-full hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                                            title={summaryKey}
+                                        >
+                                            <div className="mr-2">
                                                 {iconMap[summary.icon_name] || null}
-                                            </span>
-                                            <span>{value}</span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                            <div className=" gap-4 mb-4">
-                                {pkg.summaries?.slice(2, 4).map((summary, index) => {
-                                    const isClock = summary.icon_name === "FaRegClock";
-                                    const value = isClock ? formatDuration(summary.value) : summary.value;
-                                    if (!value) return null;
-
-                                    return (
-                                        <div key={index} className="flex  gap-2 text-sm text-gray-700">
-                                            <span className="w-5 h-5 flex items-center justify-center">
-                                                {iconMap[summary.icon_name] || null}
-                                            </span>
-                                            <span>{value}</span>
-                                        </div>
+                                            </div>
+                                            {summaryText}
+                                        </span>
                                     );
                                 })}
                             </div>
@@ -116,7 +164,6 @@ const RelatedActivities = ({ packages = [] }) => {
                                         </>
                                     )}
                                 </div>
-
 
                                 <button
                                     style={{ background: "linear-gradient(90deg, #313881, #0678B4)" }}

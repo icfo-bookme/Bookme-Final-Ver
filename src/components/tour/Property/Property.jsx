@@ -140,7 +140,7 @@ export default function PropertyList({ id, initialData }) {
       <div className="w-full pt-[40px] md:pt-[50px] relative">
         <Banner id={id} />
         
-        <div className="hidden w-[80%] mx-auto lg:block absolute bottom-0 left-0 right-0 transform translate-y-1/2 z-10">
+        <div className="hidden w-[80%] mx-auto lg:block absolute bottom-0 left-0 right-0 transform translate-y-1/2 z-20">
           <div className="container mx-auto px-4">
             <PropertyFilters
               searchTerm={searchTerm}

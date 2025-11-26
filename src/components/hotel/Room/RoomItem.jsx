@@ -5,7 +5,6 @@ import { Button, Modal } from 'flowbite-react';
 
 const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
     const [openModal, setOpenModal] = useState(false);
-
     const getFormattedDate = () => {
         const today = new Date();
         today.setDate(today.getDate() + 2);
@@ -15,7 +14,11 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
     };
 
     const discountedPrice = Math.round(room.price - (room.price * room.discount / 100));
-    const taxesAndFees = Math.round(discountedPrice * 0.265);
+    let taxesAndFees = 0;
+    if (room.destination_id != 702 && room.destination_id != 1) {
+        taxesAndFees = Math.round(discountedPrice * 0.265);
+    }
+
 
     return (
         <div className="py-3">
@@ -102,6 +105,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                 <p className="text-lg md:text-xl font-bold text-blue-900">
                                     BDT {discountedPrice}
                                 </p>
+
                                 <p className='mt-1 text-xs text-gray-700'>
                                     + BDT {taxesAndFees} Taxes & Fees
                                 </p>
@@ -190,9 +194,13 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                         <p className="text-xl font-bold text-blue-800">
                                             BDT {discountedPrice.toLocaleString()}
                                         </p>
-                                        <p className='text-xs text-gray-500 mt-1'>
-                                            + BDT {taxesAndFees.toLocaleString()} Taxes & Fees
-                                        </p>
+                                        {room.destination_id != 702 && room.destination_id != 1 && (
+                                            <p className='text-xs text-gray-500 mt-1'>
+                                                + BDT {taxesAndFees.toLocaleString()} Taxes & Fees
+                                            </p>
+                                        )}
+
+
                                         <p className='text-xs text-gray-500 mt-2'>for 1 Night, per room</p>
                                         {room.extra_discount_msg && (
                                             <p className='text-green-600 text-xs mt-1'>{room.extra_discount_msg}</p>

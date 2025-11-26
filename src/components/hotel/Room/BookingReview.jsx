@@ -64,7 +64,7 @@ const BookingReview = ({ onBackToCart, onBackToRooms, onSubmitBooking, hotelId }
             totalAmount: calculateTotal() + Math.round(calculateTotal() * 0.1),
             bookingReference: 'BK' + Date.now()
         };
-        
+
         if (onSubmitBooking) {
             onSubmitBooking(completeBookingData);
         }

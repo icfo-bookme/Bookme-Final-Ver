@@ -1,5 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,9 +11,14 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset, // Added reset to clear form after submission
   } = useForm();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const onSubmit = async (data) => {
+    setIsSubmitting(true);
+
     const emailData = {
       name: `${data.firstName} ${data.lastName}`,
       email: data.email,
@@ -42,10 +48,13 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
         toast.error("Failed to submit package info.");
       } else {
         toast.success("Submitted Successfully");
+        reset(); // Clear form after successful submission
       }
     } catch (error) {
       console.error("Error:", error);
       toast.error("An error occurred while processing your request.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -67,6 +76,7 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
               id="firstName"
               {...register("firstName", { required: true })}
               className="mt-2 p-2 border border-gray-300 rounded-md w-full text-black"
+              disabled={isSubmitting}
             />
             {errors.firstName && (
               <span className="text-red-500">First name is required</span>
@@ -86,10 +96,9 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
               id="lastName"
               {...register("lastName")}
               className="mt-2 p-2 border border-gray-300 rounded-md w-full text-black"
+              disabled={isSubmitting}
             />
-
           </div>
-
 
           <div>
             <label
@@ -110,6 +119,7 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
                 },
               })}
               className="mt-2 p-2 border border-gray-300 rounded-md w-full text-black"
+              disabled={isSubmitting}
             />
             {errors.phoneNumber && (
               <span className="text-red-500">{errors.phoneNumber.message}</span>
@@ -128,8 +138,8 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
               id="email"
               {...register("email")}
               className="mt-2 p-2 border border-gray-300 rounded-md w-full text-black"
+              disabled={isSubmitting}
             />
-
           </div>
 
           {/* Address */}
@@ -145,8 +155,8 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
               id="address"
               {...register("address")}
               className="mt-2 p-2 border border-gray-300 rounded-md w-full text-black"
+              disabled={isSubmitting}
             />
-
           </div>
 
           {/* Additional Info */}
@@ -161,18 +171,31 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
               id="additionalInfo"
               {...register("additionalInfo")}
               className="mt-2 p-2 border border-gray-300 rounded-md w-full text-black"
+              disabled={isSubmitting}
             />
           </div>
 
           <button
             type="submit"
-            className="mt-4 p-2 bg-blue-500 text-white rounded-md"
+            disabled={isSubmitting}
+            className="mt-4 p-2 bg-blue-500 text-white rounded-md flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
             style={{
-              background:
-                "linear-gradient(90deg, #313881, #0678B4)",
+              background: isSubmitting 
+                ? "#9CA3AF" 
+                : "linear-gradient(90deg, #313881, #0678B4)",
             }}
           >
-            Submit
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Signing...
+              </>
+            ) : (
+              "Submit"
+            )}
           </button>
         </div>
       </form>
