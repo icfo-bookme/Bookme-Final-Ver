@@ -496,6 +496,13 @@ const BookMeHeader = () => {
 
                           </div>
                           <hr />
+                          <Link
+                            href="/my-profile"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => setIsUserDropdownOpen(false)}
+                          >
+                           👤 &nbsp; My Profile
+                          </Link>
                           {/* <Link
                             href="/dashboard"
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -503,13 +510,7 @@ const BookMeHeader = () => {
                           >
                             Dashboard
                           </Link>
-                          <Link
-                            href="/profile"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            onClick={() => setIsUserDropdownOpen(false)}
-                          >
-                            Profile
-                          </Link>
+                          
                           <Link
                             href="/bookings"
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

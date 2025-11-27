@@ -27,26 +27,38 @@ const HotelListContent = ({
   const searchRef = useRef(null);
   const mobileFiltersRef = useRef(null);
 
+  // Close suggestions & mobile filter on outside click
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+    const handleClick = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
         setShowSuggestions(false);
       }
 
-      if (
-        mobileFiltersRef.current &&
-        !mobileFiltersRef.current.contains(event.target)
-      ) {
-        const filterButton = document.getElementById('mobile-filter-button');
-        if (filterButton && !filterButton.contains(event.target)) {
+      if (showMobileFilters) {
+        const button = document.getElementById("mobile-filter-button");
+        if (
+          mobileFiltersRef.current &&
+          !mobileFiltersRef.current.contains(e.target) &&
+          e.target !== button &&
+          !button?.contains(e.target)
+        ) {
           setShowMobileFilters(false);
         }
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [showMobileFilters]);
+
+  // Lock body scroll when mobile filter is open
+  useEffect(() => {
+    if (showMobileFilters) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [showMobileFilters]);
 
   const handleAmenityChange = (amenityId) => {
     setSelectedAmenities((prev) =>
@@ -131,26 +143,23 @@ const HotelListContent = ({
   });
 
   const sortedHotels = [...filteredHotels].sort((a, b) => {
-  if (sortOption === 'recommended') {
-    return 0;
-  }
+    if (sortOption === 'recommended') return 0;
 
-  // For hotels without price, always put them at the end
-  if (!a.hasPrice && !b.hasPrice) return 0;
-  if (!a.hasPrice) return 1;
-  if (!b.hasPrice) return -1;
+    if (!a.hasPrice && !b.hasPrice) return 0;
+    if (!a.hasPrice) return 1;
+    if (!b.hasPrice) return -1;
 
-  switch (sortOption) {
-    case 'price-low-high':
-      return a.numericPrice - b.numericPrice;
-    case 'price-high-low':
-      return b.numericPrice - a.numericPrice;
-    case 'star-rating':
-      return b.starNumber - a.starNumber || a.numericPrice - b.numericPrice;
-    default:
-      return 0;
-  }
-});
+    switch (sortOption) {
+      case 'price-low-high':
+        return a.numericPrice - b.numericPrice;
+      case 'price-high-low':
+        return b.numericPrice - a.numericPrice;
+      case 'star-rating':
+        return b.starNumber - a.starNumber || a.numericPrice - b.numericPrice;
+      default:
+        return 0;
+    }
+  });
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-BD', {
@@ -176,7 +185,7 @@ const HotelListContent = ({
           }}
         />
       </div>
-      
+
       <div className='bg-blue-100 p-5 rounded-lg'>
         {/* Mobile Filter Button */}
         <div className="md:hidden fixed bottom-6 left-0 right-0 flex justify-center z-20">
@@ -274,7 +283,6 @@ const HotelListContent = ({
             {sortedHotels.length > 0 ? (
               <div className="space-y-5">
                 {sortedHotels.map((hotel) => (
-                 
                   <HotelCard
                     key={hotel.id}
                     hotel={hotel}
@@ -284,7 +292,6 @@ const HotelListContent = ({
                     rooms={rooms}
                     adult={adult}
                     isHighlighted={hotelID == hotel.id}
-                   
                   />
                 ))}
               </div>

@@ -1,4 +1,5 @@
 "use client";
+import HotelLoadingSkeleton from "@/components/hotel/Hotel/HotelLoadingSkeleton";
 import Aside from "@/components/Profile/Aside";
 import EditForm from "@/components/Profile/EditForm";
 import { useUser } from "@/context/UserContext";
@@ -20,21 +21,17 @@ export default function ProfilePage() {
       })
       .catch(() => setLoading(false));
   }, [user]);
-console.log(data);
   if (isLoading) {
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center ">
-      <p className="text-xl font-semibold text-blue-700 animate-pulse">
-        Loading your profile...
-      </p>
-    </div>
-  );
-}
-
-
+    return (
+      <div className="w-full">
+        <HotelLoadingSkeleton />
+      </div>
+    );
+  }
+  
   return (
     <div className="flex pt-12 bg-gray-50 min-h-screen">
-      <Aside />
+
       <EditForm data={data} user={user} />
     </div>
   );

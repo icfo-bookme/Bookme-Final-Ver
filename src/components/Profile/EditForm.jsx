@@ -13,13 +13,12 @@ const EditForm = ({ data, user }) => {
     } = useForm();
 
     const [profileImage, setProfileImage] = useState("./assets/profile/image.png");
-    const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [displayName, setDisplayName] = useState("");
     const [displayPhone, setDisplayPhone] = useState("");
     const [displayEmail, setDisplayEmail] = useState("");
     const profileImageRef = useRef(null);
-    
+
     // Watch the form fields for real-time updates
     const givenName = watch("given_name");
     const surname = watch("surname");
@@ -67,7 +66,6 @@ const EditForm = ({ data, user }) => {
                 setProfileImage(user.profileImage);
             }
 
-            setIsLoading(false);
         }
     }, [data, user, reset]);
 
@@ -172,12 +170,12 @@ const EditForm = ({ data, user }) => {
                 const result = await response.json();
                 alert('Profile updated successfully!');
                 setIsEditing(false);
-                
+
                 // Update profile image if it was changed
                 if (result.data?.profile_image) {
                     setProfileImage(result.data.profile_image);
                 }
-                
+
                 // Update display values with final values
                 setDisplayName(`${formData.given_name} ${formData.surname}`.trim());
                 setDisplayPhone(formData.phone_number || "N/A");
@@ -202,33 +200,13 @@ const EditForm = ({ data, user }) => {
         setIsEditing(true);
     };
 
-    if (isLoading) {
-        return (
-            <div className="w-full">
-                <div className="animate-pulse">
-                    <div className="w-full bg-gray-200 h-40"></div>
-                    <div className="p-6 space-y-4">
-                        <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {[...Array(8)].map((_, i) => (
-                                <div key={i} className="h-12 bg-gray-200 rounded"></div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className="w-full">
             <main className="w-full pb-10">
-
                 {/* Header */}
                 <div className="w-full bg-blue-950 rounded shadow-sm border-b border-gray-200">
                     <div className=" py-3">
                         <div className="text-center">
-
                             {/* Profile Image */}
                             <div className="relative inline-block mb-4">
                                 <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-100 border-4 border-white shadow-lg mx-auto">
@@ -333,8 +311,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="text"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("given_name")}
                                             disabled={!isEditing}
@@ -349,8 +327,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="text"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("surname")}
                                             disabled={!isEditing}
@@ -365,8 +343,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="email"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("email")}
                                             disabled={!isEditing}
@@ -381,8 +359,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="tel"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("phone_number")}
                                             disabled={!isEditing}
@@ -396,8 +374,8 @@ const EditForm = ({ data, user }) => {
                                         </label>
                                         <select
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("gender")}
                                             disabled={!isEditing}
@@ -417,8 +395,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="date"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("date_of_birth")}
                                             disabled={!isEditing}
@@ -432,8 +410,8 @@ const EditForm = ({ data, user }) => {
                                         </label>
                                         <select
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("nationality")}
                                             disabled={!isEditing}
@@ -457,8 +435,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="text"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("address")}
                                             disabled={!isEditing}
@@ -473,8 +451,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="text"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("postcode")}
                                             disabled={!isEditing}
@@ -489,8 +467,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="text"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("passport")}
                                             disabled={!isEditing}
@@ -505,8 +483,8 @@ const EditForm = ({ data, user }) => {
                                         <input
                                             type="date"
                                             className={`border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${!isEditing
-                                                    ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
-                                                    : "border-gray-300 bg-white"
+                                                ? "bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed"
+                                                : "border-gray-300 bg-white"
                                                 }`}
                                             {...register("expire")}
                                             disabled={!isEditing}
@@ -528,8 +506,8 @@ const EditForm = ({ data, user }) => {
                                             className={`cursor-pointer ${!isEditing ? 'pointer-events-none' : ''}`}
                                         >
                                             <div className={`border-2 border-dashed rounded-lg p-6 text-center transition ${!isEditing
-                                                    ? "border-gray-200 bg-gray-50"
-                                                    : "border-gray-300 hover:border-blue-500 bg-white"
+                                                ? "border-gray-200 bg-gray-50"
+                                                : "border-gray-300 hover:border-blue-500 bg-white"
                                                 }`}>
                                                 <svg className={`w-10 h-10 mx-auto ${!isEditing ? "text-gray-300" : "text-gray-400"
                                                     }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -583,8 +561,8 @@ const EditForm = ({ data, user }) => {
                                             className={`cursor-pointer ${!isEditing ? 'pointer-events-none' : ''}`}
                                         >
                                             <div className={`border-2 border-dashed rounded-lg p-6 text-center transition ${!isEditing
-                                                    ? "border-gray-200 bg-gray-50"
-                                                    : "border-gray-300 hover:border-blue-500 bg-white"
+                                                ? "border-gray-200 bg-gray-50"
+                                                : "border-gray-300 hover:border-blue-500 bg-white"
                                                 }`}>
                                                 <svg className={`w-10 h-10 mx-auto ${!isEditing ? "text-gray-300" : "text-gray-400"
                                                     }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">

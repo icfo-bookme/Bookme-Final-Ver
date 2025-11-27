@@ -13,12 +13,12 @@ const Aside = () => {
       icon: "🛒", 
       link: null,
       subItems: [
-        { name: "Hotel Bookings", link: "/orders/hotel" },
-        { name: "Travel Packages", link: "/orders/packages" }
+        { name: "Hotel Bookings", link: "/my-profile/orders/hotel" },
+        // { name: "Travel Packages", link: "/my-profile/orders/packages" }
       ]
     },
-    { name: "Refer & Earn", active: false, icon: "🎁", link: "/refer" },
-    { name: "Change Password", active: false, icon: "🔐", link: "/change-password" },
+    { name: "Refer & Earn", active: false, icon: "🎁", link: "/my-profile/refer" },
+    { name: "Change Password", active: false, icon: "🔐", link: "/my-profile/change-password" },
   ];
 
   const toggleSubMenu = (menuName) => {
@@ -26,7 +26,7 @@ const Aside = () => {
   };
 
   return (
-    <aside className="w-80 bg-white border-r border-gray-200 shadow-sm hidden md:block sticky top-14 h-screen">
+    <aside className="w-64 bg-white border-r border-gray-200 shadow-sm hidden md:block sticky top-14 h-screen">
       {/* Header */}
       <div className="p-6 border-b border-gray-100">
         <h2 className="text-xl font-semibold text-gray-900">Account Settings</h2>
@@ -85,9 +85,9 @@ const Aside = () => {
                     {item.subItems.map((subItem) => (
                       <Link href={subItem.link} key={subItem.name}>
                         <button
-                          className="w-full px-4 py-2.5 rounded-lg font-medium transition-all duration-200 flex items-center gap-3 text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:border hover:border-gray-200 text-sm group"
+                          className="w-full px-4 py-2.5 rounded-lg font-mediu  flex items-center gap-3 text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 text-sm group"
                         >
-                          <span className="w-1.5 h-1.5 bg-gray-400 rounded-full group-hover:bg-blue-500 transition-colors duration-200"></span>
+                          <span className="w-1.5 h-1.5 bg-gray-400 rounded-full group-hover:bg-blue-500 transition-colors "></span>
                           <span className="font-normal">{subItem.name}</span>
                         </button>
                       </Link>

@@ -11,18 +11,18 @@ export async function generateMetadata({ params }) {
 
   const dynamicKeywords = name
     ? [
-        `${name} hotels`,
-        `book hotels in ${name}`,
-        `${name} hotel deals`,
-        `cheap hotels in ${name}`,
-        `luxury hotels in ${name}`,
-        `stay in ${name}`,
-        `${name} travel`,
-        `${name} hotel booking`,
-        `${name} budget hotels and resorts`,
-        `${name} best resorts for honeymoon`,
-        `family friendly resorts in ${name}`,
-      ]
+      `${name} hotels`,
+      `book hotels in ${name}`,
+      `${name} hotel deals`,
+      `cheap hotels in ${name}`,
+      `luxury hotels in ${name}`,
+      `stay in ${name}`,
+      `${name} travel`,
+      `${name} hotel booking`,
+      `${name} budget hotels and resorts`,
+      `${name} best resorts for honeymoon`,
+      `family friendly resorts in ${name}`,
+    ]
     : [];
 
   return {
@@ -53,7 +53,7 @@ const fetchHotelsByLocation = async (locationID) => {
 };
 
 const fetchHotelsById = async (hotelID) => {
-  
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels/list/${hotelID}`);
   if (!res.ok) throw new Error('Failed to fetch hotel by ID');
   const data = await res.json();
@@ -92,8 +92,13 @@ export default async function HotelListPage({ searchParams }) {
   } = await searchParams;
 
   if (!locationID && !hotelID) {
-    return <div className="pt-96 text-red-600">Missing location ID or hotel ID in query parameters.</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-600">
+        Missing location ID or hotel ID in query parameters.
+      </div>
+    );
   }
+
 
   try {
     let hotels = [];

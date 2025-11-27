@@ -29,6 +29,7 @@ export async function login({ email, password }) {
 
 // Get authenticated user data
 export async function getUser(token) {
+  
   try {
     const response = await api.get('/api/user', {
       headers: { Authorization: `Bearer ${token}` },
@@ -42,8 +43,7 @@ export async function getUser(token) {
 // Logout user
 export async function logout(token) {
   try {
-    const response = await api.post(
-      '/logout',
+    const response = await api.post('/logout',
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
