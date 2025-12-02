@@ -1,4 +1,3 @@
-// components/PickupLocationSelector.jsx
 import { TailSpin } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

@@ -52,7 +52,6 @@ export default async function Page() {
             <div className="max-w-4xl md:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-20">
                 <Faq />
             </div>
-
         </div>
     );
 }

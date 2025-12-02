@@ -11,19 +11,12 @@ export const metadata = {
 
 export default async function HotelHome() {
   let hotelData = [];
-  let loading = false;
   try {
-    loading = true;
+
     const hotelResult = await getAllHotels();
     hotelData = hotelResult;
-    loading = false;
   } catch (error) {
     console.error("Failed to fetch hotel data:", error);
-    loading = false;
-  }
-
-  if (loading) {
-    return <HotelLoadingSkeleton />;
   }
 
   return (

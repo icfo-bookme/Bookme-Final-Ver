@@ -18,7 +18,7 @@ const Aside = () => {
       ]
     },
     { name: "Refer & Earn", active: false, icon: "🎁", link: "/my-profile/refer" },
-    { name: "Change Password", active: false, icon: "🔐", link: "/my-profile/change-password" },
+    // { name: "Change Password", active: false, icon: "🔐", link: "/my-profile/change-password" },
   ];
 
   const toggleSubMenu = (menuName) => {
@@ -26,7 +26,7 @@ const Aside = () => {
   };
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 shadow-sm hidden md:block sticky top-14 h-screen">
+    <aside className="w-64  bg-white border-r border-gray-200 shadow-sm hidden md:block sticky top-14 h-screen">
       {/* Header */}
       <div className="p-6 border-b border-gray-100">
         <h2 className="text-xl font-semibold text-gray-900">Account Settings</h2>

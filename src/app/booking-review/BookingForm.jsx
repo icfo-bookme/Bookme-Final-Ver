@@ -29,16 +29,38 @@ export default function BookingForm({
     return `${year}-${month}-${day}`;
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+ const handleInputChange = (e) => {
+  const { name, value } = e.target;
 
-    onGuestInfoChange({
-      ...guestInfo,
-      [name]: value,
-    });
+  // Update guest info
+  onGuestInfoChange({
+    ...guestInfo,
+    [name]: value,
+  });
 
-    setErrors(prev => ({ ...prev, [name]: "" })); 
-  };
+  // Real-time validation
+  setErrors(prev => {
+    const newErrors = { ...prev };
+
+    if (name === "phone") {
+      const bdPhoneRegex = /^(?:\+?88)?01[3-9]\d{8}$/;
+      if (!bdPhoneRegex.test(value)) {
+        newErrors.phone = "Enter a valid Bangladeshi phone number.";
+      } else {
+        delete newErrors.phone;
+      }
+    } else if (name === "name") {
+      if (!value.trim()) {
+        newErrors.name = "Name is required.";
+      } else {
+        delete newErrors.name;
+      }
+    }
+
+    return newErrors;
+  });
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

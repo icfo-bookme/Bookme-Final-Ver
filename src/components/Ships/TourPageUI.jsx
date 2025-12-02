@@ -1,13 +1,15 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import ContactForm from "@/components/tour/ContactForm/ContactForm";
-import ImageCarousel from "@/services/tour/ImageCarousel";
+import ImageCarousel from "@/utils/ImageCarousel";
 import { IoLocation } from "react-icons/io5";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AccordionBookMe from "@/components/Ships/Accordion";
 import PackageCarousel from "@/components/tour/packageCarousel/packageCarousel";
 import { Roboto } from "next/font/google";
+import FacilitiesNew from "./Facilities";
+
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
@@ -20,7 +22,6 @@ export default function TourPageUI({
 }) {
   const [isFixed, setIsFixed] = useState(false);
   const accordionRef = useRef(null);
-
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -34,7 +35,7 @@ export default function TourPageUI({
 
   return (
     <div className={`${roboto.className} pt-[50px] md:pt-[80px] bg-[#EBF0F4] pb-[20px] md:pb-[200px]`}>
-      <div className="lg:container w-[98%] md:w-[85%] mx-auto">
+      <div className="lg:container w-[98%] md:w-[89%] mx-auto">
         <div className="grid-cols-1 rounded gap-8 lg:grid pr-1 pt-1">
           {/* Property Details */}
           <div className="col-span-1 p-2">
@@ -75,21 +76,14 @@ export default function TourPageUI({
 
         {/* Accordion & Contact */}
         <div className="bg-white p-[15px] rounded-lg top-[80px]" ref={accordionRef}>
-          <div className="grid-cols-3 rounded gap-10 lg:grid">
-            <div className="col-span-2">
-              <AccordionBookMe facilities={propertyFacilities} />
+          <div className="">
+            <div className="">
+               {/* <PropertyFacilities data={propertyFacilities} /> */}
+              {/* <AccordionBookMe facilities={propertyFacilities} /> */}
+              <FacilitiesNew data={propertyFacilities} />
             </div>
 
-            <div className="col-span-1 p-[10px] rounded-lg shadow-lg">
-              <h1 className="font-heading text-base shadow-2xl bg-white font-bold text-blue-900 md:mt-0 mt-[15px]">
-                Get consultancy/Get a call
-              </h1>
-              <ContactForm
-                category={"tour"}
-                propertyDetails={propertyDetails[0]?.property_name}
-                headline={""}
-              />
-            </div>
+            
           </div>
         </div>
       </div>

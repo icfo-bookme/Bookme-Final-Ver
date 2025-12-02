@@ -1,4 +1,4 @@
-// lib/api/getHotelPhotos.js
+
 const getHotelPhotos = async (hotelId) => {
   try {
     const response = await fetch(

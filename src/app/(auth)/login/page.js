@@ -12,7 +12,6 @@ import LoadingSpinner from '@/utils/LoadingSpinner';
 export default function LoginPage() {
     const router = useRouter();
     const { user, loginUser, logoutUser, loading } = useUser();
-
     const [form, setForm] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
@@ -37,7 +36,7 @@ export default function LoginPage() {
             loginUser(data.token, userData);
             router.push('/');
         } catch (err) {
-            setError(err.message);
+            setError("Your email or password is incorrect. Please try again.");
         } finally {
             setIsLoading(false);
         }

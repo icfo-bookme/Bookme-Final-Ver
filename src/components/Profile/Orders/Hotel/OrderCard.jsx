@@ -8,6 +8,7 @@ const OrderCard = ({
   getStatusBadge,
   getPaymentBadge
 }) => {
+  console.log(order);
   return (
     <div className="bg-blue-50 rounded-xl border border-gray-300 p-6 hover:shadow-md transition-all duration-300 hover:border-gray-200">
       {/* Header Section */}
