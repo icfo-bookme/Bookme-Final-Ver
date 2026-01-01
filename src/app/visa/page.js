@@ -23,6 +23,9 @@ export const metadata = {
     "student visa requirements",
     "immigration visa guide",
   ],
+  alternates: {
+    canonical: "https://bookme.com.bd/visa",
+  },
 };
 
 export default async function Home() {

@@ -105,7 +105,7 @@ const RelatedActivities = ({ packages = [] }) => {
                         <div className="relative w-full h-48">
                             <Image
                                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${pkg.image}`}
-                                alt={pkg.property_name}
+                                alt={pkg.property_name ? `Image of ${pkg.property_name} tour package, BookMe Tour Package, Travel with BookMe, Exciting Tour Packages Available, Affordable Prices.` : "Tour Package Image" }
                                 fill
                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                                 sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 30vw, 25vw"

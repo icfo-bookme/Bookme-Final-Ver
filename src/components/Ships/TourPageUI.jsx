@@ -9,6 +9,7 @@ import AccordionBookMe from "@/components/Ships/Accordion";
 import PackageCarousel from "@/components/tour/packageCarousel/packageCarousel";
 import { Roboto } from "next/font/google";
 import FacilitiesNew from "./Facilities";
+import StepProcess from "./StepProcess";
 
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
@@ -63,10 +64,13 @@ export default function TourPageUI({
           </div>
         </div>
 
+        <div>
+          <StepProcess />
+        </div>
         {/* Packages Section */}
-        <div className="my-[30px]">
-          <h1 className="font-heading text-blue-700 text-[32px] font-bold my-[32px]">
-            Packages:
+        <div className="mb-[30px]">
+          <h1 className=" text-center text-blue-950 text-[32px] font-bold mb-[22px]">
+            Packages
           </h1>
           <PackageCarousel
             propertyPackages={propertyPackages}

@@ -3,10 +3,10 @@ const getContactNumber = async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-attributes `,
       {
-      next: { revalidate: 43200 },
-    }
+        next: { revalidate: 43200 },
+      }
     );
-    const data = await res.json(); 
+    const data = await res.json();
     return data;
   } catch (error) {
     return [];

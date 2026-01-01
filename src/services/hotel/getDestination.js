@@ -4,7 +4,7 @@ const getDestination = async () => {
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/destinations`,
       { 
         next: { 
-          revalidate: 1800 
+          revalidate: 43200
         } 
       } 
     );

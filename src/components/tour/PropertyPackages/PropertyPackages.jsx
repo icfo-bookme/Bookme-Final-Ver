@@ -15,7 +15,7 @@ export const PropertyPackages = ({ packages }) => {
         >
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${pkg.mainimg}`}
-            alt={`Package Image - ${pkg.unit_name}`}
+            alt={`Package Image - ${pkg.unit_name},Sundarban, Saint Martin, Tanguar Haor Ship, BookMe Travel Packages, Explore Destinations, Affordable Travel Experiences.`}
             fill
             className="w-full sm:w-48 h-48 object-cover rounded-md mx-auto"
           />

@@ -109,7 +109,7 @@ export default function SundarbanCruiseShips() {
                             <div className="relative w-full h-64">
                                 <Image
                                     src={image}
-                                    alt={title}
+                                    alt={`Image of ${title} ship to Sundarbans, BookMe Cruise Tours, Mangrove Forest Adventure, Comfortable Wildlife Experience.`}
                                     fill
                                     className="object-cover"
                                     quality={80}

@@ -1,7 +1,9 @@
 const getAllVisa = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/countries/visa`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/countries/visa`, {
+          next: { revalidate: 43200 },
+        }
       );
       const propertyPackages = await response.json();     
       return propertyPackages;

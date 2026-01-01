@@ -21,7 +21,7 @@ export default function VisaDetails({ visaDetails, contactNumber }) {
       <div className="h-[250px] lg:h-[550px] relative">
         <Image
           src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${visaDetails?.main_img}`}
-          alt={visaDetails?.property_name}
+          alt={`Image of ${visaDetails?.property_name}, Visa Details, Travel Visa Information, BookMe Travel Services.`}
           fill
           className="object-fill"
         />

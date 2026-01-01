@@ -96,7 +96,7 @@ export default function HotelCard({ hotelData = [] }) {
                 <div className="relative h-40 sm:h-48 w-full">
                   <Image
                     src={img}
-                    alt={hotel.hotel_name || "Hotel"}
+                    alt={hotel.hotel_name ? `Image of ${hotel.hotel_name} hotel, Hotel Booking,  Travel with BookMe.` : "Hotel Image"}
                     fill
                     className="object-cover"
                     loading="lazy"

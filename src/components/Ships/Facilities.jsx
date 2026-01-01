@@ -184,7 +184,7 @@ export default function FacilitiesNew({ data }) {
                     <div className="sticky top-28 h-[750px] overflow-x-auto">
                         <div className="overflow-y-auto">
                             <ContactForm
-                                category={"tourPackages"}
+                                category={"ship"}
                                 propertyDetails={data?.property_name}
                                 headline={"Request For Custom Package"}
                             /></div>

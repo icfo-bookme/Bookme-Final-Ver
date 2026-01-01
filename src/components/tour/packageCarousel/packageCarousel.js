@@ -98,7 +98,7 @@ const PackageCarousel = ({
                 <div className="relative w-full h-[180px]">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${pkg.mainimg}`}
-                    alt={pkg.unit_id}
+                    alt={`Image of ${pkg.unit_name} , Package Image, BookMe Travel Packages, Explore Destinations, Affordable Travel Experiences.`}
                     fill
                     className="rounded-t-lg object-cover"
                   />
@@ -116,7 +116,24 @@ const PackageCarousel = ({
                       ? ""
                       : ""}
                   </p>
-                  <div className="flex justify-start items-center">
+                  {
+                    pkg.property_id == 293 ? (
+                     <div className="flex justify-start items-center">
+                    <div className={`flex gap-2 mt-3 mb-4`}>
+                      <Link href={`tel:8801841333322`} target="_blank" rel="noopener noreferrer">
+                        <div className="flex border border-blue-950 justify-center rounded-full text-black text-center text-sm font-heading items-center px-3 py-1 sm:w-[90px]">
+                          Call Now
+                        </div>
+                      </Link>
+                      <Link href={`https://wa.me/8801841333322`} target="_blank" rel="noopener noreferrer">
+                        <div className="flex border border-blue-950 justify-center rounded-full text-black text-sm font-heading gap-2 items-center px-3 py-1 sm:w-[120px]">
+                          <FaWhatsapp className="text-[16px] text-green-500" />
+                          Book Now
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                    ) : <div className="flex justify-start items-center">
                     <div className={`flex gap-2 mt-3 mb-4`}>
                       <Link href={`tel:${contactNumber?.Phone}`} target="_blank" rel="noopener noreferrer">
                         <div className="flex border border-blue-950 justify-center rounded-full text-black text-center text-sm font-heading items-center px-3 py-1 sm:w-[90px]">
@@ -131,6 +148,7 @@ const PackageCarousel = ({
                       </Link>
                     </div>
                   </div>
+                  }
                   <div className='h-[90px]'>
                     <div>
                       {pkg.price?.length > 0 ? (

@@ -5,6 +5,7 @@ import { SearchProvider } from "@/context/SearchContext";
 import { PaginationProvider } from "@/context/usePagination";
 import HeaderWrapper from "../components/HeadWrapper/HeaderWrapper";
 import { UserProvider } from "@/context/UserContext";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +30,21 @@ export const metadata = {
   alternates: {
     canonical: "https://bookme.com.bd",
   },
+
+  // Add this for Google site name
+  metadataBase: new URL("https://bookme.com.bd"),
+  applicationName: "BookMe",
+
+  openGraph: {
+    siteName: "BookMe",
+    url: "https://bookme.com.bd",
+    type: "website",
+  },
+
+  other: {
+    "apple-mobile-web-app-title": "BookMe",
+    "application-name": "BookMe",
+  },
 };
 
 export default function DashboardLayout({ children }) {
@@ -45,6 +61,16 @@ export default function DashboardLayout({ children }) {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        {/* Google tag (gtag.js) */}
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-WMVC1JFLFC"></Script>
+        <Script id="ga-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-WMVC1JFLFC');
+        `}
+      </Script>
       </head>
       <body className={inter.className}>
         <PaginationProvider>

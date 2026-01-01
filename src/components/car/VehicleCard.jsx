@@ -111,7 +111,7 @@ const VehicleCard = ({ vehicle }) => {
         <div className="relative w-full md:w-2/5 h-[14rem] rounded-lg overflow-hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_URL || ''}/storage/${vehicle.image}`}
-            alt={vehicle.property_name || 'Vehicle'}
+            alt={vehicle.property_name ? `Image of ${vehicle.property_name} BookMe Car Rental Service, Reliable Car Rentals, Affordable Prices, Travel with BookMe.` : "Vehicle Image"}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 40vw"

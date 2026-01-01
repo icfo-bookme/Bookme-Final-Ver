@@ -1,7 +1,9 @@
 const getTourDestination = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/tour/destinations`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/tour/destinations`,{
+          next: { revalidate: 43200 }
+        }
       );
       const destinations = await response.json();     
       return destinations;

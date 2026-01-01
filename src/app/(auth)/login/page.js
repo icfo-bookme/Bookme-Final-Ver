@@ -57,7 +57,7 @@ export default function LoginPage() {
                         <div className="flex justify-center mb-4">
                             <Image
                                 src="/assets/images/logo.png"
-                                alt="Logo"
+                                alt="BookMe Logo, a travel booking platform."
                                 width={150}
                                 height={50}
                                 className="h-10 w-auto"
@@ -97,7 +97,7 @@ export default function LoginPage() {
                     <div className="flex justify-center mb-1">
                         <Image
                             src="/assets/images/logo.png"
-                            alt="Logo"
+                            alt="BookMe Logo, a travel booking platform."
                             width={180}
                             height={60}
                             className="h-12 w-auto"

@@ -45,7 +45,7 @@ export default function Banner({ id }) {
             <div className="relative h-full w-full">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${image?.image}`}
-                alt={`Slide ${index}`}
+                alt={`Image of ${image?.title || "tour banner"}, Tour Banner, Explore Tours, BookMe Travel Experiences.`}
                 fill
                 className="object-cover"
                 priority={index === 0}

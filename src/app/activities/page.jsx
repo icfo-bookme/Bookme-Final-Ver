@@ -9,6 +9,9 @@ import ActivitiesCard from '../../components/Activities/ActivitiesPage/Activitie
 export const metadata = {
   title: "Activities & Experiences | BookMe",
   description: "Discover a wide range of activities and experiences to make your trip memorable. From thrilling adventures to relaxing tours, explore options with detailed information, pricing, and exclusive deals. Plan and book exciting experiences easily with BookMe.",
+  alternates: {
+    canonical: "https://bookme.com.bd/activities",
+  },
 };
 
 

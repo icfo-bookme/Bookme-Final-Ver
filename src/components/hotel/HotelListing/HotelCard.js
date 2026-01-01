@@ -34,7 +34,7 @@ const HotelCard = ({
         <div className="relative w-full md:w-2/5 h-52 rounded-lg overflow-hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${hotel.img}`}
-            alt={hotel.name}
+            alt={hotel.name ? `Image of ${hotel.name} hotel, Hotel Booking,  Travel with BookMe.` : "Hotel Image"}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 40vw"

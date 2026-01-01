@@ -27,12 +27,12 @@ export default function RegisterPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-    
+
     // Clear phone error when user starts typing
     if (name === 'phone' && phoneError) {
       setPhoneError('');
     }
-    
+
     // Clear general error when user makes any change
     if (error) {
       setError('');
@@ -44,14 +44,14 @@ export default function RegisterPage() {
     const cleanedPhone = phone.replace(/\D/g, '');
 
     const bangladeshiRegex = /^(?:\+?)?01[3-9]\d{8}$/;
-    
+
     if (!bangladeshiRegex.test(cleanedPhone)) {
       return {
         isValid: false,
         message: 'Please enter a valid Bangladeshi phone number (e.g., 01712345678)'
       };
     }
-    
+
     return {
       isValid: true,
       formattedPhone: cleanedPhone
@@ -96,11 +96,11 @@ export default function RegisterPage() {
 
     try {
       const { name, email, password } = form;
-      await register({ 
-        name, 
-        email, 
-        phone: phoneValidation.formattedPhone, 
-        password 
+      await register({
+        name,
+        email,
+        phone: phoneValidation.formattedPhone,
+        password
       });
       router.push('/login');
     } catch (err) {
@@ -112,12 +112,12 @@ export default function RegisterPage() {
 
   const handlePhoneChange = (e) => {
     const value = e.target.value;
-    
+
     // Allow only digits and optional + at the beginning
     const cleanedValue = value.replace(/[^\d+]/g, '');
-    
+
     setForm({ ...form, phone: cleanedValue });
-    
+
     // Clear errors
     if (phoneError) setPhoneError('');
     if (error) setError('');
@@ -125,7 +125,7 @@ export default function RegisterPage() {
 
   const handlePhoneBlur = (e) => {
     const value = e.target.value;
-    
+
     if (value) {
       const validation = validateBangladeshiPhone(value);
       if (!validation.isValid) {
@@ -142,7 +142,7 @@ export default function RegisterPage() {
           <div className="flex justify-center mb-1">
             <Image
               src="/assets/images/logo.png"
-              alt="Logo"
+              alt="BookMe Logo, a travel booking platform."
               width={180}
               height={60}
               className="h-12 w-auto"
@@ -161,7 +161,7 @@ export default function RegisterPage() {
               </label>
               <div className="relative text-blue-950">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                 <FaRegUser />
+                  <FaRegUser />
                 </div>
                 <input
                   id="name"
@@ -182,7 +182,7 @@ export default function RegisterPage() {
               </label>
               <div className="relative text-blue-950">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                 <MdOutlineMailLock />
+                  <MdOutlineMailLock />
                 </div>
                 <input
                   id="email"
@@ -214,9 +214,8 @@ export default function RegisterPage() {
                   onChange={handlePhoneChange}
                   onBlur={handlePhoneBlur}
                   required
-                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ${
-                    phoneError ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ${phoneError ? 'border-red-500' : 'border-gray-300'
+                    }`}
                 />
               </div>
               {phoneError && (
@@ -324,7 +323,9 @@ export default function RegisterPage() {
 
           {error && (
             <div className="mt-6 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-center text-sm">{error}</p>
+              <p className="text-red-600 text-center text-sm">
+                {error.replace(/\(and \d+ more error\)/, '').trim()}
+              </p>
             </div>
           )}
 

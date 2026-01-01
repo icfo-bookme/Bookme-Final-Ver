@@ -11,7 +11,7 @@ import PropertyPagination from "./PropertyPagination";
 import LoadingSpinner from "@/utils/LoadingSpinner";
 import Banner from "../Banner/Banner";
 
-export default function PropertyList({ id, initialData }) {
+export default function PropertyList({ id, initialData, contact }) {
   const { searchTerm, setSearchTerm } = useSearch();
   const { currentPage, handlePageChange, setCurrentPage } = usePagination();
   const [data, setData] = useState(initialData || []);
@@ -187,6 +187,7 @@ export default function PropertyList({ id, initialData }) {
               <PropertyCard
                 key={property.property_id}
                 property={property}
+                contact = {contact}
                 index={index}
                 onCardClick={handleCardClick}
               />

@@ -38,7 +38,11 @@ export async function generateMetadata({ params }) {
     title,
     description,
     keywords,
+    alternates: {
+      canonical: `https://bookme.com.bd/property/${propertyName}/${id}`,
+    },
   };
+
 }
 
 export default async function TourPage({ params }) {

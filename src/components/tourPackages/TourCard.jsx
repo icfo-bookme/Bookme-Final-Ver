@@ -33,7 +33,7 @@ const TourCard = ({ tour }) => {
         <div className="relative w-full md:w-2/5 h-[15rem] rounded-lg overflow-hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${tour.image}`}
-            alt={tour.property_name}
+            alt={`Image of ${tour.property_name}, Tour Image, BookMe Accommodation, Comfortable Stay, Affordable Prices.`}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 40vw"

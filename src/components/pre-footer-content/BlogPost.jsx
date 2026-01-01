@@ -18,7 +18,7 @@ export const BlogPost = ({ heading, blogPosts }) => {
                  <div className="relative w-full h-64">
                    <Image
                      src={post.image}
-                     alt={post.title}
+                     alt={post.title ? `Image of ${post.title} blog post, Travel Tips, BookMe Travel Blog, Explore Destinations, Affordable Travel.` : "Blog Post Image"}
                      fill
                      className="object-cover hover:scale-105 transition-transform duration-300"
                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

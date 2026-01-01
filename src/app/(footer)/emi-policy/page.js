@@ -1,5 +1,13 @@
 import React from 'react';
 
+export const metadata = {
+  title: "EMI Terms & Conditions - BookMe",
+  description: "Read the terms and conditions for using the Equated Monthly Installment (EMI) service on BookMe.",
+  alternates: {
+    canonical: "https://bookme.com.bd/emi-policy",
+  },
+};
+
 export default function EMITermsConditions() {
   return (
     <div className="min-h-screen bg-gray-50 py-16">

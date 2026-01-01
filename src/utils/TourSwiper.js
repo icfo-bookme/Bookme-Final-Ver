@@ -224,7 +224,7 @@ export default function TourSwiper({
                   <div className="relative h-48 md:h-56 lg:h-56 w-full overflow-hidden">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${property.main_img}`}
-                      alt={property.property_name}
+                      alt={`Image of ${property.property_name}, Ship Image, BookMe Accommodation, Comfortable Stay, Affordable Prices.`}
                       fill
                       className="object-cover rounded-t-lg transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"

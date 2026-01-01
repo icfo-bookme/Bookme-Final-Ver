@@ -100,7 +100,7 @@ export default function SaintMartinShips() {
                             <div className="relative w-full h-64">
                                 <Image
                                     src={image}
-                                    alt={title}
+                                    alt={`Image of ${title} ship to Saint Martin's Island, BookMe Ship Tours, Tropical Island Adventure, Comfortable Sea Journey.`}
                                     fill
                                     className="object-cover"
                                     quality={80}

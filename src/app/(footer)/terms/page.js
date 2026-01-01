@@ -1,4 +1,11 @@
-import React from 'react';
+
+export const metadata = {
+  title: "Terms & Conditions - BookMe",
+  description: "Read the Terms & Conditions for using BookMe's services, including booking policies, payment terms, cancellation procedures, and user responsibilities.",
+  alternates: {
+    canonical: "https://bookme.com.bd/terms",
+  },
+};
 
 export default function TermsAndConditions() {
   return (

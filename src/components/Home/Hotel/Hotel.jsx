@@ -5,7 +5,7 @@ export default function Hotel({ data = [] }) {
   return (
     <CommonSwiper
       data={data}
-      title="Popular Hotels & Resortscc"
+      title="Popular Hotels & Resorts"
       seeMoreLink="/hotel"
       seeMoreText="Hotels"
       basePath="/hotel/list/details"

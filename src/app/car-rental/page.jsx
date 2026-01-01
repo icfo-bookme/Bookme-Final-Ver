@@ -6,6 +6,9 @@ import Faq from "../../components/car/car/Faq";
 export const metadata = {
   title: "Car Rentals | BookMe",
   description: "Find and book reliable car rentals for your trips. Compare prices, vehicle types, and rental options to suit your needs. Enjoy a convenient and hassle-free car rental experience with BookMe and travel with ease.",
+    alternates: {
+    canonical: "https://bookme.com.bd/car-rental",
+  },
 };
 
 export default async function Page() {
@@ -28,7 +31,7 @@ export default async function Page() {
                                 {model.image ? (
                                     <Image
                                         src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${model.image}`}
-                                        alt={model.model_name}
+                                        alt={`Image of ${model.model_name} car model, BookMe Car Rental Service, New Car Models Available for Rent, Affordable Prices.`}
                                         fill
                                         className="object-cover rounded-md"
                                         sizes="(max-width: 768px) 100vw,

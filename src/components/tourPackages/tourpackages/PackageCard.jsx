@@ -144,7 +144,7 @@ const TourPackageCard = ({ packageData = [] }) => {
                                     <div className="relative h-40 sm:h-48 w-full">
                                         <Image
                                             src={imageUrl}
-                                            alt={pkg.property_name || "Tour Package"}
+                                            alt={`Image of ${pkg.property_name}, Tour Packages, Tour Activities, BookMe Accommodation, Comfortable Stay, Affordable Prices.`}
                                             fill
                                             className="object-cover"
                                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

@@ -3,7 +3,7 @@ const getFooterPolicy = async () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/footer-policies `,
         {
-          cache: "no-store", // Ensure no caching
+          next: { revalidate: 43200 },
         }
       );
       const data = await res.json();

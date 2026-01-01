@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 const EditForm = ({ data, user }) => {
     const {
@@ -210,7 +211,7 @@ const EditForm = ({ data, user }) => {
                             {/* Profile Image */}
                             <div className="relative inline-block mb-4">
                                 <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-100 border-4 border-white shadow-lg mx-auto">
-                                    <img
+                                    <Image
                                         src={profileImage}
                                         alt="Profile"
                                         className="w-full h-full object-cover"

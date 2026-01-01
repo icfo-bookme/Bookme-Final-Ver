@@ -2,9 +2,12 @@
 import getVisaDetails from "@/services/visa/getVisaDeatails";
 import getContactNumber from "@/services/tour/getContactNumber";
 import VisaDetails from "@/components/visa/VisaDetailsContent";
+import slugify from "@/utils/slugify";
 
 export async function generateMetadata({ params }) {
-  const { name } = await params; 
+  const { name, id } = await params; 
+  const nameSlugify = slugify(name);
+  
 
   const title = `${name} Visa | BookMe`;
 
@@ -27,6 +30,9 @@ export async function generateMetadata({ params }) {
     title,
     description,
     keywords,
+    alternates: {
+      canonical: `https://bookme.com.bd/visa/${nameSlugify}/${id}`,
+    },
   };
 }
 

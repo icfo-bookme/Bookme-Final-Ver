@@ -1,4 +1,11 @@
 import Link from "next/link";
+export const metadata = {
+  title: "Confirmation - BookMe",
+  description: "Your action has been completed successfully. Receive your confirmation details and reference ID here.",
+  alternates: {
+    canonical: "https://bookme.com.bd/confirmation",
+  },
+};
 
 export default async function ConfirmationPage({params}) {
     const orderno = await params.id;

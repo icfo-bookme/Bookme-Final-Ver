@@ -167,7 +167,7 @@ export default function DestinationSliderClient({ destinations }) {
                                         <div className="absolute inset-0">
                                             <Image
                                                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${destination.img}`}
-                                                alt={destination.name || 'Destination image'}
+                                                alt={`Image of ${destination.name} destination, Hotel Booking,  Travel with BookMe.`}
                                                 fill
                                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                                                 sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"

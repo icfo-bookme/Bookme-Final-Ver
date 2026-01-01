@@ -117,7 +117,7 @@ const RoomCarousel = ({ images = [] }) => {
                 <div className="relative w-full h-full cursor-zoom-in" style={{ height: carouselHeight }}>
                   <Image
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${image.image_path}`}
-                    alt={`Hotel Image ${image.id}`}
+                    alt={`Room Images}`}
                     fill
                     className="object-cover rounded-xl"
                     sizes="100vw"

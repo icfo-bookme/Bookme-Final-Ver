@@ -1,7 +1,9 @@
 export async function fetchHotelListingData(locationID) {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}`;
-    const hotelRes = await fetch(apiUrl);
+    const hotelRes = await fetch(apiUrl, {
+      next: { revalidate: 43200 },
+    });
 
     if (!hotelRes.ok) {
       throw new Error('Failed to fetch hotels');

@@ -4,11 +4,14 @@ import propertySummary from "@/services/tour/propertySummary";
 import TanguarHaorHouseboatListing from "@/components/pre-footer-content/Tangua";
 import SundarbanCruiseShips from "@/components/pre-footer-content/sundarbanShips";
 import SaintMartinShips from "@/components/pre-footer-content/saintMartinShips";
+import slugify from "@/utils/slugify";
+import getContactNumber from "@/services/tour/getContactNumber";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
 export async function generateMetadata({ params }) {
-  const { name } = await params;
+  const { name, id } = await params;
+  const nameSlugify = slugify(name);
 
   const title = `${name} Ship Tours & Cruises | BookMe`;
 
@@ -23,24 +26,30 @@ export async function generateMetadata({ params }) {
     `family cruises to ${name}`,
     `adventure cruises in ${name}`,
     `houseboats in ${name}`,
+    `couple cruises in ${name}`,
   ];
 
   return {
     title,
     description,
     keywords,
+    alternates: {
+      canonical: `https://bookme.com.bd/ships/${nameSlugify}/${id}`,
+    },
   };
 }
 
 export default async function Home({ params }) {
   const { id } = await params;
   const result = await propertySummary(id);
+  const contact = await getContactNumber();
+  
   return (
     <main className={`${roboto.className}`}>
       <div className=" mb-12">
         <div className=" ">
           <div className=" overflow-hidden">
-            <PropertyList initialData={result} id={id} />
+            <PropertyList initialData={result} id={id} contact = {contact} />
           </div>
         </div>
       </div>

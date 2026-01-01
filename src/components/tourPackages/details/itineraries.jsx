@@ -61,7 +61,7 @@ export default function Itineraries({ itineraries }) {
                                         <div className="relative w-full md:w-64 h-48 md:h-40 flex-shrink-0 rounded-lg overflow-hidden">
                                             <Image
                                                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/bookme/public//${activity.image}`}
-                                                alt={activity.name || 'Activity image'}
+                                                alt={`Image of ${activity.name}, Itinerary Activity, Travel Experience, BookMe Tours.`}
                                                 fill
                                                 className="object-cover"
                                                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"

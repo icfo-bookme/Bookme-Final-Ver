@@ -131,7 +131,7 @@ const ActivityCard = ({ activity }) => {
         <div className="relative w-full md:w-2/5 h-[13rem] rounded-lg overflow-hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${activity.image}`}
-            alt={activity.property_name}
+            alt={`Image of ${activity.property_name} BookMe Travel Activity, Exciting Activities Available, Affordable Prices. Travel with BookMe.`}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 40vw"

@@ -208,7 +208,7 @@ export default function ActivitiesCarousel({ packages = [], property_id }) {
                   <div className="relative h-48 sm:h-56 md:h-56 lg:h-56 w-full bg-gray-200">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${pkg.image}`}
-                      alt={pkg.package_name}
+                      alt={`Image of ${pkg.package_name} tour package, Tour Activities, BookMe Tour Package, Travel with BookMe, Exciting Tour Packages Available, Affordable Prices.`}
                       fill
                       className="object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 30vw, 25vw"

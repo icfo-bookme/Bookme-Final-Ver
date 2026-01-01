@@ -2,6 +2,14 @@ import React from 'react';
 import { FaPhone, FaFacebookMessenger, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import Banner from '../../components/Home/Banner';
 
+export const metadata = {
+  title: "Contact Us - BookMe",
+  description: "Get in touch with BookMe for the best deals on hotels, cars, and flights. Reach out via phone, WhatsApp, Messenger, or email for exclusive offers and instant solutions.",
+  alternates: {
+    canonical: "https://bookme.com.bd/contact",
+  },
+};
+
 const HotelDealsPage = () => {
   const contacts = {
     phone: '+8801967776777',
@@ -87,8 +95,6 @@ const HotelDealsPage = () => {
                   <a href={`mailto:${contacts.email}`} className="text-blue-600">{contacts.email}</a>
                 </div>
               </div>
-
-
             </div>
 
             <div className="sm:hidden mt-4">

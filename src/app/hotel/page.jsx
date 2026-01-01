@@ -6,7 +6,10 @@ import HotelLoadingSkeleton from '@/components/hotel/Hotel/HotelLoadingSkeleton'
 
 export const metadata = {
   title: "Hotels Booking | Best Deals & Comfortable Stays - BookMe",
-  description: "Explore and book hotels in top destinations with BookMe. Compare amenities, read reviews, and find the best deals for families, couples, and solo travelers. Enjoy hassle-free reservations, comfortable stays, and seamless customer support. From luxury resorts to cozy boutique hotels, BookMe makes planning your perfect trip simple, convenient, and memorable."
+  description: "Explore and book hotels in top destinations with BookMe. Compare amenities, read reviews, and find the best deals for families, couples, and solo travelers. Enjoy hassle-free reservations, comfortable stays, and seamless customer support. From luxury resorts to cozy boutique hotels, BookMe makes planning your perfect trip simple, convenient, and memorable.",
+  alternates: {
+    canonical: "https://bookme.com.bd/hotel",
+  },
 };
 
 export default async function HotelHome() {

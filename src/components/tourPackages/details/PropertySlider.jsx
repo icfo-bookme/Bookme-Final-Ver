@@ -76,7 +76,7 @@ const PropertySlider = ({ images }) => {
                 <div className="relative w-full h-full">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${image}`}
-                    alt={`Property Image ${index + 1}`}
+                    alt={`Property Image ${index + 1}, Ship Image, BookMe Accommodation, Comfortable Stay, Affordable Prices.`}
                     fill
                     className="object-cover rounded-lg"
                     priority

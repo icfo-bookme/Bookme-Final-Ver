@@ -55,7 +55,7 @@ export const Card = ({ flightRoutes, homepage }) => {
                                         <div className="relative h-8 w-8 sm:h-10 sm:w-10 mr-3">
                                             <Image
                                                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${route.airline_icon_url}`}
-                                                alt={`${route.airline_name || 'Airline'} logo`}
+                                                alt={`${route.airline_name || 'Airline'} logo, BookMe Flight Service, Affordable Airfares, Travel with BookMe. Emergency Flight Deals.`}
                                                 fill
                                                 className="object-contain rounded-lg"
                                                 sizes="(max-width: 640px) 32px, 40px"

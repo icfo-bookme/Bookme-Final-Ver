@@ -76,7 +76,7 @@ export default function TanguarHaorHouseboats() {
               <div className="relative w-full h-64">
                 <Image
                   src={image}
-                  alt={title}
+                  alt={`Image of ${title} houseboat in Tanguar Haor, BookMe Houseboat Tours, Floating Experience, Comfortable Stay.`}
                   fill
                   className="object-cover"
                   quality={80}

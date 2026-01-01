@@ -5,7 +5,7 @@ const PackageInfo = ({ selectedPackage }) => (
     <div className="relative h-20 w-20 rounded-md overflow-hidden flex-shrink-0">
       <Image
         src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${selectedPackage.image}`}
-        alt={selectedPackage.package_name}
+        alt={`Image of ${selectedPackage.package_name} tour package, BookMe Tour Package, Travel with BookMe, Exciting Tour Packages Available, Affordable Prices.`}
         fill
         className="object-cover"
       />

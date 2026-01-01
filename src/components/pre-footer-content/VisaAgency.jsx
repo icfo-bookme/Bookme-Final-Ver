@@ -20,7 +20,7 @@ const VisaAgency = () => {
       <div className="w-full lg:h-96 h-44 relative rounded-lg overflow-hidden mb-8">
         <Image
           src="/visa.jpg"
-          alt="Visa and passport documents"
+          alt="BookMe Visa and passport documents"
           fill
           className="object-cover"
           quality={100}

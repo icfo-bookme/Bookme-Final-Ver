@@ -14,6 +14,7 @@ import { Avatar, Dropdown } from "flowbite-react";
 import { useUser } from "@/context/UserContext";
 import PrimaryButton from "@/utils/PrimaryButton";
 import slugify from "@/utils/slugify";
+import { usePathname } from "next/navigation";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
@@ -30,6 +31,17 @@ const BookMeHeader = () => {
   const mobileMenuRef = useRef(null);
   const userDropdownRef = useRef(null);
   const { user, logoutUser } = useUser();
+  const pathname = usePathname();
+
+  // Determine which phone number to use based on pathname
+  const getPhoneNumber = useCallback(() => {
+    if (pathname === '/Property/Bay-Cruiser-1/293') {
+      return '8801841333322'; // Specific number for this path
+    }
+    return contactNumber?.Phone; // Default number
+  }, [pathname, contactNumber?.Phone]);
+
+  const phoneNumber = getPhoneNumber();
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -105,8 +117,6 @@ const BookMeHeader = () => {
     setIsUserDropdownOpen(false);
     router.push("/");
   };
-
-
 
   // Mobile menu component to separate the logic
   const MobileMenu = () => {
@@ -282,7 +292,7 @@ const BookMeHeader = () => {
           <div className="flex items-center space-x-4 mb-4">
             <a
               target="_blank"
-              href={`tel:${contactNumber?.Phone}`}
+              href={`tel:${phoneNumber}`}
               className="flex items-center justify-center w-12 h-12 bg-[#00026E] rounded-full text-white hover:bg-[#00026E]/90 transition-colors"
             >
               <FaPhone className="text-xl" />
@@ -290,22 +300,13 @@ const BookMeHeader = () => {
             <Link
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://wa.me/${contactNumber?.Phone}`}
+              href={`https://wa.me/${phoneNumber}`}
               className="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full text-white hover:bg-green-600 transition-colors relative"
             >
               <span className="absolute animate-ping opacity-75 inline-flex h-full w-full rounded-full bg-green-400"></span>
               <FaWhatsapp className="text-xl z-10" />
             </Link>
           </div>
-          {/* <div>
-            <p className="text-sm text-gray-600">Call Anytime</p>
-            <a
-              href={`tel:${contactNumber?.Phone}`}
-              className="text-lg font-semibold text-[#00026E] hover:underline"
-            >
-              {contactNumber?.Phone}
-            </a>
-          </div> */}
         </div>
       </div>
     );
@@ -420,7 +421,7 @@ const BookMeHeader = () => {
               <div className="ml-3 hidden lg:flex items-center justify-center gap-4">
                 <div className="flex items-center">
                   <div className="flex items-center mr-5">
-                    <a target="_blank" href={`tel:${contactNumber?.Phone}`} className="w-[38px] h-[38px] -mr-4">
+                    <a target="_blank" href={`tel:${phoneNumber}`} className="w-[38px] h-[38px] -mr-4">
                       <div className="phone-call-nav md:w-[40px] md:h-[40px] w-[36px] h-[36px] ">
                         <FaPhone className="md:ml-[12px] md:mt-[12px] mt-[9px] ml-[10px]" />
                       </div>
@@ -428,7 +429,7 @@ const BookMeHeader = () => {
                     <Link
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={`https://wa.me/${contactNumber?.Phone}`}
+                      href={`https://wa.me/${phoneNumber}`}
                       className="w-[38px] h-[38px] mx-[20px] "
                     >
                       <span className="btn-whatsapp-pulse btn-whatsapp-pulse-border-nav md:w-[40px] md:h-[40px] w-[36px] h-[36px] ml-[15px]">
@@ -436,15 +437,6 @@ const BookMeHeader = () => {
                       </span>
                     </Link>
                   </div>
-
-                  {/* <div>
-                    <p className="text-sm text-gray-900">Call Anytime</p>
-                    <h4 className="text-lg font-semibold">
-                      <a href="#" className="text-gray-800">
-                        {contactNumber?.Phone?.slice(3)}
-                      </a>
-                    </h4>
-                  </div> */}
                 </div>
 
                 {/* User Section - Desktop */}
@@ -488,7 +480,6 @@ const BookMeHeader = () => {
                       {isUserDropdownOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-30 border border-gray-200">
                           <div
-                           
                             className="flex mb-2 items-center gap-2 mt-2 p-2 rounded-full  transition-colors"
                           >
                             <Avatar className="h-5 " rounded />
@@ -503,21 +494,6 @@ const BookMeHeader = () => {
                           >
                            👤 &nbsp; My Profile
                           </Link>
-                          {/* <Link
-                            href="/dashboard"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            onClick={() => setIsUserDropdownOpen(false)}
-                          >
-                            Dashboard
-                          </Link>
-                          
-                          <Link
-                            href="/bookings"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            onClick={() => setIsUserDropdownOpen(false)}
-                          >
-                            My Bookings
-                          </Link> */}
                           <hr className="my-1" />
                           <button
                             onClick={handleLogout}
@@ -541,7 +517,7 @@ const BookMeHeader = () => {
               {/* Mobile Menu Button and Icons */}
               <div className="lg:hidden flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <a target="_blank" href={`tel:${contactNumber?.Phone}`} className="w-[38px] h-[38px]">
+                  <a target="_blank" href={`tel:${phoneNumber}`} className="w-[38px] h-[38px]">
                     <div className="phone-call w-[36px] h-[36px]">
                       <FaPhone className="mt-[9px] ml-[10px]" />
                     </div>
@@ -549,7 +525,7 @@ const BookMeHeader = () => {
                   <Link
                     target="_blank"
                     rel="noopener noreferrer"
-                    href={`https://wa.me/${contactNumber?.Phone}`}
+                    href={`https://wa.me/${phoneNumber}`}
                     className="w-[38px] h-[38px]"
                   >
                     <span className="btn-whatsapp-pulse btn-whatsapp-pulse-border w-[36px] h-[36px]">

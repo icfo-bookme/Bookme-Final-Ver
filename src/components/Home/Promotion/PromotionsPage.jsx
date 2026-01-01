@@ -159,7 +159,7 @@ export default function PromotionsPage({ promotions = [] }) {
                   <div className="absolute inset-0">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_BASE_URL}/${promo.image}`}
-                      alt={promo.title}
+                      alt={`Image of ${promo.title} promotion, BookMe Travel Deals, Exciting Offers, Affordable Prices, Travel with BookMe.`}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"

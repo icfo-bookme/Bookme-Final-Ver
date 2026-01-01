@@ -6,7 +6,7 @@ import PropertyAmenities from "./PropertyAmenities";
 import PropertyContactButtons from "./PropertyContactButtons";
 import slugify from "@/utils/slugify";
 
-export default function PropertyCard({ property, index, onCardClick }) {
+export default function PropertyCard({ property, index, onCardClick, contact }) {
   const containsBangla = (text) => /[\u0980-\u09FF]/.test(text);
   const propertyName = property.property_name;
   const propertySlug = containsBangla(propertyName)
@@ -25,7 +25,7 @@ export default function PropertyCard({ property, index, onCardClick }) {
         <div className="md:min-w-[400px] min-w-0 md:min-h-[300px] min-h-0 relative">
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_URL}/storage/${property.main_img}`}
-            alt={property.property_name}
+            alt={`Image of ${property.property_name}, Ship Image, BookMe Accommodation, Comfortable Stay, Affordable Prices.`}
             width={500}
             height={300}
             className="object-cover w-full md:w-[300px] md:h-[230px] h-[200px] mx-auto"
@@ -91,7 +91,7 @@ export default function PropertyCard({ property, index, onCardClick }) {
                   </div>
                 </div>
 
-                <PropertyContactButtons contactNumber={property.contactNumber} />
+                <PropertyContactButtons contactNumber={contact} pid={property.property_id} />
               </div>
             </div>
           )}

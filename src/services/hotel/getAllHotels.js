@@ -4,7 +4,7 @@ const getAllHotels = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels`, { 
         next: { 
-          revalidate: 1800 
+          revalidate: 43200
         } 
       } 
     );

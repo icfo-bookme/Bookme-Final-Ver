@@ -1,5 +1,13 @@
 import React from 'react';
 
+export const metadata = {
+  title: "Cancellation & Reissue Policy - BookMe",
+  description: "Understand BookMe's Cancellation and Reissue Policy for flights, hotels, tours, and visas. Learn about charges, refund processes, and contact information.",
+  alternates: {
+    canonical: "https://bookme.com.bd/refund-policy",
+  },
+};
+
 export default function CancellationReissuePolicy() {
   return (
     <div className="min-h-screen bg-gray-50 py-16">
