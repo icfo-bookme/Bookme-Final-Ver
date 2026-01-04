@@ -216,7 +216,7 @@ export default async function Home() {
                     <div className='flex justify-between gap-1 lg:-mt-4 lg:gap-3 lg:block'>
                       <p className="text-xs text-gray-500">Starting from:</p>
                       <p className="text-sm lg:text-xl font-bold text-blue-600">
-                        <p className="text-sm lg:text-xl font-bold text-blue-600">
+                        <span className="text-sm lg:text-xl font-bold text-blue-600">
                           {
                             Math.ceil(country?.properties[0]?.property_uinit[0]?.price[0]?.price) === 0 ? (
                               <span className='text-sm'>Contact for Price</span>
@@ -227,7 +227,7 @@ export default async function Home() {
                             )
                           }
 
-                        </p>
+                        </span>
 
                       </p>
                     </div>

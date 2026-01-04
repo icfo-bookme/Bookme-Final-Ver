@@ -147,7 +147,9 @@ const BookMeHeader = () => {
             <li>
               <Link
                 href="/hotel"
-                className="flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group"
+                className={`${pathname == "/hotel" ? "active" : ""
+  } flex items-center justify-between py-3 px-4 text-sm hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
+
                 onClick={closeAllMenus}
                 prefetch
               >
@@ -180,7 +182,7 @@ const BookMeHeader = () => {
                         <Link
                           key={destination.id}
                           href={`/ships/${slug}/${destination.id}`}
-                          className="flex items-center justify-between py-2 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group"
+                          className={`flex items-center justify-between py-2 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
                           onClick={closeAllMenus}
                           prefetch
                         >
@@ -197,7 +199,8 @@ const BookMeHeader = () => {
             <li>
               <Link
                 href="/flight"
-                className="flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group"
+                className={`${pathname == "/flight" ? "active" : ""
+  } flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
                 onClick={closeAllMenus}
                 prefetch
               >
@@ -209,7 +212,8 @@ const BookMeHeader = () => {
             <li>
               <Link
                 href="/visa"
-                className="flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group"
+                className={`${pathname == "/visa" ? "active" : ""
+  } flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
                 onClick={closeAllMenus}
                 prefetch
               >
@@ -221,7 +225,8 @@ const BookMeHeader = () => {
             <li>
               <Link
                 href="/tour/packages"
-                className="flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group"
+                className={`${pathname == "/tour/packages" ? "active" : ""
+  } flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
                 onClick={closeAllMenus}
                 prefetch
               >
@@ -233,7 +238,8 @@ const BookMeHeader = () => {
             <li>
               <Link
                 href="/activities"
-                className="flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group"
+                className={`${pathname == "/activities" ? "active" : ""
+  } flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
                 onClick={closeAllMenus}
                 prefetch
               >
@@ -245,7 +251,8 @@ const BookMeHeader = () => {
             <li>
               <Link
                 href="/car-rental"
-                className="flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group"
+                className={`${pathname == "/car-rental" ? "active" : ""
+  } flex items-center justify-between py-3 px-4 text-sm text-[#00026E] hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
                 onClick={closeAllMenus}
                 prefetch
               >
@@ -335,7 +342,7 @@ const BookMeHeader = () => {
               <div className="hidden lg:flex items-center gap-6">
                 <Link
                   href="/hotel"
-                  className="text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200"
+                  className={`${pathname == "/hotel" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
                   prefetch
                 >
                   HOTELS
@@ -362,7 +369,7 @@ const BookMeHeader = () => {
                             <Link
                               key={destination.id}
                               href={`/ships/${slug}/${destination.id}`}
-                              className="block px-4 py-2 text-sm text-[#00026E] hover:bg-blue-50"
+                              className={`${pathname == `/ships/${slug}/${destination.id}` ? "activeLg" : ""} block px-4 py-2 text-sm text-[#00026E] hover:bg-blue-50`}
                               onClick={() => {
                                 setIsPackageTourOpen(false);
                               }}
@@ -378,7 +385,7 @@ const BookMeHeader = () => {
 
                 <Link
                   href="/flight"
-                  className="text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200"
+                  className={`${pathname == "/flight" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
                   prefetch
                 >
                   FLIGHTS
@@ -386,7 +393,7 @@ const BookMeHeader = () => {
 
                 <Link
                   href="/visa"
-                  className="text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200"
+                  className={`${pathname == "/visa" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
                   prefetch
                 >
                   VISA
@@ -394,7 +401,7 @@ const BookMeHeader = () => {
 
                 <Link
                   href="/tour/packages"
-                  className="text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200"
+                  className={`${pathname == "/tour/packages" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
                   prefetch
                 >
                   TOUR PACKAGES
@@ -402,7 +409,7 @@ const BookMeHeader = () => {
 
                 <Link
                   href="/activities"
-                  className="text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200"
+                  className={`${pathname == "/activities" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
                   prefetch
                 >
                   ACTIVITIES
@@ -410,7 +417,7 @@ const BookMeHeader = () => {
 
                 <Link
                   href="/car-rental"
-                  className="text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200"
+                  className={`${pathname == "/car-rental" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
                   prefetch
                 >
                   CAR RENTAL
@@ -492,7 +499,7 @@ const BookMeHeader = () => {
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsUserDropdownOpen(false)}
                           >
-                           👤 &nbsp; My Profile
+                            👤 &nbsp; My Profile
                           </Link>
                           <hr className="my-1" />
                           <button

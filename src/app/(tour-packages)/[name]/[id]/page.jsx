@@ -2,7 +2,7 @@ import PropertyDetails from "@/components/tourPackages/details/PropertyDetails";
 import getPropertyDetails from "@/services/packages/getPropertyDetails";
 
 export async function generateMetadata({ params }) {
-  const { id } = params;
+  const id = await params.id;
   const activity = await getPropertyDetails({ id });
 
   if (!activity) {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const { id } = params;
+  const id = await params.id;
   if (!id) {
     throw new Error("No ID provided");
   }

@@ -1,0 +1,284 @@
+/* Main wrapper */
+.loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Main loader that looks like brand animation */
+.brand-loader {
+  text-align: center;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+/* Book animation */
+.book-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 2rem;
+}
+
+.book {
+  position: relative;
+  width: 80px;
+  height: 100px;
+  background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+  border-radius: 8px 12px 12px 8px;
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+  margin: 0 auto;
+  animation: bookFloat 3s ease-in-out infinite;
+}
+
+.book-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
+  border-radius: 6px 10px 10px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-title {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.book-spine {
+  position: absolute;
+  left: -6px;
+  top: 20%;
+  width: 12px;
+  height: 60%;
+  background: linear-gradient(to bottom, #5B21B6, #7C3AED);
+  border-radius: 4px 0 0 4px;
+}
+
+.page-flip {
+  position: absolute;
+  right: -15px;
+  top: 10px;
+  width: 40px;
+  height: 50px;
+  background: white;
+  border-radius: 0 4px 4px 0;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  transform-origin: left center;
+  animation: pageFlip 2s ease-in-out infinite;
+}
+
+/* Animated "M" letter */
+.letter-m {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+}
+
+.m-bar {
+  position: absolute;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  width: 12px;
+  border-radius: 6px;
+}
+
+.m-bar-1 {
+  height: 60px;
+  left: 20px;
+  top: 30px;
+  animation: mBar1 3s ease-in-out infinite;
+}
+
+.m-bar-2 {
+  height: 80px;
+  left: 54px;
+  top: 20px;
+  animation: mBar2 3s ease-in-out infinite;
+}
+
+.m-bar-3 {
+  height: 60px;
+  right: 20px;
+  top: 30px;
+  animation: mBar3 3s ease-in-out infinite;
+}
+
+/* Brand name */
+.brand-name {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #1E293B 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.blinking-cursor {
+  animation: blink 1s infinite;
+  margin-left: 2px;
+  color: #7C3AED;
+}
+
+.loading-dots {
+  color: #94A3B8;
+  font-weight: 300;
+  margin-left: 4px;
+}
+
+/* Tagline */
+.brand-tagline {
+  color: #64748B;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+}
+
+/* Decorative line */
+.decorative-line {
+  width: 200px;
+  height: 2px;
+  background: #E2E8F0;
+  margin: 2rem auto;
+  border-radius: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.decorative-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #7C3AED, transparent);
+  animation: shine 2s ease-in-out infinite;
+}
+
+.progress-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: moveDot 4s ease-in-out infinite;
+  box-shadow: 0 0 10px #10B981;
+}
+
+/* Features */
+.brand-features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feature-icon {
+  font-size: 1.2rem;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.feature-text {
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Animations */
+@keyframes bookFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes pageFlip {
+  0%, 100% { transform: perspective(400px) rotateY(0deg); }
+  50% { transform: perspective(400px) rotateY(20deg); }
+}
+
+@keyframes mBar1 {
+  0%, 100% { height: 60px; top: 30px; }
+  50% { height: 70px; top: 25px; }
+}
+
+@keyframes mBar2 {
+  0%, 100% { height: 80px; top: 20px; }
+  50% { height: 90px; top: 15px; }
+}
+
+@keyframes mBar3 {
+  0%, 100% { height: 60px; top: 30px; }
+  50% { height: 70px; top: 25px; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes moveDot {
+  0%, 100% { left: 0; }
+  50% { left: calc(100% - 8px); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .brand-name {
+    font-size: 2.2rem;
+  }
+  
+  .brand-features {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .book-container {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .book {
+    width: 70px;
+    height: 90px;
+  }
+}

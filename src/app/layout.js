@@ -1,6 +1,6 @@
+import { Inter } from "next/font/google";
 import Footer from "../components/shared/Footer/Footer";
 import "./globals.css";
-import { Inter } from "next/font/google";
 import { SearchProvider } from "@/context/SearchContext";
 import { PaginationProvider } from "@/context/usePagination";
 import HeaderWrapper from "../components/HeadWrapper/HeaderWrapper";

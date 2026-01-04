@@ -1,9 +1,9 @@
-import HotelLoadingSkeleton from "../../components/hotel/Hotel/HotelLoadingSkeleton";
+import GlobalLoader from "@/utils/GlobalLoader";
 
 export default function Loading() {
   return (
     <div className="min-h-screen flex justify-center items-center">
-      <HotelLoadingSkeleton />
+      <GlobalLoader />
     </div>
   );
 }

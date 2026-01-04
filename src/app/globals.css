@@ -582,6 +582,16 @@ body {
 	animation-timing-function: ease-out;
 	animation-iteration-count: infinite;
   }
+
+  .active{
+	background-color: #00026E;
+	color: white;
+  }
+
+   .activeLg{
+	
+	color: rgb(60, 4, 243);
+  }
   
   @keyframes pulsee {
 	0% {
@@ -721,3 +731,5 @@ body {
 	  75% { transform: translateX(4px); }
 	}
   }
+
+  
