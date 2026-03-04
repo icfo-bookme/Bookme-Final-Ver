@@ -32,7 +32,6 @@ jobs:
             git pull origin main
 
             echo "✅ Remove old node_modules and install dependencies..."
-            rm -rf node_modules
             npm install
 
             echo "✅ Build project..."
