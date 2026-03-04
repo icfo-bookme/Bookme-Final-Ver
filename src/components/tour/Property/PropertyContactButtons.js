@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function PropertyContactButtons({ pid, contactNumber }) {
   // Override phone number for pid 293 and 298
   const finalPhone =
-    pid === 293 || pid === 298 ? "8801841333322" : contactNumber?.Phone;
+    pid === 819 || pid === 293 || pid === 298 ? "8801841333322" : contactNumber?.Phone;
 
   return (
     <>

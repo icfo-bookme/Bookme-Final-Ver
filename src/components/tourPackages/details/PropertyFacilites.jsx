@@ -226,7 +226,7 @@ export default function PropertyFacilities({ data }) {
             />
           </div>
         </div>
-          <ToastContainer />
+        <ToastContainer />
       </div>
     </div>
   );

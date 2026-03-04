@@ -79,9 +79,9 @@ const RoomComponent = ({ hotelDetails, hotel_id, checkin, checkout }) => {
     const addToCart = (room) => {
         const discountedPrice = Math.round(room.price - (room.price * room.discount / 100));
         let taxes = 0;
-        if (hotelDetails.destination_id != 702 && hotelDetails.destination_id != 1) {
-            taxes = Math.round(discountedPrice * 0.265);
-        }
+        // if (hotelDetails.destination_id != 702 && hotelDetails.destination_id != 1) {
+        //     taxes = Math.round(discountedPrice * 0.265);
+        // }
 
 
         const totalPrice = discountedPrice + taxes;

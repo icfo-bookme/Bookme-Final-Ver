@@ -117,7 +117,7 @@ const PackageCarousel = ({
                       : ""}
                   </p>
                   {
-                    pkg.property_id == 293 ? (
+                    pkg.property_id == 293 || pkg.property_id == 819 ? (
                      <div className="flex justify-start items-center">
                     <div className={`flex gap-2 mt-3 mb-4`}>
                       <Link href={`tel:8801841333322`} target="_blank" rel="noopener noreferrer">

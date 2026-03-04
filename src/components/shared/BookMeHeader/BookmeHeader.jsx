@@ -35,7 +35,7 @@ const BookMeHeader = () => {
 
   // Determine which phone number to use based on pathname
   const getPhoneNumber = useCallback(() => {
-    if (pathname === '/Property/Bay-Cruiser-1/293') {
+    if (pathname === '/Property/Bay-Cruiser-1/293' || pathname === '/Property/MV-Teknaf/819') {
       return '8801841333322'; // Specific number for this path
     }
     return contactNumber?.Phone; // Default number

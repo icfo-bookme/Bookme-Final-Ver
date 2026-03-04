@@ -64,13 +64,15 @@ export default function DashboardLayout({ children }) {
         {/* Google tag (gtag.js) */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-WMVC1JFLFC"></Script>
         <Script id="ga-init" strategy="afterInteractive">
-        {`
+          {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-WMVC1JFLFC');
+          gtag('config', 'G-WMVC1JFLFC', {
+  cookie_domain: '.bookme.com.bd'
+});
         `}
-      </Script>
+        </Script>
       </head>
       <body className={inter.className}>
         <PaginationProvider>

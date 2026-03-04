@@ -3,7 +3,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'bookme.com.bd',
+        hostname: 'admin.bookme.com.bd',
         port: '',
         pathname: '/admin/**',
       },
@@ -21,10 +21,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'freecvbd.com',
+        hostname: 'mvaralsea.com',
         port: '',
         pathname: '/**',
       },
+      
     ],
   },
 };

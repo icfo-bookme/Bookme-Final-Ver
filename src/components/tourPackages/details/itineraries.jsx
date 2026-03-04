@@ -54,13 +54,14 @@ export default function Itineraries({ itineraries }) {
                                     {activity.time}
                                 </div>
                             </div>
-                            
                             <div className="col-span-12 sm:col-span-10">
                                 <div className="flex flex-col md:flex-row gap-4">
+
                                     {activity.image && (
                                         <div className="relative w-full md:w-64 h-48 md:h-40 flex-shrink-0 rounded-lg overflow-hidden">
+
                                             <Image
-                                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/bookme/public//${activity.image}`}
+                                                src={`${process.env.NEXT_PUBLIC_BASE_URL}/${activity.image}`}
                                                 alt={`Image of ${activity.name}, Itinerary Activity, Travel Experience, BookMe Tours.`}
                                                 fill
                                                 className="object-cover"
@@ -68,11 +69,11 @@ export default function Itineraries({ itineraries }) {
                                             />
                                         </div>
                                     )}
-                                    
+
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-lg text-gray-800">{activity.name}</h3>
                                         <p className="text-gray-600 mt-1 text-sm md:text-base">{activity.value}</p>
-                                        
+
                                         <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
                                             {activity.location && (
                                                 <span className="flex items-center gap-1">

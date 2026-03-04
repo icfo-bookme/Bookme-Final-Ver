@@ -142,7 +142,6 @@ const applyDateChanges = () => {
     lastUpdated: formatBDT(new Date()),
   };
 
-  console.log(bookingData);
   localStorage.setItem('bookingData', JSON.stringify(bookingData));
 
   setShowDatePickerModal(false);

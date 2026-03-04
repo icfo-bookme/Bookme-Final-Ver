@@ -15,9 +15,9 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
 
     const discountedPrice = Math.round(room.price - (room.price * room.discount / 100));
     let taxesAndFees = 0;
-    if (room.destination_id != 702 && room.destination_id != 1) {
-        taxesAndFees = Math.round(discountedPrice * 0.265);
-    }
+    // if (room.destination_id != 702 && room.destination_id != 1) {
+    //     taxesAndFees = Math.round(discountedPrice * 0.265);
+    // }
 
 
     return (
@@ -106,9 +106,9 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                     BDT {discountedPrice}
                                 </p>
 
-                                <p className='mt-1 text-xs text-gray-700'>
+                                {/* <p className='mt-1 text-xs text-gray-700'>
                                     + BDT {taxesAndFees} Taxes & Fees
-                                </p>
+                                </p> */}
                                 <p className='text-xs text-gray-700 mt-3'>for 1 Night , per room</p>
                             </div>
                         </div>
