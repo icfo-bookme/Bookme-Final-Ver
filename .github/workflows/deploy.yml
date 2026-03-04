@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            echo "✅ Setting Git safe directory.."
+            echo "✅ Setting Git safe directory..."
             git config --global --add safe.directory /var/www/bookme
 
             echo "✅ Fixing permissions..."
