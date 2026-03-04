@@ -35,10 +35,16 @@ jobs:
             git reset --hard
             git pull origin main
 
-            echo "✅ Install dependencies..."
-            npm install
+            echo "🧹 Removing old build and dependencies..."
+            rm -rf .next
+            rm -rf node_modules
 
-            echo "✅ Build project..." 
+            echo "📦 Installing fresh dependencies..."
+            npm ci
+
+            echo "🏗 Building project..."
+            export NODE_ENV=production
+            export NODE_OPTIONS="--max-old-space-size=1024"
             if ! npm run build; then
               echo "❌ Build failed, aborting deploy."
               exit 1
@@ -48,7 +54,7 @@ jobs:
             # Start PM2 if not already running
             pm2 describe bookme || pm2 start ecosystem.config.js
 
-            # Reload with updated env
+            # Reload with updated env and zero-downtime
             pm2 reload ecosystem.config.js --update-env
 
-            echo "✅ Deployment completed f successfully!"
+            echo "✅ Deployment completed successfully!"
