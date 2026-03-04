@@ -27,8 +27,8 @@ jobs:
             git config --global --add safe.directory /var/www/bookme
 
             echo "✅ Fixing permissions..."
-            sudo chown -R deploy:deploy /var/www/bookme
-            sudo chmod -R 755 /var/www/bookme
+             chown -R deploy:deploy /var/www/bookme
+             chmod -R 755 /var/www/bookme
 
             echo "✅ Pull latest code..."
             cd /var/www/bookme
