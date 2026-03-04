@@ -1,4 +1,4 @@
-name: Deploy BookMe
+name: Deploy SundarbanShips
 
 on:
   push:
@@ -10,16 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      # 2️⃣ Deploy via SSH
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.USERNAME }}
+          username: deploy
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
@@ -35,26 +33,12 @@ jobs:
             git reset --hard
             git pull origin main
 
-            echo "🧹 Removing old build and dependencies..."
-            rm -rf .next
-            rm -rf node_modules
+            echo "✅ Install dependencies..."
+            npm install
 
-            echo "📦 Installing fresh dependencies..."
-            npm ci
+            echo "✅ Build project..."
+            npm run build
 
-            echo "🏗 Building project..."
-            export NODE_ENV=production
-            export NODE_OPTIONS="--max-old-space-size=1024"
-            if ! npm run build; then
-              echo "❌ Build failed, aborting deploy."
-              exit 1
-            fi
-
-            echo "✅ Build successful. Reloading PM2..."
-            # Start PM2 if not already running
-            pm2 describe bookme || pm2 start ecosystem.config.js
-
-            # Reload with updated env and zero-downtime
+            echo "✅ Reload PM2 process using ecosystem.config.js..."
+            pm2 describe sundarbanships || pm2 start ecosystem.config.js
             pm2 reload ecosystem.config.js --update-env
-
-            echo "✅ Deployment completed successfully!"
