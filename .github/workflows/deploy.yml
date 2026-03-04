@@ -35,7 +35,7 @@ jobs:
             git reset --hard
             git pull origin main
 
-            echo "✅ Install dependencies.."
+            echo "✅ Install dependencies..."
             npm install
 
             echo "✅ Build project..." 
