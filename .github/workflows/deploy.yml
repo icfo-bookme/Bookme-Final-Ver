@@ -35,10 +35,7 @@ jobs:
             npm install
 
             echo "✅ Build project..."
-            if ! npm run build; then
-              echo "❌ Build failed, aborting deploy."
-              exit 1
-            fi
+            npm run build
 
             echo "✅ Build successful. Reloading PM2..."
             # Start PM2 if not already running
