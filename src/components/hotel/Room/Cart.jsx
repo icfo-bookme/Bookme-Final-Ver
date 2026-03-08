@@ -62,7 +62,7 @@ const Cart = ({
 
     if (typeof window !== 'undefined' && window.dataLayer) {
     window.dataLayer.push({
-      event: 'bookingDataUpdated',
+      event: 'bookingData',
       bookingData: bookingData,
     });
   }
