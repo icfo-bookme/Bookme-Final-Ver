@@ -60,6 +60,13 @@ const Cart = ({
       lastUpdated: new Date().toISOString(),
     };
 
+    if (typeof window !== 'undefined' && window.dataLayer) {
+    window.dataLayer.push({
+      event: 'bookingDataUpdated',
+      bookingData: bookingData,
+    });
+  }
+
     
 
     localStorage.setItem('bookingData', JSON.stringify(bookingData));

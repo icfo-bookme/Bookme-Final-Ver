@@ -14,7 +14,7 @@ const BookingReview = ({ onBackToCart, onBackToRooms, onSubmitBooking, hotelId }
     useEffect(() => {
         const savedData = localStorage.getItem('bookingData');
         const savedCart = localStorage.getItem('bookingCart');
-        
+
         if (savedData) {
             try {
                 const parsedData = JSON.parse(savedData);
@@ -49,7 +49,7 @@ const BookingReview = ({ onBackToCart, onBackToRooms, onSubmitBooking, hotelId }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         if (!guestInfo.name || !guestInfo.phone) {
             alert('Please fill in all required fields');
             return;
@@ -64,6 +64,33 @@ const BookingReview = ({ onBackToCart, onBackToRooms, onSubmitBooking, hotelId }
             totalAmount: calculateTotal() + Math.round(calculateTotal() * 0.1),
             bookingReference: 'BK' + Date.now()
         };
+
+        if (typeof window !== 'undefined' && window.dataLayer) {
+            window.dataLayer.push({
+                event: 'bookingConfirmed',
+                booking: {
+                    bookingReference: completeBookingData.bookingReference,
+                    customerName: guestInfo.name,
+                    customerPhone: guestInfo.phone,
+                    customerEmail: guestInfo.email || '',
+                    hotelId: hotelId,
+                    rooms: bookingData.cart.map(item => ({
+                        roomId: item.id,
+                        roomName: item.name,
+                        roomType: item.type,
+                        guests: { adults: item.adults, children: item.children },
+                        pricePerNight: item.price,
+                        totalPrice: item.total * calculateNights(),
+                        breakfast: item.breakfast,
+                    })),
+                    checkIn: bookingData.checkin,
+                    checkOut: bookingData.checkout,
+                    totalNights: calculateNights(),
+                    totalAmount: completeBookingData.totalAmount,
+                    taxesAndFees: Math.round(calculateTotal() * 0.1)
+                }
+            });
+        }
 
         if (onSubmitBooking) {
             onSubmitBooking(completeBookingData);
@@ -107,7 +134,7 @@ const BookingReview = ({ onBackToCart, onBackToRooms, onSubmitBooking, hotelId }
                         {/* Left Side - Guest Information Form */}
                         <div>
                             <h2 className="text-xl font-semibold mb-6 text-gray-800">Guest Information</h2>
-                            
+
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -198,7 +225,7 @@ const BookingReview = ({ onBackToCart, onBackToRooms, onSubmitBooking, hotelId }
                         {/* Right Side - Booking Summary */}
                         <div className="bg-gray-50 p-6 rounded-lg">
                             <h2 className="text-xl font-semibold mb-6 text-gray-800">Booking Summary</h2>
-                            
+
                             {/* Stay Dates */}
                             <div className="mb-6">
                                 <h3 className="font-semibold text-gray-700 mb-3">Stay Duration</h3>

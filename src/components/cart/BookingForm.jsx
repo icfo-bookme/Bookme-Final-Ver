@@ -124,7 +124,7 @@ export default function BookingForm({
     }
 
     setErrors(newErrors);
-    
+
     // Mark all fields as touched to show errors
     setTouched({
       name: true,
@@ -145,7 +145,7 @@ export default function BookingForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       // Scroll to first error
       const firstErrorField = Object.keys(errors).find(key => errors[key]);
@@ -161,7 +161,7 @@ export default function BookingForm({
 
     // Build payload according to your backend expectations
     const payload = {
-    
+
       order_date: new Date().toISOString().split("T")[0],
       customerid: user?.id || null,
       customer_name: guestInfo.name.trim(),
@@ -193,18 +193,37 @@ export default function BookingForm({
       );
 
       if (response.status === 201 || response.status === 200) {
-       
+
         const orderNumber = response.data.data.booking_order.orderno;
+
+        if (typeof window !== 'undefined' && window.dataLayer) {
+          window.dataLayer.push({
+            event: 'bookingConfirmed',
+            booking: {
+              orderNumber: orderNumber,
+              customerName: payload.customer_name,
+              customerPhone: payload.mobile_no,
+              customerEmail: payload.email,
+              propertyId: payload.property_id,
+              packageId: payload.package_id,
+              packageName: payload.package_name,
+              activityDate: payload.activity_date,
+              activityTime: payload.activity_time,
+              totalGuests: payload.total_guests,
+              finalPrice: payload.final_price,
+            }
+          });
+        }
         router.push(`/confirmation?orderno=${orderNumber}`);
       } else {
         alert('Failed to confirm booking. Please try again.');
       }
     } catch (error) {
       console.error('Error saving booking:', error);
-      const errorMessage = error?.response?.data?.message 
-        || error?.response?.data?.error 
+      const errorMessage = error?.response?.data?.message
+        || error?.response?.data?.error
         || 'An error occurred while confirming your booking. Please try again.';
-      
+
       alert(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -307,11 +326,10 @@ export default function BookingForm({
             value={guestInfo.specialRequests}
             onChange={handleInputChange}
             onBlur={handleBlur}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              getFieldError('specialRequests') 
-                ? 'border-red-300 bg-red-50' 
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${getFieldError('specialRequests')
+                ? 'border-red-300 bg-red-50'
                 : 'border-gray-300'
-            }`}
+              }`}
             placeholder="Any special requests or notes for your activity booking..."
           />
           {getFieldError('specialRequests') && (
@@ -353,7 +371,7 @@ export default function BookingForm({
             Please fix the following errors:
           </h3>
           <ul className="text-sm text-red-700 list-disc list-inside space-y-1">
-            {Object.entries(errors).map(([field, error]) => 
+            {Object.entries(errors).map(([field, error]) =>
               error && (
                 <li key={field}>
                   {field === 'name' && 'Full Name: '}

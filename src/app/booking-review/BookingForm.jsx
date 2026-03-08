@@ -6,12 +6,12 @@ import { Button } from 'flowbite-react';
 import api from '@/lib/api';
 import FormField from '@/utils/FormField';
 
-export default function BookingForm({ 
-  guestInfo, 
-  user, 
-  onGuestInfoChange, 
-  bookingData, 
-  calculations 
+export default function BookingForm({
+  guestInfo,
+  user,
+  onGuestInfoChange,
+  bookingData,
+  calculations
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -29,37 +29,37 @@ export default function BookingForm({
     return `${year}-${month}-${day}`;
   };
 
- const handleInputChange = (e) => {
-  const { name, value } = e.target;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-  // Update guest info
-  onGuestInfoChange({
-    ...guestInfo,
-    [name]: value,
-  });
+    // Update guest info
+    onGuestInfoChange({
+      ...guestInfo,
+      [name]: value,
+    });
 
-  // Real-time validation
-  setErrors(prev => {
-    const newErrors = { ...prev };
+    // Real-time validation
+    setErrors(prev => {
+      const newErrors = { ...prev };
 
-    if (name === "phone") {
-      const bdPhoneRegex = /^(?:\+?88)?01[3-9]\d{8}$/;
-      if (!bdPhoneRegex.test(value)) {
-        newErrors.phone = "Enter a valid Bangladeshi phone number.";
-      } else {
-        delete newErrors.phone;
+      if (name === "phone") {
+        const bdPhoneRegex = /^(?:\+?88)?01[3-9]\d{8}$/;
+        if (!bdPhoneRegex.test(value)) {
+          newErrors.phone = "Enter a valid Bangladeshi phone number.";
+        } else {
+          delete newErrors.phone;
+        }
+      } else if (name === "name") {
+        if (!value.trim()) {
+          newErrors.name = "Name is required.";
+        } else {
+          delete newErrors.name;
+        }
       }
-    } else if (name === "name") {
-      if (!value.trim()) {
-        newErrors.name = "Name is required.";
-      } else {
-        delete newErrors.name;
-      }
-    }
 
-    return newErrors;
-  });
-};
+      return newErrors;
+    });
+  };
 
 
   const handleSubmit = async (e) => {
@@ -114,6 +114,30 @@ export default function BookingForm({
       if (response.status === 201 || response.status === 200) {
         localStorage.removeItem('bookingCart');
         localStorage.removeItem('bookingReviewData');
+        if (typeof window !== 'undefined' && window.dataLayer) {
+          window.dataLayer.push({
+            event: 'bookingConfirmed',
+            booking: {
+              orderNumber: orderNumber,
+              customerName: guestInfo.name,
+              customerPhone: guestInfo.phone,
+              customerEmail: guestInfo.email || '',
+              propertyId: bookingData.hotel_id,
+              rooms: bookingData.cart.map(item => ({
+                roomId: item.id,
+                roomName: item.name,
+                pricePerNight: item.price,
+                totalPrice: item.total,
+                specialRequests: item.specialRequests || ''
+              })),
+              checkIn: confirmedBooking.booking_details[0].check_in_date,
+              checkOut: confirmedBooking.booking_details[0].check_out_date,
+              totalAmount: calculations.grandTotal,
+              totalTaxes: calculations.totalTaxes,
+              nights: calculations.nights,
+            }
+          });
+        }
         router.push(`/confirmation/${response.data.data.orderno}`);
       } else {
         setErrors({ form: "Failed to confirm booking. Please try again." });
@@ -152,9 +176,9 @@ export default function BookingForm({
           onChange={handleInputChange}
           required
           helperText={
-            errors.name 
+            errors.name
               ? <span className="text-red-600">{errors.name}</span>
-              : user 
+              : user
                 ? "Your account name is pre-filled, but you can change it if needed."
                 : ""
           }
@@ -171,10 +195,10 @@ export default function BookingForm({
           onChange={handleInputChange}
           required
           helperText={
-            errors.phone 
+            errors.phone
               ? <span className="text-red-600">{errors.phone}</span>
-              : user?.phone 
-                ? "Your account phone number is pre-filled." 
+              : user?.phone
+                ? "Your account phone number is pre-filled."
                 : "Enter a valid Bangladeshi number (e.g., 01XXXXXXXXX)"
           }
           placeholder="Enter your phone number"

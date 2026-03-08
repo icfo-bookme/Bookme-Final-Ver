@@ -28,37 +28,37 @@ export default function PurchaserForm({
     return `${year}-${month}-${day}`;
   };
 
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-  // Update guest info
-  onGuestInfoChange({
-    ...guestInfo,
-    [name]: value,
-  });
+    // Update guest info
+    onGuestInfoChange({
+      ...guestInfo,
+      [name]: value,
+    });
 
-  // Real-time validation
-  setErrors(prev => {
-    const newErrors = { ...prev };
+    // Real-time validation
+    setErrors(prev => {
+      const newErrors = { ...prev };
 
-    if (name === "phone") {
-      const bdPhoneRegex = /^(?:\+?88)?01[3-9]\d{8}$/;
-      if (!bdPhoneRegex.test(value)) {
-        newErrors.phone = "Enter a valid Bangladeshi phone number.";
-      } else {
-        delete newErrors.phone;
+      if (name === "phone") {
+        const bdPhoneRegex = /^(?:\+?88)?01[3-9]\d{8}$/;
+        if (!bdPhoneRegex.test(value)) {
+          newErrors.phone = "Enter a valid Bangladeshi phone number.";
+        } else {
+          delete newErrors.phone;
+        }
+      } else if (name === "name") {
+        if (!value.trim()) {
+          newErrors.name = "Name is required.";
+        } else {
+          delete newErrors.name;
+        }
       }
-    } else if (name === "name") {
-      if (!value.trim()) {
-        newErrors.name = "Name is required.";
-      } else {
-        delete newErrors.name;
-      }
-    }
 
-    return newErrors;
-  });
-};
+      return newErrors;
+    });
+  };
 
 
   const handleSubmit = async (e) => {
@@ -113,6 +113,31 @@ const handleInputChange = (e) => {
       if (response.status === 201 || response.status === 200) {
         localStorage.removeItem('bookingCart');
         localStorage.removeItem('bookingReviewData');
+        if (typeof window !== 'undefined' && window.dataLayer) {
+          window.dataLayer.push({
+            event: 'bookingConfirmed',
+            booking: {
+              orderNumber,
+              customerName: guestInfo.name,
+              purchaserName: guestInfo.purchaser_name,
+              customerPhone: guestInfo.phone,
+              customerEmail: guestInfo.email || '',
+              propertyId: bookingData.hotel_id,
+              rooms: bookingData.cart.map(item => ({
+                roomId: item.id,
+                roomName: item.name,
+                pricePerNight: item.price,
+                totalPrice: item.total,
+                specialRequests: item.specialRequests || ''
+              })),
+              checkIn: confirmedBooking.booking_details[0].check_in_date,
+              checkOut: confirmedBooking.booking_details[0].check_out_date,
+              totalAmount: calculations.grandTotal,
+              totalTaxes: calculations.totalTaxes,
+              nights: calculations.nights,
+            }
+          });
+        }
         router.push(`/confirmation/${response.data.data.orderno}`);
       } else {
         setErrors({ form: "Failed to confirm booking. Please try again." });
