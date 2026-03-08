@@ -35,7 +35,6 @@ export default function LoginPage() {
             const userData = await getUser(data.token);
             loginUser(data.token, userData);
 
-            // DataLayer Event
             if (typeof window !== "undefined" && window.dataLayer) {
                 window.dataLayer.push({
                     event: "user_login",
