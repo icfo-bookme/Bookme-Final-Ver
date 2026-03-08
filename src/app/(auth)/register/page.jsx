@@ -102,6 +102,13 @@ export default function RegisterPage() {
         phone: phoneValidation.formattedPhone,
         password
       });
+      if (typeof window !== "undefined" && window.dataLayer) {
+        window.dataLayer.push({
+          event: "user_signup",
+          signup_method: "email",
+          user_email: email
+        });
+      }
       router.push('/login');
     } catch (err) {
       setError(err.message);

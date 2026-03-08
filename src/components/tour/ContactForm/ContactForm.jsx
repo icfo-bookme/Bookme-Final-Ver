@@ -48,7 +48,20 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
         toast.error("Failed to submit package info.");
       } else {
         toast.success("Submitted Successfully");
-        reset(); // Clear form after successful submission
+
+        // Data Layer Event
+        if (typeof window !== "undefined" && window.dataLayer) {
+          window.dataLayer.push({
+            event: "contact_form_submit",
+            name: `${data.firstName} ${data.lastName}`,
+            phone: data.phoneNumber,
+            email: data.email || "",
+            property_name: propertyDetails,
+            category: category
+          });
+        }
+
+        reset();
       }
     } catch (error) {
       console.error("Error:", error);
@@ -114,7 +127,7 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
               {...register("phoneNumber", {
                 required: "Phone number is required",
                 pattern: {
-                  value: /^[0-9]{11,}$/, 
+                  value: /^[0-9]{11,}$/,
                   message: "Phone number must be at least 11 digits and contain only numbers",
                 },
               })}
@@ -180,8 +193,8 @@ const ContactForm = ({ propertyDetails, category, headline }) => {
             disabled={isSubmitting}
             className="mt-4 p-2 bg-blue-500 text-white rounded-md flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
             style={{
-              background: isSubmitting 
-                ? "#9CA3AF" 
+              background: isSubmitting
+                ? "#9CA3AF"
                 : "linear-gradient(90deg, #313881, #0678B4)",
             }}
           >

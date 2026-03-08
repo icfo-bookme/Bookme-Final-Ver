@@ -34,6 +34,16 @@ export default function LoginPage() {
             const data = await login(form);
             const userData = await getUser(data.token);
             loginUser(data.token, userData);
+
+            // DataLayer Event
+            if (typeof window !== "undefined" && window.dataLayer) {
+                window.dataLayer.push({
+                    event: "user_login",
+                    login_method: "email",
+                    user_email: form.email
+                });
+            }
+
             router.push('/');
         } catch (err) {
             setError("Your email or password is incorrect. Please try again.");
@@ -45,7 +55,7 @@ export default function LoginPage() {
     if (loading)
         return (
             <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-               <LoadingSpinner/>
+                <LoadingSpinner />
             </div>
         );
 
@@ -116,7 +126,7 @@ export default function LoginPage() {
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                  <MdOutlineMailLock />
+                                    <MdOutlineMailLock />
                                 </div>
                                 <input
                                     id="email"
@@ -137,7 +147,7 @@ export default function LoginPage() {
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                   <RiLockPasswordLine />
+                                    <RiLockPasswordLine />
                                 </div>
                                 <input
                                     id="password"

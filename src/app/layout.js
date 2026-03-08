@@ -69,8 +69,8 @@ export default function DashboardLayout({ children }) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-WMVC1JFLFC', {
-  cookie_domain: '.bookme.com.bd'
-});
+          cookie_domain: '.bookme.com.bd'
+      });
         `}
         </Script>
       </head>
