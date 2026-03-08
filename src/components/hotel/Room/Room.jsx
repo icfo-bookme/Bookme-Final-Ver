@@ -103,7 +103,30 @@ const RoomComponent = ({ hotelDetails, hotel_id, checkin, checkout }) => {
 
         const newCart = [...cart, cartItem];
         setCart(newCart);
-
+        if (typeof window !== "undefined") {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: "add_to_cart",
+                hotelDetail: {
+                    currency: "BDT",
+                    value: totalPrice,
+                    hotel_id: hotel_id,
+                    hotel_name: hotelDetails?.name || "",
+                    checkin_date: checkin,
+                    checkout_date: checkout,
+                    Room: {
+                        item_id: room.id,
+                        item_name: room.room_name,
+                        item_category: room.room_type,
+                        price: discountedPrice,
+                        quantity: 1,
+                        adults: room.max_adults,
+                        children: room.complementary_child_occupancy,
+                        breakfast: room.breakfast_status
+                    }
+                }
+            });
+        }
         if (!isLargeScreen) {
             setShowCart(true);
         }
@@ -131,6 +154,30 @@ const RoomComponent = ({ hotelDetails, hotel_id, checkin, checkout }) => {
             checkin,
             checkout
         };
+        if (typeof window !== "undefined") {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: "begin_checkout",
+                ecommerce: {
+                    currency: "BDT",
+                    hotel_id: hotel_id,
+                    hotel_name: hotelDetails?.name || "",
+                    checkin_date: checkin,
+                    checkout_date: checkout,
+                    rooms: cart.map((item) => ({
+                        room_id: item.id,
+                        room_name: item.name,
+                        room_type: item.type,
+                        price_per_night: item.price,
+                        taxes: item.taxes,
+                        total_price: item.total,
+                        adults: item.adults,
+                        children: item.children,
+                        breakfast: item.breakfast
+                    }))
+                }
+            });
+        }
 
         // Save data in localStorage
         localStorage.setItem('bookingReviewData', JSON.stringify(bookingData));

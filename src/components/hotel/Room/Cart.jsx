@@ -144,8 +144,8 @@ const applyDateChanges = () => {
   const bookingData = {
     cart,
     hotel_id: hotel_id,
-    checkin: formatBDT(tempCheckin),   // use formatted BDT
-    checkout: formatBDT(tempCheckout), // use formatted BDT
+    checkin: formatBDT(tempCheckin),   
+    checkout: formatBDT(tempCheckout), 
     lastUpdated: formatBDT(new Date()),
   };
 
