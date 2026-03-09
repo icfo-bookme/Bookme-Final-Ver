@@ -117,7 +117,7 @@ export default function PurchaserForm({
           window.dataLayer.push({
             event: 'bookingConfirmed',
             booking: {
-              orderNumber,
+              orderno: response.data.data.orderno,
               customerName: guestInfo.name,
               purchaserName: guestInfo.purchaser_name,
               customerPhone: guestInfo.phone,
