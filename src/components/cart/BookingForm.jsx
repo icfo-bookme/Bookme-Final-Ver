@@ -194,13 +194,13 @@ export default function BookingForm({
 
       if (response.status === 201 || response.status === 200) {
 
-        const orderNumber = response.data.data.booking_order.orderno;
+        
 
         if (typeof window !== 'undefined' && window.dataLayer) {
           window.dataLayer.push({
             event: 'bookingConfirmed',
             booking: {
-              orderNumber: orderNumber,
+              
               customerName: payload.customer_name,
               customerPhone: payload.mobile_no,
               customerEmail: payload.email,

@@ -118,7 +118,7 @@ export default function BookingForm({
           window.dataLayer.push({
             event: 'bookingConfirmed',
             booking: {
-              orderNumber: orderNumber,
+              
               customerName: guestInfo.name,
               customerPhone: guestInfo.phone,
               customerEmail: guestInfo.email || '',
