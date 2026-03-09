@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://bookme.com.bd/admin',
+  baseURL: 'https://admin.bookme.com.bd',
   withCredentials: true,
 });
 
