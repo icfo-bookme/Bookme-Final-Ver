@@ -21,9 +21,9 @@ export default function VisaDetailTracking({ visa }) {
     });
 
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      country: visa.country?.name,
+    window.dataLayer.push({    
       event: "view_package",
+      country: visa.country?.name,
       property_id: visa.property_id,
       property_name: visa.property_name,
       location: visa.district_city || visa.country?.name || "",
@@ -39,7 +39,6 @@ export default function VisaDetailTracking({ visa }) {
       })),
     });
 
-    console.log("Visa details pushed to GTM:", visa);
   }, [visa]);
 
   return null;

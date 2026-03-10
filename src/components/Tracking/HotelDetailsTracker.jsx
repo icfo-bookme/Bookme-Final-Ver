@@ -15,7 +15,6 @@ export default function HotelDetailsTracker({ hotel, rooms }) {
       rooms,
     });
 
-    console.log("Hotel details pushed raw to GTM:", { hotel, rooms });
   }, [hotel, rooms]);
 
   return null;
