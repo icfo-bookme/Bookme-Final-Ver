@@ -193,24 +193,39 @@ export default function BookingForm({
       );
 
       if (response.status === 201 || response.status === 200) {
+console.log('Booking confirmed successfully:', response.data);
 
-        
 
-        if (typeof window !== 'undefined' && window.dataLayer) {
+        if (typeof window !== "undefined") {
+          window.dataLayer = window.dataLayer || [];
+
           window.dataLayer.push({
-            event: 'bookingConfirmed',
-            booking: {
+            event: "booking_confirmed",
+            ecommerce: {
               
-              customerName: payload.customer_name,
-              customerPhone: payload.mobile_no,
-              customerEmail: payload.email,
-              propertyId: payload.property_id,
-              packageId: payload.package_id,
-              packageName: payload.package_name,
-              activityDate: payload.activity_date,
-              activityTime: payload.activity_time,
-              totalGuests: payload.total_guests,
-              finalPrice: payload.final_price,
+              value: payload.final_price,
+              currency: "BDT",
+              items: [
+                {
+                  item_id: payload.package_id,
+                  item_name: payload.package_name,
+                  item_category: "Activity",
+                  price: payload.final_price,
+                  quantity: payload.total_guests,
+                  property_id: payload.property_id
+                }
+              ]
+            },
+            customer: {
+              name: payload.customer_name,
+              phone: payload.mobile_no,
+              email: payload.email
+            },
+            booking: {
+              activity_date: payload.activity_date,
+              activity_time: payload.activity_time,
+              total_guests: payload.total_guests,
+              pickup_location: payload.pickup_location
             }
           });
         }
@@ -327,8 +342,8 @@ export default function BookingForm({
             onChange={handleInputChange}
             onBlur={handleBlur}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${getFieldError('specialRequests')
-                ? 'border-red-300 bg-red-50'
-                : 'border-gray-300'
+              ? 'border-red-300 bg-red-50'
+              : 'border-gray-300'
               }`}
             placeholder="Any special requests or notes for your activity booking..."
           />
