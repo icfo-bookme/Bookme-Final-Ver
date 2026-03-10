@@ -80,7 +80,6 @@ export default function ActivitiesCarousel({ packages = [], property_id }) {
       .replace(/[^\w\-]+/g, '')
       .replace(/\-\-+/g, '-');
 
-  // Check if package has a discount
   const hasDiscount = (pkg) => {
     return (pkg.discount_amount && pkg.discount_amount > 0) ||
       (pkg.discount_percentage && pkg.discount_percentage > 0);
@@ -96,6 +95,20 @@ export default function ActivitiesCarousel({ packages = [], property_id }) {
   };
 
   const handleAddToCart = (pkg) => {
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+
+      window.dataLayer.push({
+        event: "book_now_click",
+        property_id: property_id,
+        package_id: pkg.id,
+        package_name: pkg.package_name,
+        duration: pkg.duration,
+        person_allowed: pkg.person_allowed,
+        price: pkg.discounted_price || pkg.regular_price,
+        currency: "BDT"
+      });
+    };
     setSelectedPackage(pkg);
     setShowBookingModal(true);
   };
@@ -109,7 +122,7 @@ export default function ActivitiesCarousel({ packages = [], property_id }) {
     <div className={`${roboto.className} bg-blue-50 w-full mx-auto max-w-7xl`}>
       <div className="w-full text-center mb-5">
         <h2 className="text-xl mt-8 md:text-2xl font-bold text-[#00026E] mb-2">
-          Popular packages 
+          Popular packages
         </h2>
         <div className="w-20 h-1 bg-[#0678B4] mx-auto"></div>
       </div>
@@ -128,7 +141,7 @@ export default function ActivitiesCarousel({ packages = [], property_id }) {
             centeredSlides={true}
             initialSlide={1}
             speed={isMobile ? 1000 : 1000}
-           
+
             navigation={{
               nextEl: '.package-swiper-button-next',
               prevEl: '.package-swiper-button-prev',
@@ -258,7 +271,7 @@ export default function ActivitiesCarousel({ packages = [], property_id }) {
                       <div>
                         <span className="text-xs sm:text-sm text-gray-600">Starting from</span>
                         <div className="flex items-center gap-2 font-bold text-lg sm:text-xl text-blue-900">
-                          {pkg?.discount_amount>0 && pkg.discount_percentage > 0  ? (
+                          {pkg?.discount_amount > 0 && pkg.discount_percentage > 0 ? (
                             <>
                               <span>{pkg.discounted_price.toLocaleString()} TK</span>
                               <span className="line-through text-sm text-gray-500 font-medium">
