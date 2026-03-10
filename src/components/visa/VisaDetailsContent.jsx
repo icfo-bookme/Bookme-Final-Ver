@@ -7,6 +7,7 @@ import { FaPhone } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 import ContactForm from "@/components/tour/ContactForm/ContactForm";
 import { VisaType } from "./VisaType";
+import VisaDetailTracking from "../Tracking/VisaDetailTracking";
 
 export default function VisaDetails({ visaDetails, contactNumber }) {
   const [showForm, setShowForm] = useState(false);
@@ -16,6 +17,8 @@ export default function VisaDetails({ visaDetails, contactNumber }) {
   }
 
   return (
+    <>
+    <VisaDetailTracking visa={visaDetails} />
     <div className="bg-[#FAFAFA] text-[#333]">
       {/* Hero Image */}
       <div className="h-[250px] lg:h-[550px] relative">
@@ -134,6 +137,6 @@ export default function VisaDetails({ visaDetails, contactNumber }) {
           <ToastContainer />
         </div>
       </div>
-    </div>
+    </div></>
   );
 }

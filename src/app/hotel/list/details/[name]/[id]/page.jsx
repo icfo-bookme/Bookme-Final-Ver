@@ -1,6 +1,8 @@
 
 import HotelHashRoute from "@/components/hotel/hotelHashRote";
+import HotelDetailsTracker from "@/components/Tracking/HotelDetailsTracker";
 import getHotelDetails from "@/services/hotel/gethoteldetails";
+import getRooms from "@/services/room/getroom";
 
 
 export async function generateMetadata({ params }) {
@@ -52,11 +54,12 @@ export async function generateMetadata({ params }) {
 export default async function HotelDetailsPage({ params, searchParams }) {
 
   const hotelDetails = await getHotelDetails(params.id);
+  const  allRooms = await getRooms(params.id);
   const { checkin, checkout, rooms, adult } = searchParams;
 
   return (
     <div className=" pt-16 min-h-screen bg-gray-200">
-
+      <HotelDetailsTracker hotel={hotelDetails} rooms={allRooms} />
       <div className=" ">
         <HotelHashRoute hotelId={params.id} initialHotelDetails={hotelDetails} checkin={checkin}
           checkout={checkout} />
