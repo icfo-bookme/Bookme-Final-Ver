@@ -2,32 +2,39 @@
 
 import { useEffect } from "react";
 
-export default function PackageViewTracker({ property }) {
+export default function PackageViewTracker({ property, packages }) {
   useEffect(() => {
-    if (!property) return;
+    if (!property || !packages) return;
 
     window.dataLayer = window.dataLayer || [];
 
-    // declare category properly
-    let category = "Tour Package"; // default
-    if (property.category_id === 1) {
-      category = "Tanguar Haor Tour Package";
-    } else if (property.category_id === 2) {
-      category = "Sundarban Tour Package";
-    } else if (property.category_id === 3) {
-      category = "Saint Martin Tour Package";
-    }
+    // Determine property category
+    let category = "";
+    if (property?.category_id === 1) category = "Tanguar Haor Tour Package";
+    else if (property?.category_id === 2) category = "Sundarban Tour Package";
+    else category = "Saint Martin Tour Package";
 
-    console.log("Tracking package view for:", property);
+    // Prepare packages array
+    const packagesData = packages.flatMap((pkg) =>
+      (pkg.price || []).map((p) => ({
+        name: pkg.unit_name,
+        price: Number(p.price),
+        category: pkg.unit_category || "room",
+        discount: p.discount_percent ? Number(p.discount_percent) : 0,
+      }))
+    );
 
+    // Push to dataLayer
     window.dataLayer.push({
-      event: "package_view",
-      package_name: property.property_name,
-      package_id: property.property_id,
+      event: "view_package",
+      property_name: property.property_name,
+      property_id: property.property_id,
       location: property.district_city,
-      category: category,
+      category,
+      packages: packagesData,
     });
-  }, [property]);
+
+  }, [property, packages]);
 
   return null;
 }

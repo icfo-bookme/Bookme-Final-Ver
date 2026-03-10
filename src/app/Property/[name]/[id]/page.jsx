@@ -63,10 +63,14 @@ export default async function TourPage({ params }) {
     getContactNumber(),
   ]);
 
+
+  console.log("Property Packages:", propertyPackages);
+ 
+
   return (
     <>
       {/* GTM Tracking */}
-      <PackageViewTracker property={propertyDetails?.[0]} />
+      <PackageViewTracker property={propertyDetails?.[0]} packages={propertyPackages} />
       <TourPageUI
         propertyImages={propertyImages}
         propertyDetails={propertyDetails}
