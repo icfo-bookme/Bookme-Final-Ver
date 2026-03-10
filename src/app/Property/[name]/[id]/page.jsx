@@ -5,6 +5,7 @@ import getPropertyPackages from "@/services/tour/getPropertyPackages";
 import getContactNumber from "@/services/tour/getContactNumber";
 import TourPageUI from "@/components/Ships/TourPageUI";
 import { PreFooter } from "@/components/pre-footer-content/PreFooter";
+import PackageViewTracker from "@/components/Tracking/PackageViewTracker";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }) {
   const property = propertyDetails?.[0] || {};
 
   const propertyName = property.property_name || "Tour Property";
-  const location = property.district_city || "Bangladesh"; 
+  const location = property.district_city || "Bangladesh";
 
   const title = propertyName;
 
@@ -64,14 +65,16 @@ export default async function TourPage({ params }) {
 
   return (
     <>
-    <TourPageUI
-      propertyImages={propertyImages}
-      propertyDetails={propertyDetails}
-      propertyFacilities={propertyFacilities}
-      propertyPackages={propertyPackages}
-      contactNumber={contactNumber}
-    />
-    <PreFooter id={id} />
+      {/* GTM Tracking */}
+      <PackageViewTracker property={propertyDetails?.[0]} />
+      <TourPageUI
+        propertyImages={propertyImages}
+        propertyDetails={propertyDetails}
+        propertyFacilities={propertyFacilities}
+        propertyPackages={propertyPackages}
+        contactNumber={contactNumber}
+      />
+      <PreFooter id={id} />
     </>
   );
 }
