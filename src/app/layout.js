@@ -30,17 +30,13 @@ export const metadata = {
   alternates: {
     canonical: "https://bookme.com.bd",
   },
-
-  // Add this for Google site name
   metadataBase: new URL("https://bookme.com.bd"),
   applicationName: "BookMe",
-
   openGraph: {
     siteName: "BookMe",
     url: "https://bookme.com.bd",
     type: "website",
   },
-
   other: {
     "apple-mobile-web-app-title": "BookMe",
     "application-name": "BookMe",
@@ -51,9 +47,22 @@ export default function DashboardLayout({ children }) {
   return (
     <html lang="en" data-theme="white">
       <head>
+        {/* Google Tag Manager */}
+        <Script id="gtm-head" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-TPGZ8PRZ');
+          `}
+        </Script>
+
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -61,28 +70,25 @@ export default function DashboardLayout({ children }) {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
-        {/* Google tag (gtag.js) */}
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-WMVC1JFLFC"></Script>
-        <Script id="ga-init" strategy="afterInteractive">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-WMVC1JFLFC', {
-          cookie_domain: '.bookme.com.bd'
-      });
-        `}
-        </Script>
       </head>
+
       <body className={inter.className}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-TPGZ8PRZ"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+
         <PaginationProvider>
           <SearchProvider>
             <UserProvider>
               <div className="bg-white">
                 <HeaderWrapper />
-                <main className="min-h-[100vh] py-[12px]">
-                  {children}
-                </main>
+                <main className="min-h-[100vh] py-[12px]">{children}</main>
                 <Footer />
               </div>
             </UserProvider>
