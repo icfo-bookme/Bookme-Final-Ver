@@ -7,6 +7,10 @@ import RelatedActivities from "../../Activities/RelatedActivities";
 import Tab from "../../car/DetailsTab/tab";
 import CarPropertySummary from "../../car/CarPropertySummary";
 import CarPropertyFacilities from "../../car/CarPropertyFacilites";
+import TourPackageToDataLayer from "@/components/Tracking/TourPackageToDataLayer";
+import TourActivityToDataLayer from "@/components/Tracking/TourActivitiesTracking";
+import CarRentalToDataLayer from "@/components/Tracking/CarRentalTracking";
+
 
 export default async function PropertyDetails({ data }) {
 
@@ -15,10 +19,12 @@ export default async function PropertyDetails({ data }) {
     if (!data) {
         return <div>No property details available</div>;
     }
+    
     return (
         <div className="container md:w-[93%] w-[98%] mx-auto">
             {category_id == 5 && (
                 <>
+                <TourPackageToDataLayer data={data} />
                     <div className="p-5 bg-white rounded-lg grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div className="md:col-span-7">
                             <h2 className="text-lg sm:text-xl font-bold text-gray-800  sm:mb-3 flex items-center -mt-2  gap-2">
@@ -40,6 +46,7 @@ export default async function PropertyDetails({ data }) {
 
             {category_id == 6 && (
                 <>
+                <TourActivityToDataLayer data={data} />
                     <div className="md:px-5 px-1  bg-gray-100 rounded-lg">
                         <div className="py-2">
                             <div className="px-2">
@@ -68,6 +75,7 @@ export default async function PropertyDetails({ data }) {
 
             {category_id == 7 && (
                 <>
+                <CarRentalToDataLayer data={data} />
                     {data.models &&
                         <div className=" mb-5  bg-gray-100 rounded-lg">
                             <Tab models={data.models} />
