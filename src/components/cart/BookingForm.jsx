@@ -194,6 +194,7 @@ export default function BookingForm({
 
       if (response.status === 201 || response.status === 200) {
 console.log('Booking confirmed successfully:', response.data);
+        const order_id = response.data.order_id;
 
 
         if (typeof window !== "undefined") {
@@ -229,7 +230,7 @@ console.log('Booking confirmed successfully:', response.data);
             }
           });
         }
-        router.push(`/confirmation?orderno=${orderNumber}`);
+        router.push(`/confirmation?orderno=${order_id}`);
       } else {
         alert('Failed to confirm booking. Please try again.');
       }
