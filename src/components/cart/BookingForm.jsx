@@ -193,8 +193,8 @@ export default function BookingForm({
       );
 
       if (response.status === 201 || response.status === 200) {
-console.log('Booking confirmed successfully:', response.data.activity_detail);
-        const orderId = response.data.activity_detail.order_id;
+console.log('Booking confirmed successfully:', response.data.data.activity_detail.order_id);
+        const orderId = response.data.data.activity_detail.order_id;
 
 
         if (typeof window !== "undefined") {
@@ -230,7 +230,7 @@ console.log('Booking confirmed successfully:', response.data.activity_detail);
             }
           });
         }
-        router.push(`/confirmation/${order_id}`);
+        router.push(`/confirmation/${orderId}`);
       } else {
         alert('Failed to confirm booking. Please try again.');
       }
