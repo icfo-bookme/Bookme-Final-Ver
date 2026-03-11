@@ -193,8 +193,8 @@ export default function BookingForm({
       );
 
       if (response.status === 201 || response.status === 200) {
-console.log('Booking confirmed successfully:', response.data);
-        const order_id = response.data.order_id;
+console.log('Booking confirmed successfully:', response.data.activity_detail);
+        const orderId = response.data.activity_detail.order_id;
 
 
         if (typeof window !== "undefined") {
