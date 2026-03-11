@@ -8,11 +8,21 @@ export default function PackageViewTracker({ property, packages }) {
 
     window.dataLayer = window.dataLayer || [];
 
-    // Determine property category
     let category = "";
-    if (property?.category_id === 1) category = "Tanguar Haor Tour Package";
-    else if (property?.category_id === 2) category = "Sundarban Tour Package";
-    else category = "Saint Martin Tour Package";
+    let eventName = "";
+
+    if (property?.category_id === 1) {
+      category = "Tanguar Haor Tour Package";
+      eventName = "view_tanguar_haor_packages";
+    } 
+    else if (property?.category_id === 2) {
+      category = "Sundarban Tour Package";
+      eventName = "view_sundarban_packages";
+    } 
+    else {
+      category = "Saint Martin Tour Package";
+      eventName = "view_saint_martin_packages";
+    }
 
     // Prepare packages array
     const packagesData = packages.flatMap((pkg) =>
@@ -26,7 +36,7 @@ export default function PackageViewTracker({ property, packages }) {
 
     // Push to dataLayer
     window.dataLayer.push({
-      event: "view_package",
+      event: eventName,
       property_name: property.property_name,
       property_id: property.property_id,
       location: property.district_city,

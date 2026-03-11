@@ -230,7 +230,7 @@ console.log('Booking confirmed successfully:', response.data);
             }
           });
         }
-        router.push(`/confirmation?orderno=${order_id}`);
+        router.push(`/confirmation/${order_id}`);
       } else {
         alert('Failed to confirm booking. Please try again.');
       }
