@@ -80,7 +80,7 @@ const GuestSelector = ({ guests, onChange, onClose }) => {
 };
 
 const GuestCounter = ({ label, description, count, onIncrease, onDecrease, minCount }) => (
-  <div className="flex justify-between items-center">
+  <div className="flex text-black justify-between items-center">
     <div>
       <h4 className="font-medium text-gray-700">{label}</h4>
       <p className="text-sm text-gray-500">{description}</p>
@@ -89,7 +89,7 @@ const GuestCounter = ({ label, description, count, onIncrease, onDecrease, minCo
       <button
         onClick={onDecrease}
         disabled={count <= minCount}
-        className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+        className="w-10 h-10 text-black rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />

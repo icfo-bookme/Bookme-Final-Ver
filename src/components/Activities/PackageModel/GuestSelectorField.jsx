@@ -4,7 +4,7 @@ const GuestSelectorField = ({ guests, onTrigger }) => (
     <label className="block text-sm font-medium text-gray-700 mb-2">Guests</label>
     <div
       onClick={onTrigger}
-      className="guest-selector-trigger w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer flex justify-between items-center hover:border-blue-400 transition-colors"
+      className="guest-selector-trigger text-black w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer flex justify-between items-center hover:border-blue-400 transition-colors"
     >
       <span>
         {guests.adults} Adult{guests.adults !== 1 ? 's' : ''}, {guests.children} Child{guests.children !== 1 ? 'ren' : ''}

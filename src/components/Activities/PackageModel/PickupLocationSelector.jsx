@@ -91,7 +91,7 @@ const PickupLocationSelector = ({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${className}`}
+      className={`w-full text-black p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${className}`}
       required
     >
       <option value="">Select pickup location</option>
