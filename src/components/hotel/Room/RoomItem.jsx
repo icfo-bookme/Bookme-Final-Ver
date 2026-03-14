@@ -5,10 +5,89 @@ import { Button, Modal } from 'flowbite-react';
 
 const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
     const [openModal, setOpenModal] = useState(false);
+    
+    // Helper function to format dates without timezone issues
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        
+        // Parse the date string (YYYY-MM-DD) and create date in UTC to avoid timezone shifts
+        const [year, month, day] = dateString.split('-').map(Number);
+        
+        // Create date using UTC to prevent timezone offset issues
+        const date = new Date(Date.UTC(year, month - 1, day));
+        
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            timeZone: 'UTC' // Force UTC to maintain the original date
+        });
+    };
+
+    // Format date with year for display
+    const formatDateWithYear = (dateString) => {
+        if (!dateString) return '';
+        
+        const [year, month, day] = dateString.split('-').map(Number);
+        const date = new Date(Date.UTC(year, month - 1, day));
+        
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            timeZone: 'UTC'
+        });
+    };
+
+    // Calculate end date for display (effective_till is the last night, so checkout is next day)
+    const getDisplayEndDate = (dateString) => {
+        if (!dateString) return '';
+        
+        const [year, month, day] = dateString.split('-').map(Number);
+        // Add one day to show checkout date
+        const endDate = new Date(Date.UTC(year, month - 1, day));
+        endDate.setUTCDate(endDate.getUTCDate() + 1);
+        
+        return endDate.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            timeZone: 'UTC'
+        });
+    };
+
+    // Format date range for display
+    const formatDateRange = (fromDate, tillDate, nights) => {
+        if (!fromDate || !tillDate) return '';
+        
+        const [fromYear, fromMonth, fromDay] = fromDate.split('-').map(Number);
+        const [tillYear, tillMonth, tillDay] = tillDate.split('-').map(Number);
+        
+        const startDate = new Date(Date.UTC(fromYear, fromMonth - 1, fromDay));
+        const endDate = new Date(Date.UTC(tillYear, tillMonth - 1, tillDay));
+        
+        // Add one day to till date for checkout display
+        const checkoutDate = new Date(Date.UTC(tillYear, tillMonth - 1, tillDay));
+        checkoutDate.setUTCDate(checkoutDate.getUTCDate() + 1);
+        
+        const formattedStart = startDate.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            timeZone: 'UTC'
+        });
+        
+        const formattedCheckout = checkoutDate.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            timeZone: 'UTC'
+        });
+        
+        return `${formattedStart} - ${formattedCheckout} (${nights} nights)`;
+    };
+
     const getFormattedDate = () => {
         const today = new Date();
         today.setDate(today.getDate() + 2);
-
+        
+        // For cancellation date, we want to show in local format
         const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
         return today.toLocaleDateString('en-GB', options).replace(',', '');
     };
@@ -25,7 +104,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
             </span>
             <div className="rounded-lg mt-1 bg-gray-100 border border-gray-300 mb-4">
 
-                {/* Mobile View (sm) - FIXED PRICE DISPLAY */}
+                {/* Mobile View (sm) */}
                 <div className="md:hidden">
                     <div className="border-b border-gray-300">
                         <RoomCarousel images={room.images} key={room.id} />
@@ -90,7 +169,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                 <li className='text-xs'>Free cancellation before 00:01 on {getFormattedDate()}</li>
                             </div>
 
-                            {/* Price Section - IMPROVED LAYOUT */}
+                            {/* Price Section */}
                             <div className="border-t border-gray-300 pt-4">
                                 {/* Discount Badge */}
                                 <div className="flex justify-between items-start mb-3">
@@ -110,22 +189,18 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                             const pricePerNight = Number(segment.price_per_night);
                                             const discount = Number(segment.discount || 0);
                                             const discountedPrice = Math.round(pricePerNight - (pricePerNight * discount / 100));
-                                            const fromDate = new Date(segment.effective_from);
-                                            const toDate = new Date(segment.effective_till);
-
-                                            const formattedFrom = fromDate.toLocaleDateString('en-US', {
-                                                month: 'short',
-                                                day: 'numeric'
-                                            });
-                                            const formattedTo = toDate.toLocaleDateString('en-US', {
-                                                month: 'short',
-                                                day: 'numeric'
-                                            });
+                                            
+                                            // Use the fixed date range formatter
+                                            const dateRange = formatDateRange(
+                                                segment.effective_from, 
+                                                segment.effective_till, 
+                                                segment.nights
+                                            );
 
                                             return (
                                                 <div key={idx} className="bg-white p-2 rounded border border-gray-200">
                                                     <p className="text-xs font-semibold text-gray-700 mb-1">
-                                                        {formattedFrom} - {formattedTo}
+                                                        {dateRange}
                                                     </p>
                                                     <div className="flex flex-wrap items-baseline justify-between gap-1">
                                                         <div className="flex items-center flex-wrap gap-1">
@@ -146,7 +221,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                                         </p>
                                                     )}
                                                     <p className="text-xs text-gray-500 mt-1">
-                                                        {segment.nights} nights • Total: BDT {Number(segment.final_segment_price).toLocaleString()}
+                                                        Total: BDT {Number(segment.final_segment_price).toLocaleString()}
                                                     </p>
                                                 </div>
                                             );
@@ -191,7 +266,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                     </div>
                 </div>
 
-                {/* Desktop View (lg) - UNCHANGED */}
+                {/* Desktop View (lg) */}
                 <div className="hidden md:grid md:grid-cols-8 gap-6">
                     {/* Left side - Carousel */}
                     <div className='col-span-3 border-r border-gray-300'>
@@ -201,7 +276,6 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                     {/* Right side - All other information */}
                     <div className="col-span-5 px-4 py-2">
                         {/* Room header section */}
-
                         <div className="flex justify-between items-start mb-4">
                             <div>
                                 <h2 className="text-xl font-bold text-gray-800 mt-1 mb-1">{room.room_name}</h2>
@@ -260,24 +334,17 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                                     const pricePerNight = Number(segment.price_per_night);
                                                     const discount = Number(segment.discount || 0);
                                                     const discountedPrice = Math.round(pricePerNight - (pricePerNight * discount / 100));
-                                                    const fromDate = new Date(segment.effective_from);
-                                                    const toDate = new Date(segment.effective_till);
-
-                                                    const formattedFrom = fromDate.toLocaleDateString('en-US', {
-                                                        month: 'short',
-                                                        day: 'numeric',
-                                                        year: 'numeric'
-                                                    });
-                                                    const formattedTo = toDate.toLocaleDateString('en-US', {
-                                                        month: 'short',
-                                                        day: 'numeric',
-                                                        year: 'numeric'
-                                                    });
+                                                    
+                                                    // Use the fixed date range formatter with year
+                                                    const formattedFrom = formatDateWithYear(segment.effective_from);
+                                                    const formattedTill = formatDateWithYear(segment.effective_till);
+                                                    const formattedCheckout = getDisplayEndDate(segment.effective_till);
 
                                                     return (
                                                         <div key={idx} className="border-b border-gray-200 pb-2 last:border-0">
                                                             <p className="text-xs font-semibold text-gray-600">
-                                                                {formattedFrom} - {formattedTo}
+                                                                {formattedFrom} - {formattedCheckout}
+                                                                <span className="text-gray-400 ml-1">({segment.nights} nights)</span>
                                                             </p>
                                                             <div className="flex items-center justify-end gap-2 mt-1">
                                                                 {discount > 0 && (
@@ -286,7 +353,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                                                     </p>
                                                                 )}
                                                                 <p className="text-sm font-bold text-blue-800">
-                                                                    BDT {discountedPrice.toLocaleString()}/<span className='text-xs text-gray-500 mt-2'>1 Night, per room</span>
+                                                                    BDT {discountedPrice.toLocaleString()}/night
                                                                 </p>
                                                             </div>
                                                             {discount > 0 && (
@@ -295,7 +362,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                                                 </p>
                                                             )}
                                                             <p className="text-xs text-gray-500">
-                                                                {segment.nights} nights • Total: BDT {Number(segment.final_segment_price).toLocaleString()}
+                                                                Total for {segment.nights} nights: BDT {Number(segment.final_segment_price).toLocaleString()}
                                                             </p>
                                                         </div>
                                                     );
@@ -320,7 +387,6 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                             </p>
                                         )}
 
-                                        
                                         {room.extra_discount_msg && (
                                             <p className='text-green-600 text-xs mt-1'>{room.extra_discount_msg}</p>
                                         )}
