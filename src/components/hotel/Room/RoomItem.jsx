@@ -15,10 +15,6 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
 
     const discountedPrice = Math.round(room.price - (room.price * room.discount / 100));
     let taxesAndFees = 0;
-    // if (room.destination_id != 702 && room.destination_id != 1) {
-    //     taxesAndFees = Math.round(discountedPrice * 0.265);
-    // }
-
 
     return (
         <div className="py-3">
@@ -29,7 +25,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
             </span>
             <div className="rounded-lg mt-1 bg-gray-100 border border-gray-300 mb-4">
 
-                {/* Mobile View (sm) */}
+                {/* Mobile View (sm) - FIXED PRICE DISPLAY */}
                 <div className="md:hidden">
                     <div className="border-b border-gray-300">
                         <RoomCarousel images={room.images} key={room.id} />
@@ -76,58 +72,126 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                             </div>
                         )}
 
-                        <div className="grid grid-cols-2 gap-4 mt-4">
-                            <div>
+                        <div className="flex flex-col mt-4">
+                            {/* Refund Policy and Basic Info */}
+                            <div className="mb-4">
                                 <button
                                     onClick={() => setOpenModal(true)}
+                                    className="mb-2 inline-block"
                                 >
                                     <i className="fa fa-eye text-blue-500" aria-hidden="true"></i> <span className="font-bold underline">Refund Policy</span>
                                 </button>
 
-                                <p className="text-gray-600 mt-2 text-sm flex items-center gap-2">
+                                <p className="text-gray-600 text-sm flex items-center gap-2 mb-2">
                                     <i className="fa-solid fa-utensils"></i>
                                     Breakfast {room.breakfast_status === 'included' ? 'Included' : 'Not Included'}
                                 </p>
-                                <p className="text-gray-600 mt-2 text-xs mb-4">{room.room_characteristics}</p>
+                                <p className="text-gray-600 text-xs mb-2">{room.room_characteristics}</p>
                                 <li className='text-xs'>Free cancellation before 00:01 on {getFormattedDate()}</li>
                             </div>
-                            <div className='text-end'>
-                                {room.discount > 0 && (
-                                    <span className="text-sm bg-[#FD7E14] text-white font-bold px-2 py-0.5 rounded-xl">
-                                        {room.discount}% OFF
-                                    </span>
-                                )}
-                                <p className='mt-3 text-green-500 text-xs'>{room.extra_discount_msg}</p>
-                                <p className='mt-3 text-xs'>Starts From</p>
-                                {room.discount > 0 && (
-                                    <p className="text-xs md:text-sm text-red-500 line-through">BDT {room.price}  <span className='text-xs text-gray-700 mt-3'>for 1 Night , per room</span></p>
-                                )}
-                                <p className="text-lg md:text-xl font-bold text-blue-900">
-                                    BDT {discountedPrice}
-                                </p>
 
-                                {/* <p className='mt-1 text-xs text-gray-700'>
-                                    + BDT {taxesAndFees} Taxes & Fees
-                                </p> */}
-                               
+                            {/* Price Section - IMPROVED LAYOUT */}
+                            <div className="border-t border-gray-300 pt-4">
+                                {/* Discount Badge */}
+                                <div className="flex justify-between items-start mb-3">
+                                    <p className='text-green-500 text-xs'>{room.extra_discount_msg}</p>
+                                    {room.discount > 0 && (
+                                        <span className="text-sm bg-[#FD7E14] text-white font-bold px-2 py-0.5 rounded-xl whitespace-nowrap">
+                                            {room.discount}% OFF
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* Price Segments or Single Price */}
+                                {room.price_segments && room.price_segments.length > 0 ? (
+                                    <div className="space-y-3 mb-3">
+                                        <p className='text-xs text-gray-600 font-semibold'>Available Rates:</p>
+                                        {room.price_segments.map((segment, idx) => {
+                                            const pricePerNight = Number(segment.price_per_night);
+                                            const discount = Number(segment.discount || 0);
+                                            const discountedPrice = Math.round(pricePerNight - (pricePerNight * discount / 100));
+                                            const fromDate = new Date(segment.effective_from);
+                                            const toDate = new Date(segment.effective_till);
+
+                                            const formattedFrom = fromDate.toLocaleDateString('en-US', {
+                                                month: 'short',
+                                                day: 'numeric'
+                                            });
+                                            const formattedTo = toDate.toLocaleDateString('en-US', {
+                                                month: 'short',
+                                                day: 'numeric'
+                                            });
+
+                                            return (
+                                                <div key={idx} className="bg-white p-2 rounded border border-gray-200">
+                                                    <p className="text-xs font-semibold text-gray-700 mb-1">
+                                                        {formattedFrom} - {formattedTo}
+                                                    </p>
+                                                    <div className="flex flex-wrap items-baseline justify-between gap-1">
+                                                        <div className="flex items-center flex-wrap gap-1">
+                                                            {discount > 0 && (
+                                                                <p className="text-xs text-red-500 line-through">
+                                                                    BDT {pricePerNight.toLocaleString()}
+                                                                </p>
+                                                            )}
+                                                            <p className="text-base font-bold text-blue-800">
+                                                                BDT {discountedPrice.toLocaleString()}
+                                                            </p>
+                                                        </div>
+                                                        <span className="text-xs text-gray-500">/night</span>
+                                                    </div>
+                                                    {discount > 0 && (
+                                                        <p className="text-xs text-green-600 mt-1">
+                                                            Save BDT {(pricePerNight - discountedPrice).toLocaleString()}
+                                                        </p>
+                                                    )}
+                                                    <p className="text-xs text-gray-500 mt-1">
+                                                        {segment.nights} nights • Total: BDT {Number(segment.final_segment_price).toLocaleString()}
+                                                    </p>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div className="mb-3">
+                                        <p className='text-xs text-gray-600'>Starts From</p>
+                                        <div className="flex items-baseline flex-wrap gap-2 mt-1">
+                                            {room.discount > 0 && (
+                                                <p className="text-sm text-red-500 line-through">BDT {room.price?.toLocaleString()}</p>
+                                            )}
+                                            <p className="text-xl font-bold text-blue-900">
+                                                BDT {discountedPrice?.toLocaleString()}
+                                            </p>
+                                            <span className="text-xs text-gray-500">/night, per room</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Taxes and Fees */}
+                                {room.destination_id != 702 && room.destination_id != 1 && (
+                                    <p className='text-xs text-gray-700 mb-2'>
+                                        + BDT {taxesAndFees.toLocaleString()} Taxes & Fees
+                                    </p>
+                                )}
+
+                                {/* Add to Cart Button */}
+                                <div className="mt-4">
+                                    <Button
+                                        onClick={() => onAddToCart(room)}
+                                        style={{
+                                            background: "linear-gradient(90deg, #313881, #0678B4)",
+                                        }}
+                                        className="w-full text-center px-3 py-2 text-white rounded hover:opacity-90 transition-colors text-sm"
+                                    >
+                                        Add Room
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="mt-4">
-                            <Button
-                                onClick={() => onAddToCart(room)}
-                                style={{
-                                    background: "linear-gradient(90deg, #313881, #0678B4)",
-                                }}
-                                className="w-full text-center px-3 py-2 text-white rounded hover:opacity-90 transition-colors text-sm"
-                            >
-                                Add Room
-                            </Button>
                         </div>
                     </div>
                 </div>
 
-                {/* Desktop View (lg) */}
+                {/* Desktop View (lg) - UNCHANGED */}
                 <div className="hidden md:grid md:grid-cols-8 gap-6">
                     {/* Left side - Carousel */}
                     <div className='col-span-3 border-r border-gray-300'>
