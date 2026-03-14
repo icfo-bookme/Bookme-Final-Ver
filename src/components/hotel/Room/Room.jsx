@@ -51,7 +51,7 @@ const RoomComponent = ({ hotelDetails, hotel_id, checkin, checkout }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { success, rooms, error } = await getRooms(hotel_id);
+                const { success, rooms, error } = await getRooms(hotel_id, checkin, checkout);
                 if (!success) throw new Error(error);
                 setRooms(rooms);
             } catch (err) {
@@ -62,7 +62,7 @@ const RoomComponent = ({ hotelDetails, hotel_id, checkin, checkout }) => {
         };
 
         fetchData();
-    }, [hotel_id]);
+    }, [hotel_id, checkin, checkout]);
 
     // Open Room Details Modal
     const openRoomDetails = (room) => {
@@ -92,6 +92,7 @@ const RoomComponent = ({ hotelDetails, hotel_id, checkin, checkout }) => {
             type: room.room_type,
             adults: room.max_adults,
             children: room.complementary_child_occupancy,
+            price_segments: room.price_segments,
             price: discountedPrice,
             taxes: taxes,
             total: totalPrice,

@@ -187,19 +187,74 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                             <div className='p-4 rounded-lg'>
                                 <div className="flex flex-col h-full justify-between">
                                     <div className="text-right">
-                                        <p className='text-gray-500 text-xs'>Starts From</p>
-                                        {room.discount > 0 && (
-                                            <p className="text-sm text-gray-400 line-through">BDT {room.price.toLocaleString()}</p>
+                                        <p className='text-gray-500 text-xs mb-2'>Available Rates</p>
+
+                                        {/* Loop through all price segments */}
+                                        {room.price_segments && room.price_segments.length > 0 ? (
+                                            <div className="space-y-3">
+                                                {room.price_segments.map((segment, idx) => {
+                                                    const pricePerNight = Number(segment.price_per_night);
+                                                    const discount = Number(segment.discount || 0);
+                                                    const discountedPrice = Math.round(pricePerNight - (pricePerNight * discount / 100));
+                                                    const fromDate = new Date(segment.effective_from);
+                                                    const toDate = new Date(segment.effective_till);
+
+                                                    const formattedFrom = fromDate.toLocaleDateString('en-US', {
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                        year: 'numeric'
+                                                    });
+                                                    const formattedTo = toDate.toLocaleDateString('en-US', {
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                        year: 'numeric'
+                                                    });
+
+                                                    return (
+                                                        <div key={idx} className="border-b border-gray-200 pb-2 last:border-0">
+                                                            <p className="text-xs font-semibold text-gray-600">
+                                                                {formattedFrom} - {formattedTo}
+                                                            </p>
+                                                            <div className="flex items-center justify-end gap-2 mt-1">
+                                                                {discount > 0 && (
+                                                                    <p className="text-xs text-red-500 line-through">
+                                                                        BDT {pricePerNight.toLocaleString()}
+                                                                    </p>
+                                                                )}
+                                                                <p className="text-sm font-bold text-blue-800">
+                                                                    BDT {discountedPrice.toLocaleString()}
+                                                                </p>
+                                                            </div>
+                                                            {discount > 0 && (
+                                                                <p className="text-xs text-green-600">
+                                                                    {discount}% OFF • Save BDT {(pricePerNight - discountedPrice).toLocaleString()}
+                                                                </p>
+                                                            )}
+                                                            <p className="text-xs text-gray-500">
+                                                                {segment.nights} nights • Total: BDT {Number(segment.final_segment_price).toLocaleString()}
+                                                            </p>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            // Fallback for single price
+                                            <>
+                                                <p className='text-gray-500 text-xs'>Starts From</p>
+                                                {room.discount > 0 && (
+                                                    <p className="text-sm text-gray-400 line-through">BDT {room.price?.toLocaleString()}</p>
+                                                )}
+                                                <p className="text-xl font-bold text-blue-800">
+                                                    BDT {discountedPrice?.toLocaleString()}
+                                                </p>
+                                            </>
                                         )}
-                                        <p className="text-xl font-bold text-blue-800">
-                                            BDT {discountedPrice.toLocaleString()}
-                                        </p>
+
                                         {room.destination_id != 702 && room.destination_id != 1 && (
                                             <p className='text-xs text-gray-500 mt-1'>
                                                 + BDT {taxesAndFees.toLocaleString()} Taxes & Fees
                                             </p>
                                         )}
-
 
                                         <p className='text-xs text-gray-500 mt-2'>for 1 Night, per room</p>
                                         {room.extra_discount_msg && (

@@ -1,6 +1,6 @@
-const getRooms = async (hotelId) => {
+const getRooms = async (hotelId, checkin, checkout) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/rooms/${hotelId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/rooms/${hotelId}?checkin=${checkin}&checkout=${checkout}`, {
       next: { revalidate: 43200 },
     });
     if (!response.ok) throw new Error(`Request failed: ${response.status}`);   
