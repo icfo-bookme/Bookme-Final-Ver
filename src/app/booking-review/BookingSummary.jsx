@@ -1,103 +1,106 @@
 export default function BookingSummary({ bookingData, user, calculations }) {
-  
-  // Function to find matching price segment for a date
+
+  // ✅ Find matching price segment for a date
   const findMatchingPriceSegment = (item, date) => {
-    if (!item.price_segments || item.price_segments.length === 0) {
-      return {
-        price_per_night: item.price,
-        discount: item.discount || 0,
-        final_segment_price: item.price
-      };
-    }
-
+    if (!item.price_segments || item.price_segments.length === 0) return null;
     const checkDate = new Date(date);
-    
-    const matchingSegment = item.price_segments.find(segment => {
-      const fromDate = new Date(segment.effective_from);
-      const toDate = new Date(segment.effective_till);
-      return checkDate >= fromDate && checkDate <= toDate;
+    checkDate.setHours(0, 0, 0, 0);
+    const match = item.price_segments.find(segment => {
+      const from = new Date(segment.effective_from);
+      const to = new Date(segment.effective_till);
+      from.setHours(0, 0, 0, 0);
+      to.setHours(0, 0, 0, 0);
+      return checkDate >= from && checkDate <= to;
     });
-
-    return matchingSegment || item.price_segments[0];
+    return match || item.price_segments[0];
   };
 
-  // Get price breakdown by segment for an item
-  const getItemPriceBreakdown = (item, checkin, checkout) => {
-    const nights = calculations.nights;
-    const breakdown = [];
-    
+  // ✅ Calculate nights from bookingData directly (safe fallback)
+  const getNights = () => {
+    const cin = bookingData?.checkin || calculations?.checkin;
+    const cout = bookingData?.checkout || calculations?.checkout;
+    if (!cin || !cout) return calculations?.nights || 1;
+    const a = new Date(cin); a.setHours(0, 0, 0, 0);
+    const b = new Date(cout); b.setHours(0, 0, 0, 0);
+    return Math.max(1, Math.ceil((b - a) / (1000 * 60 * 60 * 24)));
+  };
+
+  // ✅ Group consecutive same-price nights into single rows
+  const getItemPriceBreakdown = (item) => {
+    const cin = bookingData?.checkin || calculations?.checkin;
+    const cout = bookingData?.checkout || calculations?.checkout;
+    if (!cin || !cout) return [];
+
+    const checkinDate = new Date(cin);
+    checkinDate.setHours(0, 0, 0, 0);
+    const nights = getNights();
+
+    // No segments: flat single row
     if (!item.price_segments || item.price_segments.length === 0) {
-      // Single price fallback
+      const pricePerNight = item.price || 0;
+      const taxesPerNight = Number(item.taxes) || 0;
       return [{
-        fromDate: new Date(checkin),
-        toDate: new Date(checkout),
-        pricePerNight: item.price,
-        discountedPrice: item.price,
-        originalPrice: item.price,
-        discount: item.discount || 0,
-        nights: nights,
-        roomTotal: item.price * nights,
-        taxesTotal: (item.taxes || 0) * nights,
-        grandTotal: (item.price + (item.taxes || 0)) * nights
+        pricePerNight,
+        discountedPrice: pricePerNight,
+        discount: 0,
+        nights,
+        roomTotal: pricePerNight * nights,
+        taxesTotal: taxesPerNight * nights,
+        originalRoomTotal: pricePerNight * nights,
+        grandTotal: (pricePerNight + taxesPerNight) * nights
       }];
     }
 
-    let remainingNights = nights;
-    let currentDate = new Date(checkin);
-    
-    while (remainingNights > 0 && currentDate < new Date(checkout)) {
+    // Build per-night segment keys
+    const perNight = [];
+    for (let i = 0; i < nights; i++) {
+      const currentDate = new Date(checkinDate);
+      currentDate.setDate(checkinDate.getDate() + i);
       const segment = findMatchingPriceSegment(item, currentDate);
-      
       if (segment) {
-        const segmentEnd = new Date(segment.effective_till);
-        const checkoutDate = new Date(checkout);
-        const maxNightsInSegment = Math.min(
-          remainingNights,
-          Math.ceil((Math.min(segmentEnd, checkoutDate) - currentDate) / (1000 * 60 * 60 * 24)) + 1
-        );
-        
-        const pricePerNight = Number(segment.price_per_night);
-        const discount = Number(segment.discount || 0);
-        const discountedPrice = Math.round(pricePerNight - (pricePerNight * discount / 100));
-        const taxesPerNight = item.taxes || 0;
-        
-        const segmentEndDate = new Date(currentDate);
-        segmentEndDate.setDate(currentDate.getDate() + maxNightsInSegment - 1);
-        
-        breakdown.push({
-          fromDate: new Date(currentDate),
-          toDate: segmentEndDate,
-          pricePerNight: pricePerNight,
-          discountedPrice: discountedPrice,
-          originalPrice: pricePerNight,
-          discount: discount,
-          nights: maxNightsInSegment,
-          roomTotal: discountedPrice * maxNightsInSegment,
-          taxesTotal: taxesPerNight * maxNightsInSegment,
-          originalRoomTotal: pricePerNight * maxNightsInSegment,
-          grandTotal: (discountedPrice + taxesPerNight) * maxNightsInSegment
+        perNight.push({
+          segmentKey: `${segment.price_per_night}-${segment.discount || 0}-${segment.effective_from}-${segment.effective_till}`,
+          pricePerNight: Number(segment.price_per_night) || 0,
+          discount: Number(segment.discount || 0),
         });
-        
-        remainingNights -= maxNightsInSegment;
-        currentDate.setDate(currentDate.getDate() + maxNightsInSegment);
-      } else {
-        break;
       }
     }
-    
-    return breakdown;
-  };
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric',
-      year: 'numeric'
+    // ✅ Merge consecutive nights with same segmentKey
+    const grouped = [];
+    for (const night of perNight) {
+      const last = grouped[grouped.length - 1];
+      if (last && last.segmentKey === night.segmentKey) {
+        last.nights += 1;
+      } else {
+        grouped.push({ ...night, nights: 1 });
+      }
+    }
+
+    // Build final breakdown rows
+    const taxesPerNight = Number(item.taxes) || 0;
+    return grouped.map(group => {
+      const discountedPrice = Math.round(
+        group.pricePerNight - (group.pricePerNight * group.discount / 100)
+      );
+      return {
+        pricePerNight: group.pricePerNight,
+        discountedPrice,
+        discount: group.discount,
+        nights: group.nights,
+        roomTotal: discountedPrice * group.nights,
+        taxesTotal: taxesPerNight * group.nights,
+        originalRoomTotal: group.pricePerNight * group.nights,
+        grandTotal: (discountedPrice + taxesPerNight) * group.nights
+      };
     });
   };
 
-  console.log(bookingData);
-  
+  const formatDate = (date) => {
+    if (!date || !(date instanceof Date) || isNaN(date)) return '';
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
   return (
     <div className="bg-gray-50 px-6 rounded-lg">
       <div className="mb-3">
@@ -108,24 +111,23 @@ export default function BookingSummary({ bookingData, user, calculations }) {
       <h2 className="text-lg text-center font-bold text-gray-700 border-b border-gray-100">
         Booking Summary
       </h2>
-      
-      {user && <UserInfoSection user={user} />} 
-      <StayDurationSection 
-        checkin={bookingData?.checkin} 
-        checkout={bookingData?.checkout} 
-        nights={calculations?.nights} 
+
+      {user && <UserInfoSection user={user} />}
+      <StayDurationSection
+        checkin={bookingData?.checkin}
+        checkout={bookingData?.checkout}
+        nights={getNights()}
       />
-      <RoomDetailsSection 
-        cart={bookingData?.cart} 
-        calculations={calculations}
+      <RoomDetailsSection
+        cart={bookingData?.cart}
+        nights={getNights()}
         getItemPriceBreakdown={getItemPriceBreakdown}
         formatDate={formatDate}
       />
-      <PriceSummarySection 
-        calculations={calculations}
+      <PriceSummarySection
+        nights={getNights()}
         cart={bookingData?.cart}
         getItemPriceBreakdown={getItemPriceBreakdown}
-        formatDate={formatDate}
       />
     </div>
   );
@@ -161,23 +163,17 @@ function StayDurationSection({ checkin, checkout, nights }) {
           <div>
             <div className="text-sm text-gray-600">Check-in</div>
             <div className="font-semibold text-black">
-              {new Date(checkin).toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-              })}
+              {checkin ? new Date(checkin).toLocaleDateString('en-US', {
+                weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+              }) : '—'}
             </div>
           </div>
           <div>
             <div className="text-sm text-gray-600">Check-out</div>
             <div className="font-semibold text-black">
-              {new Date(checkout).toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-              })}
+              {checkout ? new Date(checkout).toLocaleDateString('en-US', {
+                weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+              }) : '—'}
             </div>
           </div>
         </div>
@@ -190,20 +186,15 @@ function StayDurationSection({ checkin, checkout, nights }) {
   );
 }
 
-function RoomDetailsSection({ cart, calculations, getItemPriceBreakdown, formatDate }) {
-  const calculateRoomTotalWithTaxes = (item) => {
-    const breakdown = getItemPriceBreakdown(item, calculations.checkin, calculations.checkout);
-    return breakdown.reduce((sum, segment) => sum + segment.grandTotal, 0);
-  };
-
+function RoomDetailsSection({ cart, nights, getItemPriceBreakdown, formatDate }) {
   return (
     <div className="mb-6">
       <h3 className="font-semibold text-gray-700 mb-3">Room Details</h3>
       <div className="space-y-4">
         {cart?.map((item, index) => {
-          const breakdown = getItemPriceBreakdown(item, calculations.checkin, calculations.checkout);
-          const itemTotal = calculateRoomTotalWithTaxes(item);
-          
+          const breakdown = getItemPriceBreakdown(item);
+          const itemTotal = breakdown.reduce((sum, s) => sum + s.grandTotal, 0);
+
           return (
             <div key={index} className="bg-white p-4 rounded-lg border border-gray-200">
               {/* Room Header */}
@@ -216,87 +207,78 @@ function RoomDetailsSection({ cart, calculations, getItemPriceBreakdown, formatD
                   BDT {itemTotal.toLocaleString()}
                 </span>
               </div>
-              
+
               {/* Guest Info */}
               <div className="text-sm text-gray-600 mb-3">
                 <div>Guests: {item.adults} Adults, {item.children} Children</div>
                 <div>Breakfast: {item.breakfast}</div>
               </div>
 
-              {/* Price Breakdown by Segment */}
-              {breakdown.length > 0 && (
-                <div className="mt-3 bg-gray-50 p-3 rounded-lg">
-                  <p className="text-xs font-semibold text-gray-700 mb-2">Price Breakdown:</p>
+              {/* ✅ Price Breakdown Box */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden">
+                <div className="bg-gray-100 px-3 py-1.5 border-b border-gray-200">
+                  <p className="text-xs font-semibold text-gray-700">Price Breakdown</p>
+                </div>
+                <div className="px-3 py-2 space-y-2">
                   {breakdown.map((segment, segIdx) => (
-                    <div key={segIdx} className="text-xs border-b border-gray-200 last:border-0 py-2">
-                      {/* Date Range */}
-                      <div className="flex justify-between items-center text-gray-600 mb-1">
-                        <span className="font-medium">
-                          {formatDate(segment.fromDate)} - {formatDate(segment.toDate)}
-                        </span>
-                        <span>{segment.nights} night{segment.nights > 1 ? 's' : ''}</span>
-                      </div>
-                      
-                      {/* Price per Night */}
-                      <div className="flex justify-between items-center mt-1">
-                        <div>
+                    <div key={segIdx} className="text-xs">
+
+                      {/* Price × Nights = Total */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 flex-wrap text-gray-700">
                           {segment.discount > 0 && (
-                            <span className="text-red-500 line-through mr-2">
+                            <span className="line-through text-gray-400">
                               BDT {segment.pricePerNight.toLocaleString()}
                             </span>
                           )}
                           <span className="font-semibold text-blue-800">
                             BDT {segment.discountedPrice.toLocaleString()}
                           </span>
-                          <span className="text-gray-500">/night</span>
+                          <span className="text-gray-400">×</span>
+                          <span className="font-medium text-gray-600">
+                            {segment.nights} night{segment.nights > 1 ? 's' : ''}
+                          </span>
                         </div>
-                        <span className="font-semibold">
+                        <span className="font-bold text-blue-900 ml-2">
                           BDT {segment.roomTotal.toLocaleString()}
                         </span>
                       </div>
-                      
+
                       {/* Taxes */}
-                      <div className="flex justify-between items-center mt-1 text-gray-500">
-                        <span>Govt. Taxes & Fees</span>
-                        <span>BDT {segment.taxesTotal.toLocaleString()}</span>
-                      </div>
-                      
-                      {/* Segment Total */}
-                      <div className="flex justify-between items-center mt-1 font-medium">
-                        <span>Segment Total</span>
-                        <span className="text-blue-800">BDT {segment.grandTotal.toLocaleString()}</span>
-                      </div>
-                      
-                      {/* Discount Info */}
+                      {item.taxes > 0 && (
+                        <div className="flex items-center justify-between mt-1 text-gray-500">
+                          <span>Govt. Taxes & Fees × {segment.nights} night{segment.nights > 1 ? 's' : ''}</span>
+                          <span>BDT {segment.taxesTotal.toLocaleString()}</span>
+                        </div>
+                      )}
+
+                      {/* Discount badge */}
                       {segment.discount > 0 && (
-                        <p className="text-green-600 mt-1">
-                          {segment.discount}% OFF • Save BDT {(segment.originalRoomTotal - segment.roomTotal).toLocaleString()}
-                        </p>
+                        <div className="mt-1 inline-flex items-center gap-1 bg-green-50 border border-green-200 rounded px-1.5 py-0.5">
+                          <span className="text-green-600 font-medium">{segment.discount}% OFF</span>
+                          <span className="text-green-500">
+                            · Save BDT {(segment.originalRoomTotal - segment.roomTotal).toLocaleString()}
+                          </span>
+                        </div>
+                      )}
+
+                      {segIdx < breakdown.length - 1 && (
+                        <div className="border-t border-dashed border-gray-200 mt-2" />
                       )}
                     </div>
                   ))}
-                  
-                  {/* Item Total */}
-                  <div className="flex justify-between items-center mt-3 pt-2 border-t border-gray-300 font-semibold">
-                    <span className="text-sm">Room Total (incl. taxes)</span>
-                    <span className="text-sm text-blue-900">BDT {itemTotal.toLocaleString()}</span>
-                  </div>
                 </div>
-              )}
 
-              {/* Simple view if no segments */}
-              {breakdown.length === 0 && (
-                <div className="text-xs text-gray-500">
-                  <div className="flex justify-between">
-                    <span>BDT {item.price} × {calculations.nights} nights</span>
-                    <span>BDT {item.price * calculations.nights}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Govt. Taxes & Fees:</span>
-                    <span>BDT {(item.taxes || 0) * calculations.nights}</span>
-                  </div>
+                {/* Room Total Footer */}
+                <div className="flex justify-between items-center px-3 py-2 bg-blue-50 border-t border-gray-200">
+                  <span className="text-xs font-semibold text-gray-700">
+                    Room Total ({nights} night{nights > 1 ? 's' : ''})
+                  </span>
+                  <span className="text-sm font-bold text-blue-900">
+                    BDT {itemTotal.toLocaleString()}
+                  </span>
                 </div>
-              )}
+              </div>
             </div>
           );
         })}
@@ -305,97 +287,52 @@ function RoomDetailsSection({ cart, calculations, getItemPriceBreakdown, formatD
   );
 }
 
-function PriceSummarySection({ calculations, cart, getItemPriceBreakdown, formatDate }) {
-  // Calculate detailed totals by segment
-  const getDetailedTotals = () => {
-    if (!cart || !calculations) return null;
+function PriceSummarySection({ nights, cart, getItemPriceBreakdown }) {
+  if (!cart) return null;
 
-    let roomTotal = 0;
-    let totalTaxes = 0;
-    let grandTotal = 0;
-    const segmentDetails = [];
+  let roomTotal = 0;
+  let totalTaxes = 0;
+  let totalSavings = 0;
+  let grandTotal = 0;
 
-    cart.forEach(item => {
-      const breakdown = getItemPriceBreakdown(item, calculations.checkin, calculations.checkout);
-      
-      breakdown.forEach(segment => {
-        roomTotal += segment.roomTotal;
-        totalTaxes += segment.taxesTotal;
-        grandTotal += segment.grandTotal;
-        
-        segmentDetails.push({
-          ...segment,
-          roomName: item.name
-        });
-      });
+  cart.forEach(item => {
+    const breakdown = getItemPriceBreakdown(item);
+    breakdown.forEach(segment => {
+      roomTotal += segment.roomTotal;
+      totalTaxes += segment.taxesTotal;
+      totalSavings += segment.originalRoomTotal - segment.roomTotal;
+      grandTotal += segment.grandTotal;
     });
-
-    return { roomTotal, totalTaxes, grandTotal, segmentDetails };
-  };
-
-  const totals = getDetailedTotals();
+  });
 
   return (
     <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4">
       <h3 className="font-semibold text-gray-700 mb-3">Price Summary</h3>
-      
-      {/* Segment-wise breakdown */}
-      {totals?.segmentDetails.length > 0 && (
-        <div className="mb-4 space-y-2">
-          <p className="text-xs font-semibold text-gray-600">Detailed Breakdown:</p>
-          {totals.segmentDetails.map((segment, idx) => (
-            <div key={idx} className="text-xs bg-gray-50 p-2 rounded">
-              <div className="font-medium text-gray-700 mb-1">
-                {segment.roomName}
-              </div>
-              <div className="text-gray-600">
-                {formatDate(segment.fromDate)} - {formatDate(segment.toDate)}
-              </div>
-              <div className="flex justify-between mt-1">
-                <span>{segment.nights} nights @ BDT {segment.discountedPrice.toLocaleString()}/night</span>
-                <span className="font-medium">BDT {segment.roomTotal.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between text-gray-500">
-                <span>Taxes & Fees</span>
-                <span>BDT {segment.taxesTotal.toLocaleString()}</span>
-              </div>
-              {segment.discount > 0 && (
-                <div className="text-green-600 mt-1">
-                  Saved BDT {(segment.originalRoomTotal - segment.roomTotal).toLocaleString()}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-      
-      {/* Summary Totals */}
       <div className="space-y-2 text-gray-700">
+
         <div className="flex justify-between text-sm">
-          <span>Room Total ({calculations?.nights} nights)</span>
-          <span>BDT {totals?.roomTotal?.toLocaleString() || calculations?.roomTotal}</span>
+          <span>Room Total ({nights} night{nights > 1 ? 's' : ''})</span>
+          <span>BDT {roomTotal.toLocaleString()}</span>
         </div>
-        <div className="flex justify-between text-sm">
-          <span>Govt. Taxes & Fees</span>
-          <span>BDT {totals?.totalTaxes?.toLocaleString() || calculations?.totalTaxes}</span>
-        </div>
-        
-        {/* Total Savings */}
-        {totals?.segmentDetails.some(s => s.discount > 0) && (
-          <div className="flex justify-between text-sm text-green-600">
-            <span>Total Savings</span>
-            <span>
-              BDT {totals.segmentDetails
-                .reduce((sum, s) => sum + (s.originalRoomTotal - s.roomTotal), 0)
-                .toLocaleString()}
-            </span>
+
+        {totalTaxes > 0 && (
+          <div className="flex justify-between text-sm">
+            <span>Govt. Taxes & Fees</span>
+            <span>BDT {totalTaxes.toLocaleString()}</span>
           </div>
         )}
-        
+
+        {totalSavings > 0 && (
+          <div className="flex justify-between text-sm text-green-600">
+            <span>Total Savings</span>
+            <span>- BDT {totalSavings.toLocaleString()}</span>
+          </div>
+        )}
+
         <div className="border-t border-gray-200 pt-2 mt-2">
           <div className="flex justify-between font-semibold text-lg text-blue-900">
             <span>Total Amount</span>
-            <span>BDT {totals?.grandTotal?.toLocaleString() || calculations?.grandTotal}</span>
+            <span>BDT {grandTotal.toLocaleString()}</span>
           </div>
         </div>
       </div>
