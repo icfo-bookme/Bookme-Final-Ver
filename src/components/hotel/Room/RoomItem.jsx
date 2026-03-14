@@ -222,7 +222,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                                                     </p>
                                                                 )}
                                                                 <p className="text-sm font-bold text-blue-800">
-                                                                    BDT {discountedPrice.toLocaleString()} <span className='text-xs text-gray-500 mt-2'>for 1 Night, per room</span>
+                                                                    BDT {discountedPrice.toLocaleString()}/<span className='text-xs text-gray-500 mt-2'>1 Night, per room</span>
                                                                 </p>
                                                             </div>
                                                             {discount > 0 && (
