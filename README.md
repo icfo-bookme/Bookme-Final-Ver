@@ -1,6 +1,6 @@
 
 
-## Getting Started ll
+## Getting Started
 
 First, run the development server:
 

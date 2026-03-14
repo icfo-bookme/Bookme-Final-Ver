@@ -100,7 +100,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                 <p className='mt-3 text-green-500 text-xs'>{room.extra_discount_msg}</p>
                                 <p className='mt-3 text-xs'>Starts From</p>
                                 {room.discount > 0 && (
-                                    <p className="text-xs md:text-sm text-red-500 line-through">BDT {room.price}</p>
+                                    <p className="text-xs md:text-sm text-red-500 line-through">BDT {room.price}  <span className='text-xs text-gray-700 mt-3'>for 1 Night , per room</span></p>
                                 )}
                                 <p className="text-lg md:text-xl font-bold text-blue-900">
                                     BDT {discountedPrice}
@@ -109,7 +109,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                 {/* <p className='mt-1 text-xs text-gray-700'>
                                     + BDT {taxesAndFees} Taxes & Fees
                                 </p> */}
-                                <p className='text-xs text-gray-700 mt-3'>for 1 Night , per room</p>
+                               
                             </div>
                         </div>
 
@@ -222,7 +222,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                                                     </p>
                                                                 )}
                                                                 <p className="text-sm font-bold text-blue-800">
-                                                                    BDT {discountedPrice.toLocaleString()}
+                                                                    BDT {discountedPrice.toLocaleString()} <p className='text-xs text-gray-500 mt-2'>for 1 Night, per room</p>
                                                                 </p>
                                                             </div>
                                                             {discount > 0 && (
@@ -256,7 +256,7 @@ const RoomItem = ({ room, index, onViewDetails, onAddToCart }) => {
                                             </p>
                                         )}
 
-                                        <p className='text-xs text-gray-500 mt-2'>for 1 Night, per room</p>
+                                        
                                         {room.extra_discount_msg && (
                                             <p className='text-green-600 text-xs mt-1'>{room.extra_discount_msg}</p>
                                         )}
