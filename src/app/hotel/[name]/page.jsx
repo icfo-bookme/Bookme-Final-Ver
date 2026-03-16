@@ -32,8 +32,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-const fetchHotelsByLocation = async (locationID) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}`);
+const fetchHotelsByLocation = async (locationID,checkin, checkout) => {
+  console.log('Fetching hotels for location ID:', locationID, 'Check-in:', checkin, 'Check-out:', checkout);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}?checkin=${checkin}&checkout=${checkout}`);
   if (!res.ok) throw new Error('Failed to fetch hotels by location');
   const data = await res.json();
 
@@ -52,9 +53,9 @@ const fetchHotelsByLocation = async (locationID) => {
   });
 };
 
-const fetchHotelsById = async (hotelID) => {
+const fetchHotelsById = async (hotelID,checkin, checkout) => {
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels/list/${hotelID}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels/list/${hotelID}?checkin=${checkin}&checkout=${checkout}`);
   if (!res.ok) throw new Error('Failed to fetch hotel by ID');
   const data = await res.json();
 
@@ -103,9 +104,9 @@ export default async function HotelListPage({ searchParams }) {
   try {
     let hotels = [];
     if (locationID) {
-      hotels = await fetchHotelsByLocation(locationID);
+      hotels = await fetchHotelsByLocation(locationID, checkin, checkout);
     } else if (hotelID) {
-      hotels = await fetchHotelsById(hotelID);
+      hotels = await fetchHotelsById(hotelID, checkin, checkout);
     }
 
     const amenities = await fetchAmenities();
