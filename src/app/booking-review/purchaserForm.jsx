@@ -259,7 +259,7 @@ export default function PurchaserForm({
         alert('Failed to confirm booking. Please try again.');
       }
     } catch (error) {
-      console.error('Error saving booking:', error);
+      
       setErrors({ form: 'An error occurred while confirming your booking.' });
       alert('An error occurred while confirming your booking.');
     } finally {

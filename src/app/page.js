@@ -10,7 +10,6 @@ import LoadingSpinner from "../components/SearchBar/Hotels/LoadingSpinner";
 
 import getServicesData from "@/services/homepage/getServicesData";
 
-// === Dynamic Imports ===
 const VisaMain = nextDynamic(() => import("../components/Home/Visa/Main"), { ssr: true });
 const HotelMain = nextDynamic(() => import("../components/Home/Hotel/Main"), { ssr: true });
 const TangourMain = nextDynamic(() => import("../components/Home/Tangour/Main"), { ssr: true });

@@ -33,7 +33,6 @@ export async function generateMetadata({ params }) {
 }
 
 const fetchHotelsByLocation = async (locationID,checkin, checkout) => {
-  console.log('Fetching hotels for location ID:', locationID, 'Check-in:', checkin, 'Check-out:', checkout);
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}?checkin=${checkin}&checkout=${checkout}`);
   if (!res.ok) throw new Error('Failed to fetch hotels by location');
   const data = await res.json();

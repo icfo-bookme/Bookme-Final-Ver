@@ -148,12 +148,12 @@ const BookMeHeader = () => {
               <Link
                 href="/hotel"
                 className={`${pathname == "/hotel" ? "active" : ""
-  } flex items-center justify-between py-3 px-4 text-sm hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
+  } flex items-center justify-between text-blue-950 py-3 px-4  text-sm hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
 
                 onClick={closeAllMenus}
                 prefetch
               >
-                <span className="font-medium">Hotels</span>
+                <span className="font-medium ">Hotels</span>
                 <FaChevronRight className="text-blue-400 group-hover:translate-x-1 transition-transform" />
               </Link>
             </li>
