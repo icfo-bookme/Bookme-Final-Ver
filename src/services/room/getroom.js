@@ -1,13 +1,13 @@
 const getRooms = async (hotelId, checkin, checkout) => {
   try {
 
-    // যদি date না আসে তাহলে default date সেট করা
+    
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
     const formatDate = (date) => {
-      return date.toISOString().split('T')[0]; // YYYY-MM-DD
+      return date.toISOString().split('T')[0]; 
     };
 
     const checkinDate = checkin ? checkin : formatDate(today);
