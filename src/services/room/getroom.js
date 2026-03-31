@@ -1,7 +1,7 @@
 const getRooms = async (hotelId, checkin, checkout) => {
   try {
 
-    
+    console.log('getRooms called with:', { hotelId, checkin, checkout });
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
