@@ -13,7 +13,10 @@ const getAllHotels = async () => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels?checkin=${checkinDate}&checkout=${checkoutDate}`,
-      { cache: "no-store" } // <-- important
+      {
+        cache: "no-store",
+        next: { revalidate: 0 },
+      }
     );
     return await response.json();
   } catch (error) {

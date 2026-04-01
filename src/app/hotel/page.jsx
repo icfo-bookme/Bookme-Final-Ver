@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import getAllHotels from '@/services/hotel/getAllHotels';
 import HotelHeroSection from '@/components/hotel/Hotel/HotelHeroSection';
 import HotelCTA from '@/components/hotel/Hotel/HotelCTA';
