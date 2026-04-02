@@ -48,7 +48,7 @@ const HpmepageBlog = () => {
         <section className="">
           
           <p className="text-gray-700 mb-4">
-            Book <strong>cheap flight tickets online</strong> with BookMe comprehensive flight booking platform. We offer the best deals on both <strong>domestic flights</strong> and <strong>international flights</strong>, including popular routes like <strong>Dhaka to Dubai flights</strong>. Enjoy <strong>last-minute flight deals</strong>, <strong>business class flight booking</strong>, and <strong>economy class ticket booking</strong> options. Our platform provides <strong>cheap airfare</strong> and <strong>flight booking discounts</strong> for all major airlines worldwide. Visit our <Link href="/flight" className="text-blue-800 hover:underline">flight booking page</Link> to find the best deals for your next journey.
+            Book <strong>cheap flight tickets online</strong> with BookMe comprehensive <strong>flight booking platform</strong>. We offer the best deals on both <strong>domestic flights</strong> and <strong>international flights</strong>, including popular routes like <strong>Dhaka to Dubai flights</strong>. Enjoy <strong>last-minute flight deals</strong>, <strong>business class flight booking</strong>, and <strong>economy class ticket booking</strong> options. Our platform provides <strong>cheap airfare</strong> and <strong>flight booking discounts</strong> for all major airlines worldwide. Visit our <Link href="/flight" className="text-blue-800 hover:underline">flight booking page</Link> to find the best deals for your next journey.
           </p>
         </section>
 
@@ -64,7 +64,7 @@ const HpmepageBlog = () => {
         <section className="">
           
           <p className="text-gray-700 mb-4">
-            Explore amazing <strong>tour packages</strong> and <strong>travel activities</strong> with BookMe. From <strong>family holiday packages</strong> to <strong>Maldives honeymoon packages</strong> and <strong>Europe tour deals</strong>, we offer <strong>luxury travel packages</strong> and <strong>budget holiday packages</strong> worldwide. Enjoy <strong>guided tours</strong>, <strong>adventure travel deals</strong>, and <strong>all-inclusive travel deals</strong> designed for every type of traveler. Our <strong>custom travel planning</strong> service ensures you get the perfect <strong>international holiday packages</strong> tailored to your preferences. Check out our <Link href="/tour/packages" className="text-blue-800 hover:underline">tour packages collection</Link> for your next adventure.
+            Explore amazing <Link href={'/tour/packages'} className='text-blue-600 ' >tour packages</Link> and <Link href={'/activities'} className='text-blue-600 ' >travel activities</Link> with <strong>BookMe</strong>. From <strong>family holiday packages</strong> to <strong>Maldives honeymoon packages</strong> and <strong>Europe tour deals</strong>, we offer <strong>luxury travel packages</strong> and <strong>budget holiday packages</strong> worldwide. Enjoy <strong>guided tours</strong>, <strong>adventure travel deals</strong>, and <strong>all-inclusive travel deals</strong> designed for every type of traveler. Our <strong>custom travel planning</strong> service ensures you get the perfect <strong>international holiday packages</strong> tailored to your preferences. Check out our <Link href="/tour/packages" className="text-blue-800 hover:underline">tour packages collection</Link> for your next adventure.
           </p>
         </section>
 
@@ -72,7 +72,7 @@ const HpmepageBlog = () => {
         <section className="">
          
           <p className="text-gray-700 mb-4">
-            Experience unforgettable sea adventures with BookMe <strong>cruise booking online</strong> services. Book <strong>Sundarban ships Ticket Booking</strong> for amazing <strong>Sundarban cruise trip</strong> experiences. Secure your <strong>Saint Martin ship tickets</strong> for tropical getaways and enjoy unique <strong>Tangour Haor Houseboats</strong> experiences. We offer <strong>luxury cruise deals</strong>, <strong>family cruise vacations</strong>, and <strong>ferry tickets booking</strong> services. Whether you are looking for <strong>cheap cruise vacations</strong> or <strong>last-minute cruise booking</strong> options, BookMe has you covered for all your maritime travel needs. Browse our <Link href="/ships" className="text-blue-800 hover:underline">ship ticket booking section</Link> for available voyages.
+            Experience unforgettable sea adventures with BookMe <strong>cruise booking online</strong> services. Book <strong>Sundarban ships Ticket Booking</strong> for amazing <strong>Sundarban cruise trip</strong> experiences. Secure your <strong>Saint Martin ship tickets</strong> for tropical getaways and enjoy unique <strong>Tangour Haor Houseboats</strong> experiences. We offer <strong>luxury cruise deals</strong>, <strong>family cruise vacations</strong>, and <strong>ferry tickets booking</strong> services. Whether you are looking for <strong>cheap cruise vacations</strong> or <strong>last-minute cruise booking</strong> options, BookMe has you covered for all your maritime travel needs. Browse our <Link href="/ships/Tanguar-Haor/1" className="text-blue-800 hover:underline">ship ticket booking section</Link> for available voyages.
           </p>
         </section>
 
@@ -80,7 +80,7 @@ const HpmepageBlog = () => {
         <section className="">
          
           <p className="text-gray-700 mb-4">
-            Enjoy convenient transportation with BookMe comprehensive <strong>car rental service</strong>. Whether you need to <strong>rent a car near airport</strong> or require <strong>luxury car hire</strong> for special occasions, we offer the best <strong>car rental</strong> options. Our services include <strong>luxury car rentals for families</strong>, <strong>one-way car rental</strong>, and <strong>car rental with driver</strong> options. Choose from <strong>daily car rental service</strong> or <strong>monthly car rental service</strong> with <strong>cheap car hire online</strong> rates. Perfect for <strong>car hire for vacation</strong> and business travel needs. Visit our <Link href="/car-rental" className="text-blue-800 hover:underline">car rental service page</Link> to book your vehicle.
+            Enjoy convenient transportation with <strong>BookMe</strong> comprehensive <strong>car rental service</strong>. Whether you need to <strong>rent a car near airport</strong> or require <strong>luxury car hire</strong> for special occasions, we offer the best <strong>car rental</strong> options. Our services include <strong>luxury car rentals for families</strong>, <strong>one-way car rental</strong>, and <strong>car rental with driver</strong> options. Choose from <strong>daily car rental service</strong> or <strong>monthly car rental service</strong> with <strong>cheap car hire online</strong> rates. Perfect for <strong>car hire for vacation</strong> and business travel needs. Visit our <Link href="/car-rental" className="text-blue-800 hover:underline">car rental service page</Link> to book your vehicle.
           </p>
         </section>
 
@@ -88,7 +88,7 @@ const HpmepageBlog = () => {
         <section className="">
          
           <p className="text-gray-700 mb-4">
-            Simplify your international travel with BookMe professional <strong>visa application service</strong>. We provide comprehensive support for <strong>tourist visa application</strong>, <strong>US visa assistance</strong>, <strong>UK visa application online</strong>, and <strong>Thailand visa processing</strong>. Our experienced team offers <strong>fast visa service</strong> and complete <strong>visa documentation support</strong> for <strong>student visa service</strong>, <strong>work visa processing</strong>, and <strong>business visa application</strong>. With our <strong>visa support service</strong>, you get expert guidance on all <strong>international visa requirements</strong> to ensure smooth travel planning. Learn more about our <Link href="/visa" className="text-blue-800 hover:underline">visa processing services</Link> for your next international trip.
+            Simplify your international travel with <strong>BookMe</strong> professional <strong>visa application service</strong>. We provide comprehensive support for <strong>tourist visa application</strong>, <strong>US visa assistance</strong>, <strong>UK visa application online</strong>, and <strong>Thailand visa processing</strong>. Our experienced team offers <strong>fast visa service</strong> and complete <strong>visa documentation support</strong> for <strong>student visa service</strong>, <strong>work visa processing</strong>, and <strong>business visa application</strong>. With our <strong>visa support service</strong>, you get expert guidance on all <strong>international visa requirements</strong> to ensure smooth travel planning. Learn more about our <Link href="/visa" className="text-blue-800 hover:underline">visa processing services</Link> for your next international trip.
           </p>
         </section>
 
@@ -96,7 +96,7 @@ const HpmepageBlog = () => {
         <section className="">
           
           <p className="text-gray-700 mb-4">
-            Enhance your travel experience with BookMe curated selection of <strong>travel activities</strong> and local experiences. From city tours and cultural activities to adventure sports and culinary experiences, we connect you with the best <strong>guided tours</strong> and local experts. Whether you are looking for family-friendly activities or solo adventures, our platform offers a wide range of options to make your trip memorable. Discover exciting <Link href="/activities" className="text-blue-800 hover:underline">travel activities and experiences</Link> for your next destination.
+            Enhance your travel experience with <strong>BookMe</strong> curated selection of <strong>travel activities</strong> and local experiences. From city tours and cultural activities to adventure sports and culinary experiences, we connect you with the best <strong>guided tours</strong> and local experts. Whether you are looking for family-friendly activities or solo adventures, our platform offers a wide range of options to make your trip memorable. Discover exciting <Link href="/activities" className="text-blue-800 hover:underline">travel activities and experiences</Link> for your next destination.
           </p>
         </section>
 
