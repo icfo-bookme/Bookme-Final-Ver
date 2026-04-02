@@ -16,8 +16,8 @@ export const metadata = {
 export default async function HotelHome() {
   let hotelData = [];
   try {
-
     const hotelResult = await getAllHotels();
+    console.log("Fetched hotel data:", hotelResult);
     hotelData = hotelResult;
   } catch (error) {
     console.error("Failed to fetch hotel data:", error);

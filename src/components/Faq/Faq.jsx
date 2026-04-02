@@ -14,7 +14,7 @@ export default function Faq() {
 
 				<div className="flex flex-col divide-y sm:px-8 lg:px-12 xl:px-32 text-blue-950">
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							How do I make a booking with Bookme?
 						</summary>
@@ -30,7 +30,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What payment options does Bookme support?
 						</summary>
@@ -47,7 +47,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							How will I receive my booking confirmation?
 						</summary>
@@ -61,7 +61,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Can I cancel or modify my booking?
 						</summary>
@@ -75,7 +75,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What is Bookme refund policy?
 						</summary>
@@ -89,7 +89,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Is my personal data secure with Bookme?
 						</summary>
@@ -105,7 +105,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Does Bookme charge extra fees?
 						</summary>
@@ -119,7 +119,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Can I book on behalf of someone else?
 						</summary>
@@ -135,7 +135,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What should I do if I face issues during booking or payment?
 						</summary>
@@ -152,7 +152,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Does Bookme offer discounts or promotions?
 						</summary>
@@ -168,7 +168,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Can I delete my account and personal data?
 						</summary>
@@ -182,7 +182,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Can I change the name on my booking?
 						</summary>
@@ -194,7 +194,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Do I need a physical ticket?
 						</summary>
@@ -209,7 +209,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What documents are required for international travel?
 						</summary>
@@ -223,7 +223,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Can I request early check-in or late check-out at hotels?
 						</summary>
@@ -237,7 +237,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Are meals included in hotel bookings?
 						</summary>
@@ -251,7 +251,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Can I customize a tour package?
 						</summary>
@@ -265,7 +265,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What is the minimum group size for a tour?
 						</summary>
@@ -279,7 +279,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What if my ship is delayed or cancelled?
 						</summary>
@@ -293,7 +293,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Are there surcharges for certain payment methods?
 						</summary>
@@ -307,7 +307,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Does Bookme provide invoices for corporate bookings?
 						</summary>
@@ -323,7 +323,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What are Bookme customer support hours?
 						</summary>
@@ -337,7 +337,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Is live chat support available?
 						</summary>
@@ -351,7 +351,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Can I book extra baggage for my flight?
 						</summary>
@@ -365,7 +365,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							What should I do if I miss my flight, ship, or bus?
 						</summary>
@@ -381,7 +381,7 @@ export default function Faq() {
 						</div>
 					</details>
 
-					<details>
+					<details open>
 						<summary className="py-4 outline-none cursor-pointer focus:underline">
 							Who do I contact for urgent issues after hours?
 						</summary>
