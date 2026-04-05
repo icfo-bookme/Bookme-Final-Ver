@@ -14,6 +14,14 @@ const VisaSearch = () => {
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^\w\-]+/g, '');
+
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "search",
+          search_value: slug,
+          
+        });
+      }
     router.push(`/visa/${slug}/${selectedItem.id}`);
   };
 

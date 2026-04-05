@@ -62,6 +62,12 @@ const CarRentalSearchBar = ({ locationsData }) => {
     params.set("dropoff", searchParams.dropoffLocation.id);
     params.set("date", searchParams.pickupDate);
     params.set("time", searchParams.pickupTime);
+     if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "search",
+          search_value: "car rental search",         
+        });
+      }
     router.push(`/Car/list/${pickupId}?${params.toString()}`);
   };
 

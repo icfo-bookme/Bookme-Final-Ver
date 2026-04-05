@@ -13,8 +13,21 @@ const ShipsSearch = () => {
     console.log("Selected Item:", selectedItem);
     const slug = slugify(selectedItem.name);
     if (selectedItem.type === "property") {
+       if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "search",
+          search_value: slug,
+          
+        });
+      }
       router.push(`/Property/${slug}/${selectedItem.id}`);
     } else {
+       if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "search",
+          search_value: slug,         
+        });
+      }
       const slug = slugify(`${selectedItem.name}, ${selectedItem.country}`);
       router.push(`/ships/${slug}/${selectedItem.id}`);
     }

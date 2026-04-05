@@ -56,12 +56,12 @@ const SearchForm = ({ destinations, hotels, defaultDestination }) => {
 
     if (selectedHotelId) {
       queryParams.hotelID = String(selectedHotelId);
-      
+
       // Find the selected hotel to get its location for the URL
       const selectedHotel = hotels.find(
         (hotel) => String(hotel.hotel_id) === String(selectedHotelId)
       );
-      
+
       if (!selectedHotel) {
         alert("Hotel not found!");
         return;
@@ -69,9 +69,16 @@ const SearchForm = ({ destinations, hotels, defaultDestination }) => {
 
       // Use hotel name for URL but search by hotel ID
       const hotelName = slugify(selectedHotel.hotel_name)
-      
+
 
       const query = new URLSearchParams(queryParams).toString();
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "search",
+          search_value: hotelName,
+          
+        });
+      }
       router.push(`/hotel/${hotelName}?${query}`);
 
     } else {
@@ -89,9 +96,17 @@ const SearchForm = ({ destinations, hotels, defaultDestination }) => {
       }
 
       const destinationName = slugify(selectedDestination.name)
-       
+
 
       const query = new URLSearchParams(queryParams).toString();
+
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "search",
+          search_value: selectedDestination.name,
+          
+        });
+      }
       router.push(`/hotel/${destinationName}?${query}`);
     }
   };
