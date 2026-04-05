@@ -19,13 +19,15 @@ const ActivitiesSearchBar = () => {
       }
       router.push(`/${slug}/${selectedItem.id}`);
     } else {
+
+      const slug = slugify(`${selectedItem.name}, ${selectedItem.country}`);
        if (window.dataLayer) {
         window.dataLayer.push({
           event: "search",
           search_value: slug,        
         });
       }
-      const slug = slugify(`${selectedItem.name}, ${selectedItem.country}`);
+      
       router.push(`/activities/list/${slug}/${selectedItem.id}`);
     }
   };

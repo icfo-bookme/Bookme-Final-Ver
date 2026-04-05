@@ -21,15 +21,15 @@ const TourSearchBar = () => {
         });
       }
       router.push(`/${slug}/${selectedItem.id}`);
-    } else {
-       if (window.dataLayer) {
+    } else {      
+      const slug = slugify(`${selectedItem.name}, ${selectedItem.country}`);
+      if (window.dataLayer) {
         window.dataLayer.push({
           event: "search",
           search_value: slug,
           
         });
       }
-      const slug = slugify(`${selectedItem.name}, ${selectedItem.country}`);
       router.push(`/tour/packages/${slug}/${selectedItem.id}`);
     }
   };

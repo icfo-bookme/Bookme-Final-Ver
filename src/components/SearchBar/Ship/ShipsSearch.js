@@ -8,39 +8,39 @@ import slugify from "@/utils/slugify";
 const ShipsSearch = () => {
   const router = useRouter();
   const { data: shipsData, loading, error } = useSearchData('ships');
-  
+
   const handleSearch = (selectedItem) => {
-    console.log("Selected Item:", selectedItem);
     const slug = slugify(selectedItem.name);
     if (selectedItem.type === "property") {
-       if (window.dataLayer) {
+      if (window.dataLayer) {
         window.dataLayer.push({
           event: "search",
-          search_value: slug,
-          
+          search_value: slug || selectedItem.name,
         });
       }
       router.push(`/Property/${slug}/${selectedItem.id}`);
     } else {
-       if (window.dataLayer) {
+
+      const slug = slugify(`${selectedItem.name}, ${selectedItem.country}`);
+
+      if (window.dataLayer) {
         window.dataLayer.push({
           event: "search",
-          search_value: slug,         
+          search_value: slug,
         });
       }
-      const slug = slugify(`${selectedItem.name}, ${selectedItem.country}`);
       router.push(`/ships/${slug}/${selectedItem.id}`);
     }
   };
 
   const formatResultText = (item) => {
     if (item.type === "property") {
-      return item.name; 
+      return item.name;
     }
     return `${item.name}, ${item.country}`;
   };
 
-  const formatDisplayText = (item) => { 
+  const formatDisplayText = (item) => {
     return "LOCATION/PROPERTY";
   };
 
@@ -53,7 +53,7 @@ const ShipsSearch = () => {
       placeholderConfig={{
         prefix: "Search Ships For",
         showPrefix: true
-      }} 
+      }}
       buttonText="Search Ships"
       onSearch={handleSearch}
       formatResultText={formatResultText}
