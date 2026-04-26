@@ -37,6 +37,8 @@ jobs:
             echo "✅ Build project..."
             npm run build
 
+            su bookme
+
             echo "✅ Build successful. Reloading PM2..."
             # Start PM2 if not already running
             pm2 describe bookme || pm2 start ecosystem.config.js
