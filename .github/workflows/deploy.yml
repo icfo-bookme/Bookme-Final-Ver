@@ -30,21 +30,24 @@ jobs:
 
             cd /var/www/bookme
 
-            echo "📥 Syncing with remote repo..."
+            echo "🔄 Sync latest code..."
             git fetch origin main
             git reset --hard origin/main
             git clean -fd
 
-            echo "📦 Installing dependencies..."
+            echo "🧹 Fix permissions & clean build cache..."
+            rm -rf .next
+
+            echo "📦 Install dependencies..."
             npm install
 
-            echo "🏗️ Building project..."
+            echo "🏗️ Build project..."
             npm run build
 
-            echo "♻️ Restarting PM2 safely..."
-            pm2 restart ecosystem.config.js --name bookme || pm2 start ecosystem.config.js --name bookme
+            echo "♻️ Restart PM2..."
+            pm2 restart ecosystem.config.js --name bookme --update-env || pm2 start ecosystem.config.js --name bookme
 
-            echo "💾 Saving PM2 state..."
+            echo "💾 Save PM2 state..."
             pm2 save
 
             echo "✅ Deployment successful!"
