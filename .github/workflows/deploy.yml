@@ -31,13 +31,11 @@ jobs:
             git reset --hard
             git pull origin main
 
-            echo "✅ Remove dd old node_modules and install dependencies..."
+            echo "✅ Remove old node_modules and install dependencies..."
             npm install
 
             echo "✅ Build project..."
             npm run build
-
-            su bookme
 
             echo "✅ Build successful. Reloading PM2..."
             # Start PM2 if not already running
