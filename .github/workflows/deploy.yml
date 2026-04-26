@@ -19,29 +19,32 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.USERNAME }}  # deploy user
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          script: |
-            echo "✅ Setting Git safe directory..."
-            git config --global --add safe.directory /var/www/bookme
 
-            echo "✅ Pull latest code..."
+          script: |
+            set -e
+
+            echo "🚀 Starting deployment..."
+
             cd /var/www/bookme
+
+            echo "📥 Pull latest code..."
             git reset --hard
             git pull origin main
 
-            echo "✅ Remove old node_modules and install dependencies..."
+            echo "📦 Install dependencies..."
             npm install
 
-            echo "✅ Build project..."
+            echo "🏗️ Build project..."
             npm run build
 
-            echo "✅ Build successful. Reloading PM2..."
-            # Start PM2 if not already running
-            pm2 describe bookme || pm2 start ecosystem.config.js
+            echo "♻️ Restart PM2 safely..."
+            pm2 delete bookme || true
+            pm2 start ecosystem.config.js --name bookme
 
-            # Reload with updated env
-            pm2 reload ecosystem.config.js --update-env
+            echo "💾 Save PM2 state..."
+            pm2 save
 
-            echo "✅ Deployment completed successfully!"
+            echo "✅ Deployment successful!"
