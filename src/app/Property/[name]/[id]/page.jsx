@@ -6,6 +6,7 @@ import getContactNumber from "@/services/tour/getContactNumber";
 import TourPageUI from "@/components/Ships/TourPageUI";
 import { PreFooter } from "@/components/pre-footer-content/PreFooter";
 import PackageViewTracker from "@/components/Tracking/PackageViewTracker";
+import getSchedules from "@/services/tour/getSchedules";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -55,18 +56,17 @@ export default async function TourPage({ params }) {
     propertyFacilities,
     propertyPackages,
     contactNumber,
+    schedules,
   ] = await Promise.all([
     getPropertyImages(id),
     getPropertyDetails(id),
     getFacilities(id),
     getPropertyPackages(id),
     getContactNumber(),
+    getSchedules(id),
+
   ]);
-
-
-  console.log("Property Packages:", propertyPackages);
  
-
   return (
     <>
       {/* GTM Tracking */}
@@ -77,6 +77,7 @@ export default async function TourPage({ params }) {
         propertyFacilities={propertyFacilities}
         propertyPackages={propertyPackages}
         contactNumber={contactNumber}
+        schedules={schedules}
       />
       <PreFooter id={id} />
     </>

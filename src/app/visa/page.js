@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import getContactNumber from '@/services/tour/getContactNumber';
 import VisaAgency from '../../components/pre-footer-content/VisaAgency';
+import slugify from '@/utils/slugify';
 
 export const metadata = {
   title: "Visa Information | BookMe",
@@ -48,13 +49,7 @@ export default async function Home() {
     console.error("Failed to fetch data:", error);
     loading = false;
   }
-  const slugify = (str) =>
-    str
-  
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-');
+ 
 
   if (loading) {
     return (

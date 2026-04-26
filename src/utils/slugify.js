@@ -1,8 +1,16 @@
 const slugify = (str) =>
   str
     ?.trim()
-    ?.replace(/\s+/g, '-') 
-    ?.replace(/[^\w\u0980-\u09FF\-]+/g, '') // 
-    ?.replace(/\-\-+/g, '-') 
+    ?.toLowerCase()
+    // remove Bangla characters completely
+    ?.replace(/[\u0980-\u09FF]+/g, '')
+    // spaces → hyphen
+    ?.replace(/\s+/g, '-')
+    // remove non-word characters
+    ?.replace(/[^\w\-]+/g, '')
+    // multiple hyphen fix
+    ?.replace(/\-\-+/g, '-')
+    // remove leading/trailing hyphens
+    ?.replace(/^-+|-+$/g, '');
 
 export default slugify;

@@ -26,11 +26,10 @@ const LocationSearch = ({
   const [inputRef, handleClick] = useScrollOnClick(150);
   const animationIntervalRef = useRef(null);
 
-  // Combine destinations and hotels for animation
   const allItems = [
     ...destinations.map(dest => `${dest.name}, ${dest.country}`),
     ...hotels.map(hotel => `${hotel.hotel_name}, ${hotel.street_address}`)
-  ];
+  ].slice(0, 10);
 
   // Initialize show placeholder after mount
   useEffect(() => {

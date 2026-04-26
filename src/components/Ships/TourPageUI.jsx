@@ -10,6 +10,8 @@ import PackageCarousel from "@/components/tour/packageCarousel/packageCarousel";
 import { Roboto } from "next/font/google";
 import FacilitiesNew from "./Facilities";
 import StepProcess from "./StepProcess";
+import Schedules from "./schedules";
+import PaymentMethods from "./PaymentMethods";
 
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
@@ -20,6 +22,7 @@ export default function TourPageUI({
   propertyFacilities,
   propertyPackages,
   contactNumber,
+  schedules
 }) {
   const [isFixed, setIsFixed] = useState(false);
   const accordionRef = useRef(null);
@@ -33,6 +36,7 @@ export default function TourPageUI({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+console.log("Schedules in UI:", schedules);
 
   return (
     <div className={`${roboto.className} pt-[50px] md:pt-[80px] bg-[#EBF0F4] pb-[20px] md:pb-[200px]`}>
@@ -69,13 +73,22 @@ export default function TourPageUI({
         </div>
         {/* Packages Section */}
         <div className="mb-[30px]">
-          <h1 className=" text-center text-blue-950 text-[32px] font-bold mb-[22px]">
-            Packages
+          <h1 className=" text-center text-blue-950 text-3xl font-semibold mb-[22px]">
+            Packages for <span className="text-red-600">{propertyDetails[0].property_name}</span>
           </h1>
           <PackageCarousel
             propertyPackages={propertyPackages}
             contactNumber={contactNumber}
           />
+        </div>
+
+        <div>
+            {/* Schedule Section */}
+             <Schedules schedules={schedules} contactNumber={contactNumber.Phone} property_name={propertyDetails[0].property_name} />
+        </div>
+
+        <div>
+          <PaymentMethods property_name={propertyDetails[0].property_name} />
         </div>
 
         {/* Accordion & Contact */}

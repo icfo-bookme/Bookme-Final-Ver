@@ -76,7 +76,7 @@ const SearchForm = ({ destinations, hotels, defaultDestination }) => {
         window.dataLayer.push({
           event: "search",
           search_value: hotelName,
-          
+
         });
       }
       router.push(`/hotel/${hotelName}?${query}`);
@@ -104,7 +104,7 @@ const SearchForm = ({ destinations, hotels, defaultDestination }) => {
         window.dataLayer.push({
           event: "search",
           search_value: selectedDestination.name,
-          
+
         });
       }
       router.push(`/hotel/${destinationName}?${query}`);
