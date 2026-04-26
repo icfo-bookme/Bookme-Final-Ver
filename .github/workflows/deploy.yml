@@ -31,7 +31,7 @@ jobs:
             git reset --hard
             git pull origin main
 
-            echo "✅ Remove old node_modules and install dependencies..."
+            echo "✅ Remove dd old node_modules and install dependencies..."
             npm install
 
             echo "✅ Build project..."
