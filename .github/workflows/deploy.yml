@@ -37,7 +37,7 @@ jobs:
             echo "📦 Install dependencies..."
             npm install
 
-            echo "🏗️ Build project..."
+            echo "🏗️ Build project.."
             npm run build
 
             echo "♻️ Restart PM2 safely..."
