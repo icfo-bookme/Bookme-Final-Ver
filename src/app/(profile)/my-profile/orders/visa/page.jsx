@@ -38,7 +38,7 @@ const Page = () => {
     return (
         <div className="min-h-screen  py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
-                {/* Header Section ..*/}
+                {/* Header Section */}
                 <div className="mb-12 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
                         <h1 className="text-xl md:text-xl font-extrabold bg-gradient-to-r from-[#313881] to-[#0678B4] bg-clip-text text-transparent tracking-tight">
