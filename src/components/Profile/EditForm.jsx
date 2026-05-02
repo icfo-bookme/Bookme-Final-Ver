@@ -13,7 +13,7 @@ const EditForm = ({ data, user }) => {
         reset
     } = useForm();
 
-    const [profileImage, setProfileImage] = useState("./assets/profile/image.png");
+    const [profileImage, setProfileImage] = useState("/assets/profile/image.png");
     const [isEditing, setIsEditing] = useState(false);
     const [displayName, setDisplayName] = useState("");
     const [displayPhone, setDisplayPhone] = useState("");
@@ -214,10 +214,10 @@ const EditForm = ({ data, user }) => {
                                     <Image
                                         src={profileImage}
                                         alt="Profile"
+                                        width={128}
+                                        height={128}
                                         className="w-full h-full object-cover"
-                                        onError={(e) => {
-                                            e.target.src = "./assets/profile/image.png";
-                                        }}
+                                       
                                     />
                                 </div>
                                 {isEditing && (

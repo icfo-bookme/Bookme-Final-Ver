@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 const OrderCard = ({
   order,
   formatDate,
@@ -118,13 +120,13 @@ const OrderCard = ({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-gray-100">
         {/* Utility Buttons */}
         <div className="flex gap-1 order-2 sm:order-1">
-          <button 
+          <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/invoice/download/${order.id}`} 
             className="flex items-center gap-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 py-2 px-3 rounded-lg transition-colors text-sm font-medium"
             title="Download invoice"
           >
             <i className="fa-solid fa-download text-sm"></i>
             <span className="hidden sm:inline">Invoice</span>
-          </button>
+          </Link>
           
           <button 
             className="flex items-center gap-2 text-gray-600 hover:text-green-600 hover:bg-green-50 py-2 px-3 rounded-lg transition-colors text-sm font-medium"

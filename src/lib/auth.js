@@ -43,12 +43,16 @@ export async function getUser(token) {
 // Logout user
 export async function logout(token) {
   try {
-    const response = await api.post('/logout',
+    const response = await api.post(
+      '/api/logout',
       {},
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
+
     return response.data;
   } catch (error) {
     throw new Error('Logout failed');

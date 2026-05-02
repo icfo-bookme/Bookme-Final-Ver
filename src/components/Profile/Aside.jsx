@@ -8,13 +8,13 @@ const Aside = () => {
   const menuItems = [
     { name: "Personal Info", active: false, icon: "👤", link: "/my-profile" },
     { 
-      name: "My Orders", 
+      name: "My Bookings", 
       active: false, 
       icon: "🛒", 
       link: null,
       subItems: [
-        { name: "Hotel Bookings", link: "/my-profile/orders/hotel" },
-        // { name: "Travel Packages", link: "/my-profile/orders/packages" }
+        { name: "Hotel", link: "/my-profile/orders/hotel" },
+        { name: "Visa", link: "/my-profile/orders/visa" }
       ]
     },
     { name: "Refer & Earn", active: false, icon: "🎁", link: "/my-profile/refer" },

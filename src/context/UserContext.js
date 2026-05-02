@@ -1,31 +1,34 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getUser } from '@/lib/auth';
+import { getUser, logout } from '@/lib/auth';
 
-const UserContext = createContext();
+const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // On mount, try to load user from localStorage
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
-    if (savedToken) {
-      getUser(savedToken)
-        .then((userData) => {
-          setUser(userData);
-          setToken(savedToken);
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-        })
-        .finally(() => setLoading(false));
-    } else {
+
+    if (!savedToken) {
       setLoading(false);
+      return;
     }
+
+    getUser(savedToken)
+      .then((userData) => {
+        setUser(userData);
+        setToken(savedToken);
+      })
+      .catch(() => {
+        localStorage.removeItem('token');
+        setUser(null);
+        setToken(null);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const loginUser = (newToken, userData) => {
@@ -34,7 +37,15 @@ export const UserProvider = ({ children }) => {
     setUser(userData);
   };
 
-  const logoutUser = () => {
+  const logoutUser = async () => {
+    // try {
+    //   if (token) {
+    //     await logout(token);
+    //   }
+    // } catch (err) {
+    //   console.log('Logout API failed but continuing UI logout');
+    // }
+
     localStorage.removeItem('token');
     setToken(null);
     setUser(null);
@@ -47,4 +58,10 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-export const useUser = () => useContext(UserContext);
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUser must be used inside UserProvider');
+  }
+  return context;
+};

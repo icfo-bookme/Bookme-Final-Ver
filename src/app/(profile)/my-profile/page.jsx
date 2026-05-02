@@ -5,6 +5,7 @@ import EditForm from "@/components/Profile/EditForm";
 import { useUser } from "@/context/UserContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import GlobalLoader from "@/utils/GlobalLoader";
 
 export default function ProfilePage() {
   const { user } = useUser();
@@ -31,7 +32,7 @@ export default function ProfilePage() {
   if (isLoading) {
     return (
       <div className="w-full">
-        <HotelLoadingSkeleton />
+        <GlobalLoader />
       </div>
     );
   }
