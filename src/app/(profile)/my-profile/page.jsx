@@ -1,6 +1,4 @@
 'use client';
-
-import HotelLoadingSkeleton from "@/components/hotel/Hotel/HotelLoadingSkeleton";
 import EditForm from "@/components/Profile/EditForm";
 import { useUser } from "@/context/UserContext";
 import { useEffect, useState } from "react";
