@@ -23,7 +23,7 @@ export default function BookingSummary({ bookingData }) {
     return (
         <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Booking Summary</h2>
-            
+
             {/* Property Info */}
             <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-700 mb-2">Activity</h3>
@@ -42,10 +42,14 @@ export default function BookingSummary({ bookingData }) {
                         <span className="text-gray-600">Base Price:</span>
                         <span className="font-medium">৳{packageData.base_price}</span>
                     </div>
-                    {packageData.discount_amount !== "0.00" && (
+                    {(Number(packageData.discount_amount) > 0 || Number(packageData.discount_percent) > 0) && (
                         <div className="flex justify-between text-green-600">
                             <span>Discount:</span>
-                            <span>-৳{packageData.discount_amount}</span>
+                            <span>
+                                {Number(packageData.discount_amount) > 0
+                                    ? `-৳${packageData.discount_amount}`
+                                    : `-${packageData.discount_percent}%`}
+                            </span>
                         </div>
                     )}
                     <div className="flex justify-between border-t border-gray-200 pt-2">
@@ -85,7 +89,7 @@ export default function BookingSummary({ bookingData }) {
                 <div className="flex justify-between items-center">
                     <span className="text-xl font-bold text-gray-800">Total Amount:</span>
                     <span className="text-2xl font-bold text-blue-600">
-                        ৳{packageData.final_price}
+                        ৳{packageData.final_price * cart_session.total_guest}
                     </span>
                 </div>
                 <p className="text-sm text-gray-500 mt-2">*Taxes and fees included</p>

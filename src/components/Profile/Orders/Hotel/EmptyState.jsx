@@ -19,7 +19,7 @@ const EmptyState = ({ activeTab }) => {
           ? "You don't have any upcoming hotel bookings."
           : activeTab === "completed"
           ? "You haven't completed any hotel stays yet."
-          : "You haven't cancelled any hotel bookings."}
+          : "You haven't cancelled  bookings."}
       </p>
 
       {activeTab === "upcoming" && (

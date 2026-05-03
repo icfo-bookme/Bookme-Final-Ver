@@ -1,5 +1,3 @@
-"use client";
-
 const Header = ({ title, subtitle }) => {
   return (
     <div className="mb-8">

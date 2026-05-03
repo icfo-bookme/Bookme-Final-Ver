@@ -14,7 +14,8 @@ const Aside = () => {
       link: null,
       subItems: [
         { name: "Hotel", link: "/my-profile/orders/hotel" },
-        { name: "Visa", link: "/my-profile/orders/visa" }
+        { name: "Visa", link: "/my-profile/orders/visa" },
+        { name: "Activities", link: "/my-profile/orders/activities" },
       ]
     },
     { name: "Refer & Earn", active: false, icon: "🎁", link: "/my-profile/refer" },

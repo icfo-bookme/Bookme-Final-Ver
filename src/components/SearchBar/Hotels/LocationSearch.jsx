@@ -40,6 +40,13 @@ const LocationSearch = ({
     }
   }, [allItems.length]);
 
+  const truncateText = (text, maxLength = 30) => {
+  if (!text) return "";
+  return text.length > maxLength 
+    ? text.slice(0, maxLength) + "..." 
+    : text;
+};
+
   // Start animation when component mounts and items are loaded
   const startAnimation = useCallback(() => {
     if (!allItems.length || !showPlaceholder || isInputFocused) return;
@@ -303,7 +310,7 @@ const LocationSearch = ({
               
               {showPlaceholder && allItems.length > 0 && (
                 <span className={`text-gray-400 font-medium transition-all duration-500 ${animationClass}`}>
-                  {getCurrentItem()}
+                  {truncateText(getCurrentItem(), 23)}
                 </span>
               )}
             </div>

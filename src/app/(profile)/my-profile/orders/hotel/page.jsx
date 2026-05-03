@@ -28,7 +28,7 @@ export default function HotelOrdersPage() {
       </div>
     );  
   }
-  console.log(data);
+
   return (
     <div className="  bg-gray-50 min-h-screen">
       

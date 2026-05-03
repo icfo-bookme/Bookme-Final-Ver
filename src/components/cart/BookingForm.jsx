@@ -182,6 +182,7 @@ export default function BookingForm({
       activity_date: bookingData.cart_session.date,
       activity_time: new Date(bookingData.cart_session.time).toTimeString().split(' ')[0],
       total_guests: bookingData.cart_session.total_guest,
+      total_payable: bookingData.cart_session.total_guest * bookingData.package.final_price,
       pickup_location: bookingData.cart_session.pickup_location,
       special_requests: guestInfo.specialRequests?.trim() || "",
     };
@@ -193,9 +194,7 @@ export default function BookingForm({
       );
 
       if (response.status === 201 || response.status === 200) {
-console.log('Booking confirmed successfully:', response.data.data.activity_detail.order_id);
         const orderId = response.data.data.activity_detail.order_id;
-
 
         if (typeof window !== "undefined") {
           window.dataLayer = window.dataLayer || [];
@@ -367,7 +366,7 @@ console.log('Booking confirmed successfully:', response.data.data.activity_detai
           >
             {isSubmitting
               ? 'Processing Your Booking...'
-              : `Confirm Booking - ৳${bookingData.package.final_price}`}
+              : `Confirm Booking - ৳${bookingData.package.final_price * bookingData.cart_session.total_guest}`}
             <i className="fa-solid fa-check ml-2"></i>
           </Button>
 
