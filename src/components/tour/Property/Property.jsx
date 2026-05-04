@@ -55,9 +55,9 @@ export default function PropertyList({ id, initialData, contact }) {
   const normalizeString = (str) => {
     return str
       ? str
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
       : "";
   };
 
@@ -139,7 +139,7 @@ export default function PropertyList({ id, initialData, contact }) {
       {/* Banner Section */}
       <div className="w-full pt-[40px] md:pt-[50px] relative">
         <Banner id={id} />
-        
+
         <div className="hidden w-[80%] mx-auto lg:block absolute bottom-0 left-0 right-0 transform translate-y-1/2 z-20">
           <div className="container mx-auto px-4">
             <PropertyFilters
@@ -187,7 +187,7 @@ export default function PropertyList({ id, initialData, contact }) {
               <PropertyCard
                 key={property.property_id}
                 property={property}
-                contact = {contact}
+                contact={contact}
                 index={index}
                 onCardClick={handleCardClick}
               />
@@ -203,7 +203,7 @@ export default function PropertyList({ id, initialData, contact }) {
           />
         )}
 
-      
+
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 
-const getAllHotels = async () => {
+const getAllHotels = async (page = 1) => {
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
@@ -12,7 +12,7 @@ const getAllHotels = async () => {
   const checkoutDate = formatDate(tomorrow);
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels?checkin=${checkinDate}&checkout=${checkoutDate}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels?checkin=${checkinDate}&checkout=${checkoutDate}?page=${page}`,
       {
         cache: "no-store",
         next: { revalidate: 0 },

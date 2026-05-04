@@ -1,43 +1,54 @@
-export const dynamic = "force-dynamic";
-import getAllHotels from '@/services/hotel/getAllHotels';
-import HotelHeroSection from '@/components/hotel/Hotel/HotelHeroSection';
-import HotelCTA from '@/components/hotel/Hotel/HotelCTA';
-import HotelCard from '@/components/hotel/Hotel/HotelCard';
-import HotelLoadingSkeleton from '@/components/hotel/Hotel/HotelLoadingSkeleton';
+import HotelHeroSection from "@/components/hotel/Hotel/HotelHeroSection";
+import HotelCTA from "@/components/hotel/Hotel/HotelCTA";
+import HotelCard from "@/components/hotel/Hotel/HotelCard";
+import Link from "next/link";
+import getHotels from "@/services/hotel/getHotels";
+import Pagination from "@/components/hotel/Hotel/Pagination";
+
 
 export const metadata = {
   title: "Hotels Booking | Best Deals & Comfortable Stays - BookMe",
-  description: "Explore and book hotels in top destinations with BookMe. Compare amenities, read reviews, and find the best deals for families, couples, and solo travelers. Enjoy hassle-free reservations, comfortable stays, and seamless customer support. From luxury resorts to cozy boutique hotels, BookMe makes planning your perfect trip simple, convenient, and memorable.",
+  description:
+    "Explore and book hotels in top destinations with BookMe...",
   alternates: {
     canonical: "https://bookme.com.bd/hotel",
   },
 };
 
-export default async function HotelHome() {
+export default async function HotelHome({ searchParams }) {
+  const page = searchParams?.page || 1;
+
   let hotelData = [];
-  try {
-    const hotelResult = await getAllHotels();
-    console.log("Fetched hotel data:", hotelResult);
-    hotelData = hotelResult;
-  } catch (error) {
-    console.error("Failed to fetch hotel data:", error);
-  }
+  let pagination = null;
+
+ const hotelResult = await getHotels(page);
+ hotelData = hotelResult?.data || [];
+    pagination = hotelResult?.pagination;
+
+  
 
   return (
     <div className="min-h-screen">
       <HotelHeroSection />
-      <main className="container mx-auto ">
-        <section className="mt-12 ">
-          <h2 className="text-xl sm:text-2xl md:text-2xl font-bold text-center mb-2 text-blue-950">
+    
+      <div className="" id="hotel-list-start"></div>
+      <main className="container mx-auto">
+        <section className="mt-12">
+          <h2 className="text-xl font-bold text-center mb-2 text-blue-950">
             Best Hotels for Your Next Trip
           </h2>
+
           <HotelCard hotelData={hotelData} />
+
+          {/* Pagination UI */}
+         <Pagination pagination={pagination} page={page} />
           {hotelData.length === 0 && (
             <div className="text-center text-gray-500 mt-8">
               No hotels found. Please try a different search.
             </div>
           )}
         </section>
+
         <HotelCTA />
       </main>
     </div>

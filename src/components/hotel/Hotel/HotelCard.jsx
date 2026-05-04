@@ -14,64 +14,11 @@ export default function HotelCard({ hotelData = [] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [visibleCount, setVisibleCount] = useState(12);
-
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-
-  const filteredHotels = useMemo(() => {
-    const term = searchTerm.toLowerCase();
-    return term
-      ? hotelData.filter((h) =>
-          h?.hotel_name?.toLowerCase().includes(term)
-        )
-      : hotelData;
-  }, [hotelData, searchTerm]);
-
-  const visibleHotels = filteredHotels.slice(0, visibleCount);
+  const visibleHotels = hotelData.slice(0, visibleCount);
 
   return (
     <div className="container mx-auto px-4">
-    
-      <div className=" top-16 z-20 bg-white rounded-xl lg:w-[50%] lg:mx-auto py-3 shadow-sm border-b border-gray-200 -mx-4 px-4">
-        <div className="relative max-w-2xl mx-auto">
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              placeholder="Search hotels by name..."
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setShowSuggestions(true);
-              }}
-              onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-              className="w-full py-3 h-12 px-4 pr-12 rounded-lg border text-gray-800 border-blue-500 outline-none ring-2 ring-blue-500 shadow-sm"
-            />
-            <FaSearch className="absolute right-4 text-gray-400" />
-          </div>
-
-          {/* Suggestions */}
-          {showSuggestions && filteredHotels.length > 0 && (
-            <div className="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 max-h-60 overflow-auto">
-              {filteredHotels.slice(0, 8).map((hotel) => (
-                <div
-                  key={hotel.hotel_id}
-                  onClick={() => {
-                    setSearchTerm(hotel.hotel_name);
-                    setShowSuggestions(false);
-                  }}
-                  className="px-4 py-2 hover:bg-blue-50 text-gray-950 cursor-pointer border-b border-gray-100 last:border-b-0"
-                >
-                  <p className="font-medium">{hotel.hotel_name}</p>
-                  <p className="text-sm text-gray-500 flex items-center gap-1">
-                    <CiLocationOn className="text-gray-800" />
-                    {hotel.street_address || "No address"}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
 
       <div className="pt-4 pb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {visibleHotels.length > 0 ? (
@@ -169,15 +116,15 @@ export default function HotelCard({ hotelData = [] }) {
           </div>
         )}
       </div>
-
-   
       <LazyLoader
-        totalItems={filteredHotels.length}
+        totalItems={hotelData.length}
         initialCount={12}
         increment={12}
         onVisibleChange={setVisibleCount}
         loadingText="Loading more hotels..."
       />
+
+
     </div>
   );
 }

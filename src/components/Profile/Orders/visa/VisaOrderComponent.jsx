@@ -6,7 +6,7 @@ const VisaOrderComponent = ({ data }) => {
     return (
         <div>
             {data.length === 0 ? (
-                <div className="bg-white/80 backdrop-blur-sm p-16 rounded-3xl border-2 border-dashed border-gray-600 text-center shadow-lg">
+                <div className="bg-white/80 backdrop-blur-sm p-16 rounded-3xl border-2  border-gray-600 text-center shadow-lg">
                     <div className="text-6xl mb-4">🔍</div>
                     <p className="text-gray-400 text-xl font-medium">No records found for this phone number.</p>
                     <p className="text-gray-300 text-sm mt-2">Please check your number or contact support</p>
@@ -99,7 +99,6 @@ const VisaOrderComponent = ({ data }) => {
 
                                         <PrimaryButton
                                             className="w-full sm:w-auto flex items-center justify-center gap-2 group/btn shadow-md hover:shadow-xl transition-all duration-300"
-
                                         >
                                             Track Status
                                             <ChevronRight size={18} className="group-hover/btn:translate-x-1 transition-transform duration-300" />
