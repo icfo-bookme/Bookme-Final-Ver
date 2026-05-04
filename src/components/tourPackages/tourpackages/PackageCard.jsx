@@ -35,7 +35,7 @@ const TourPackageCard = ({ packageData = [] }) => {
             <div className="pt-4 pb-6">
                 {packageData?.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                        {packageData?.map(pkg => {
+                        {packageData?.slice(0, visibleCount)?.map(pkg => {
                             const price = Number(pkg?.price) || 0;
                             const imageUrl = pkg?.image
                                 ? `${baseUrl}/storage/${pkg.image}`
