@@ -25,7 +25,6 @@ export default async function HotelHome({ searchParams }) {
  hotelData = hotelResult?.data || [];
     pagination = hotelResult?.pagination;
 
-  
 
   return (
     <div className="min-h-screen">
@@ -40,7 +39,7 @@ export default async function HotelHome({ searchParams }) {
 
           <HotelCard hotelData={hotelData} />
 
-          {/* Pagination UI */}
+          {/* Pagination UI . */}
          <Pagination pagination={pagination} page={page} />
           {hotelData.length === 0 && (
             <div className="text-center text-gray-500 mt-8">
