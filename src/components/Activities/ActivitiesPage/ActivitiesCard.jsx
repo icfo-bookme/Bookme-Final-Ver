@@ -15,27 +15,7 @@ function calculateDiscountedPrice(originalPrice, discount) {
     return Math.round(originalPrice * (1 - discount / 100));
 }
 
-function findSimilarPackages(searchTerm, packages = []) {
-    if (!searchTerm) return packages;
 
-    const lowerSearchTerm = searchTerm.toLowerCase();
-
-    const exactMatches = packages.filter(pkg =>
-        pkg?.property_name?.toLowerCase().includes(lowerSearchTerm)
-    );
-
-    if (exactMatches.length > 0) return exactMatches;
-
-    return packages.filter(pkg => {
-        const packageName = pkg?.property_name?.toLowerCase() || "";
-        return (
-            packageName.includes(lowerSearchTerm) ||
-            lowerSearchTerm.includes(packageName) ||
-            packageName.split(" ").some(word => word.startsWith(lowerSearchTerm)) ||
-            lowerSearchTerm.split(" ").some(word => packageName.startsWith(word))
-        );
-    });
-}
 
 // Function to format duration summary
 function formatDuration(durationValue) {
@@ -102,31 +82,6 @@ const ActivitiesCard = ({ packageData = [] }) => {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
     const [visibleCount, setVisibleCount] = useState(12);
-    const filteredPackages = useMemo(() => {
-        if (!searchTerm) return packageData;
-
-        const lowerSearchTerm = searchTerm.toLowerCase();
-        return packageData.filter(pkg =>
-            pkg?.property_name?.toLowerCase().includes(lowerSearchTerm)
-        );
-    }, [packageData, searchTerm]);
-
-    const similarPackages = useMemo(
-        () => findSimilarPackages(searchTerm, packageData),
-        [searchTerm, packageData]
-    );
-
-    const handleSearchChange = e => {
-        setSearchTerm(e.target.value);
-        setShowSuggestions(true);
-    };
-
-    const handleSearchFocus = () => setShowSuggestions(true);
-
-    const selectSuggestion = packageName => {
-        setSearchTerm(packageName);
-        setShowSuggestions(false);
-    };
 
 
     const renderSummaryIcon = (iconName) => {
@@ -158,47 +113,13 @@ const ActivitiesCard = ({ packageData = [] }) => {
     return (
         <div className="container mx-auto px-4">
             {/* Sticky Search Bar Container */}
-            <div className="top-16 z-20 bg-white lg:w-[50%] rounded-xl lg:mx-auto py-3 -mx-4 px-4 shadow-sm border-b border-gray-200">
-                <div className="relative max-w-2xl mx-auto">
-                    <div className="relative flex items-center">
-                        <input
-                            type="text"
-                            placeholder="Search tour packages..."
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            onFocus={handleSearchFocus}
-                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                            className="w-full py-3 h-12 px-4 pr-12 rounded-lg border text-gray-800 border-gray-300 outline-none ring-2 ring-blue-500 border-transparent shadow-sm"
-                        />
-                        <FaSearch className="absolute right-4 text-gray-400" />
-                    </div>
-
-                    {/* Suggestions Dropdown */}
-                    {showSuggestions && similarPackages.length > 0 && (
-                        <div className="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 max-h-60 overflow-auto">
-                            {similarPackages.map(pkg => (
-                                <div
-                                    key={pkg.id}
-                                    className="px-4 py-2 hover:bg-blue-50 text-gray-950 cursor-pointer border-b border-gray-100 last:border-b-0"
-                                    onClick={() => selectSuggestion(pkg.property_name)}
-                                >
-                                    <p className="font-medium">{pkg.property_name || "No Name"}</p>
-                                    <p className="text-sm text-gray-500 truncate flex gap-1">
-                                        <IoLocationOutline className="text-gray-800 mt-[2px]" />
-                                        {pkg.address || "No address"}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
+            
 
             {/* Main Content */}
             <div className="pt-4 pb-6">
-                {filteredPackages?.length > 0 ? (
+                {packageData?.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                        {filteredPackages
+                        {packageData
                             ?.slice(0, visibleCount)
                             .map(pkg => {
                                 const price = Number(pkg?.price) || 0;
@@ -353,11 +274,11 @@ const ActivitiesCard = ({ packageData = [] }) => {
                 )}
             </div>
             <LazyLoader
-                totalItems={filteredPackages.length}
+                totalItems={packageData.length}
                 initialCount={12}
                 increment={12}
                 onVisibleChange={setVisibleCount}
-                loadingText="Loading more packages..."
+                loadingText="Loading more Activities..."
             />
         </div>
 

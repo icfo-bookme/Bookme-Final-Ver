@@ -1,9 +1,8 @@
 import HotelHeroSection from "@/components/hotel/Hotel/HotelHeroSection";
 import HotelCTA from "@/components/hotel/Hotel/HotelCTA";
 import HotelCard from "@/components/hotel/Hotel/HotelCard";
-import Link from "next/link";
 import getHotels from "@/services/hotel/getHotels";
-import Pagination from "@/components/hotel/Hotel/Pagination";
+import Pagination from "@/utils/Pagination";
 
 
 export const metadata = {
@@ -30,7 +29,7 @@ export default async function HotelHome({ searchParams }) {
     <div className="min-h-screen">
       <HotelHeroSection />
     
-      <div className="" id="hotel-list-start"></div>
+      <div className="" id="list-start"></div>
       <main className="container mx-auto">
         <section className="mt-12">
           <h2 className="text-xl font-bold text-center mb-2 text-blue-950">
@@ -40,7 +39,7 @@ export default async function HotelHome({ searchParams }) {
           <HotelCard hotelData={hotelData} />
 
           {/* Pagination UI . */}
-         <Pagination pagination={pagination} page={page} />
+         <Pagination pagination={pagination} page={page} route="/hotel" />
           {hotelData.length === 0 && (
             <div className="text-center text-gray-500 mt-8">
               No hotels found. Please try a different search.

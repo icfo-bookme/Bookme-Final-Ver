@@ -1,15 +1,14 @@
 "use client";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import GlobalLoader from "@/utils/GlobalLoader";
 
-export default function Pagination({ pagination, page }) {
+export default function Pagination({ pagination, page, route }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const goToPage = (p) => {
     startTransition(() => {
-      router.push(`/hotel?page=${p}#hotel-list-start`);
+      router.push(`${route}?page=${p}#list-start`);
     });
   };
 

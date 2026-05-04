@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaStar, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
-import { CiLocationOn } from "react-icons/ci";
 import slugify from "@/utils/slugify";
 import LazyLoader from "@/utils/LazyLoader";
 
@@ -12,7 +11,6 @@ const calcDiscountPrice = (price, discount) =>
 
 export default function HotelCard({ hotelData = [] }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [visibleCount, setVisibleCount] = useState(12);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
   const visibleHotels = hotelData.slice(0, visibleCount);

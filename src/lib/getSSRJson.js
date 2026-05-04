@@ -16,6 +16,8 @@ export async function getSSRJson(endUrl, options = {}) {
       throw new Error(`API Error: ${res}`);
     }
 
+    
+
     return await res.json();
   } catch (error) {
     console.error("getSSRJson Error:", error);
