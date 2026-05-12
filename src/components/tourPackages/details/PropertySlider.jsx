@@ -137,7 +137,7 @@ const PropertySlider = ({ images }) => {
                 style={{ height: isMobile ? 80 : 100 }}
                 onClick={() => {
                   if (mainSwiperRef.current) {
-                    mainSwiperRef.current.slideTo(index);
+                    mainSwiperRef.current.slideToLoop(index);
                   }
                 }}
               >
