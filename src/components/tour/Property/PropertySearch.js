@@ -111,7 +111,7 @@ export default function PropertySearch({
           }
         }}
         placeholder="Search property by name..."
-        className="w-full border p-3 rounded mb-2"
+        className="w-full border p-3 rounded mb-2 text-gray-800"
       />
 
       {/* DROPDOWN */}
