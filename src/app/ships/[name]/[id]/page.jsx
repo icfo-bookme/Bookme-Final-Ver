@@ -39,20 +39,42 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function Home({ params }) {
-  const { id } = await params;
-  const result = await propertySummary(id);
+export default async function Home({ params, searchParams }) {
+
+  const { name, id } = await params;
+  const nameSlugify = slugify(name);
+  const page = searchParams?.page || 1;
+  const sort = searchParams?.sort || "";
+  const minPrice = searchParams?.min_price || "";
+  const maxPrice = searchParams?.max_price || "";
+  const search = searchParams?.search || "";
+
+  const result = await propertySummary({
+    locationId: id,
+    page,
+    sort,
+    minPrice,
+    maxPrice,
+    search,
+  });
+
   const contact = await getContactNumber();
-  
+
   return (
     <main className={`${roboto.className}`}>
-      <div className=" mb-12">
-        <div className=" ">
-          <div className=" overflow-hidden">
-            <PropertyList initialData={result} id={id} contact = {contact} />
-          </div>
-        </div>
-      </div>
+
+      <PropertyList
+        initialData={result}
+        id={id}
+        contact={contact}
+        page={page}
+        name={nameSlugify}
+        sort={sort}
+        search={search}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+      />
+
       {
         id==1 && <TanguarHaorHouseboatListing />
       }
@@ -62,7 +84,7 @@ export default async function Home({ params }) {
        {
         id==3 && <SaintMartinShips />
       }
-    
+
     </main>
   );
 }
