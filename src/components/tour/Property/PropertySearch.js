@@ -72,7 +72,7 @@ export default function PropertySearch({
 
   return (
     <div ref={wrapperRef} className="relative w-full">
-      <label className="block mb-2 font-medium">
+      <label className="block mb-2 font-medium text-gray-900">
         Search property by name
       </label>
     
@@ -116,7 +116,7 @@ export default function PropertySearch({
 
       {/* DROPDOWN */}
       {open && suggestions.length > 0 && (
-        <div className="absolute bg-white border w-full z-50 max-h-60 overflow-y-auto shadow-lg rounded">
+        <div className="absolute bg-white text-gray-800 border w-full z-50 max-h-60 overflow-y-auto shadow-lg rounded">
           {suggestions.map((item, i) => (
             <div
               key={i}
