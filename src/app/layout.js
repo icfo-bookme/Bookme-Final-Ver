@@ -43,7 +43,7 @@ export const metadata = {
   },
 };
 
-export default function DashboardLayout({ children }) {
+export default function Layout({ children }) {
   return (
     <html lang="en" data-theme="white">
       <head>

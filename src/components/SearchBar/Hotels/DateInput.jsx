@@ -12,7 +12,7 @@ const formatDate = (date) =>
 const DateInput = ({ label, date, onClick }) => {
   return (
     <div className="space-y-1 relative">
-      <label className="block text-sm font-medium text-blue-950">{label}</label>
+      <label className="block text-sm font-medium text-gray-600">{label}</label>
       <div
         onClick={onClick}
         className="p-3 h-12 border border-gray-300 rounded-lg cursor-pointer hover:border-blue-600 transition-colors bg-white flex items-center"

@@ -7,7 +7,7 @@ const GuestInput = ({ adults, children, rooms, onClick }) => {
 
   return (
     <div className="col-span-2 sm:col-span-1 space-y-1">
-      <label className="block text-sm font-medium text-blue-950">GUEST & ROOMS</label>
+      <label className="block text-sm font-medium text-gray-600">GUEST & ROOMS</label>
       <div
         onClick={onClick}
         className="p-3 h-12 border border-gray-300 rounded-lg cursor-pointer hover:border-blue-600 transition-colors bg-white flex items-center"

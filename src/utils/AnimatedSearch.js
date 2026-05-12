@@ -311,7 +311,7 @@ const AnimatedSearch = ({
       <form onSubmit={handleSearch}>
         <div className="grid grid-cols-1 gap-4 relative">
           <div className="space-y-1 relative">
-            <label className="block text-sm text-blue-950 font-medium">
+            <label className="block text-sm text-gray-600 font-medium">
               {formatDisplayText(selectedItem || data[0])}
             </label>
             <div className="relative">

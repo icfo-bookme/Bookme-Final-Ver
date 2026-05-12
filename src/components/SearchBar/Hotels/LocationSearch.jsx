@@ -284,7 +284,7 @@ const LocationSearch = ({
 
   return (
     <div className="col-span-2 sm:col-span-1 space-y-1 relative" ref={searchRef}>
-      <label className="block text-sm font-medium text-blue-950">CITY/HOTEL/RESORT/AREA</label>
+      <label className="block text-sm font-medium text-gray-600">CITY/HOTEL/RESORT/AREA</label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <LuMapPin className="h-5 w-5 text-blue-600" />
