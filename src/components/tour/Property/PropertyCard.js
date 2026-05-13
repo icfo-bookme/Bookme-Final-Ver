@@ -26,7 +26,7 @@ export default function PropertyCard({ property, index, onCardClick, contact }) 
         {/* Discount Badge */}
         {discount > 0 && (
           <div className="absolute top-5 right-5 lg:top-5 lg:left-[315px] z-10 w-14 h-14 p-2 text-white text-center font-semibold text-sm bg-red-700 rounded-full flex items-center justify-center">
-            {discount}%
+            {discount}% OFF
           </div>
         )}
 
