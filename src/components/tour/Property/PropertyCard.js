@@ -95,7 +95,7 @@ export default function PropertyCard({ property, index, onCardClick, contact }) 
                   <Link
                     href={`/Property/${propertySlug}/${property.property_id}`}
                     onClick={() => onCardClick(index)}
-                    className="text-[11px] md:text-[14px] xl:text-[16px] h-[40px] sm:px-4 px-[5px] py-2 text-white font-semibold rounded-md"
+                    className="text-white font-medium py-2 px-4 rounded-md text-sm text-center transition-all duration-300 transform hover:scale-[1.03] shadow-md hover:shadow-lg flex items-center"
                     style={{
                       background: "linear-gradient(90deg, #313881, #0678B4)",
                     }}
@@ -106,7 +106,7 @@ export default function PropertyCard({ property, index, onCardClick, contact }) 
                   <Link
                     href={`/Property/${propertySlug}/${property.property_id}`}
                     onClick={() => onCardClick(index)}
-                    className="ml-2 text-[11px] md:text-[14px] xl:text-[16px] h-[40px] sm:px-4 px-[5px] py-2 text-white font-semibold rounded-md"
+                    className="ml-2 text-white font-medium py-2 px-4 rounded-md text-sm text-center transition-all duration-300 transform hover:scale-[1.03] shadow-md hover:shadow-lg flex items-center"
                     style={{
                       background: "linear-gradient(90deg, #313881, #0678B4)",
                     }}
