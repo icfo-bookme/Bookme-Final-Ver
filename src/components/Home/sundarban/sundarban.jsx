@@ -7,7 +7,7 @@ export default function SundarbanShipsClient({ data = [] }) {
         <TourSwiper
             data={data}
             title="Popular Sundarban Ships"
-            seeMoreLink="/tour/Sundarban/2"
+            seeMoreLink="/tour/sundarban/2"
             tourType="sundarban"
         />
     );

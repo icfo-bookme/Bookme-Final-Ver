@@ -5,7 +5,7 @@ export default function Tangour({ data = [] }) {
     <TourSwiper
       data={data}
       title="Popular Tangour Haor Boats"
-      seeMoreLink="/tour/Tanguar-haor/1"
+      seeMoreLink="/tour/tanguar-haor/1"
       tourType="tangour"
       showContactNumber={true}
     />

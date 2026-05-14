@@ -7,7 +7,7 @@ export default function SaintMartinClient({ data = [] }) {
         <TourSwiper
             data={data}
             title="Popular Saint Martin Ships"
-            seeMoreLink="/tour/Saint-martin-ships/3"
+            seeMoreLink="/tour/saint-martin/3"
             tourType="saintmartin"
             showContactNumber={true}
         />
