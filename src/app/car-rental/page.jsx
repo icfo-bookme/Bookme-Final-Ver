@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import getCarModel from "@/services/Car/getCarModel";
+import getContactNumber from "@/services/tour/getContactNumber";
 import CarHeroSection from "../../components/car/car/CarHeroSection";
 import Faq from "../../components/car/car/Faq";
+import { FaPhone, FaWhatsapp } from "react-icons/fa";
 
 export const metadata = {
   title: "Car Rentals | BookMe",
@@ -13,6 +16,7 @@ export const metadata = {
 
 export default async function Page() {
     const carModels = await getCarModel();
+    const contactNumber = await getContactNumber();
 
     return (
         <div className="pt-10">
@@ -48,6 +52,27 @@ export default async function Page() {
                             <h3 className="text-lg font-medium text-gray-900">
                                 {model.model_name}
                             </h3>
+
+                            <div className="flex gap-2 mt-3">
+                                <Link
+                                    href={`tel:${contactNumber?.Phone}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 bg-gradient-to-r from-[#313881] to-[#0678B4] hover:bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full transition"
+                                >
+                                    <FaPhone className="w-3.5 h-3.5" />
+                                    Call
+                                </Link>
+                                <Link
+                                    href={`https://wa.me/${contactNumber?.Phone}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full transition"
+                                >
+                                    <FaWhatsapp className="w-3.5 h-3.5" />
+                                    WhatsApp
+                                </Link>
+                            </div>
                         </div>
                     ))}
                 </div>

@@ -1,7 +1,7 @@
 const propertySummary = async ({
   locationId,
   page = 1,
-  sort = "",
+  sort = "popularity",
   minPrice = "",
   maxPrice = "",
   search = "",
