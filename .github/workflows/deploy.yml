@@ -39,7 +39,8 @@ jobs:
             rm -rf .next
 
             echo "📦 Install dependencies..."
-            npm install
+            rm -rf node_modules
+            npm ci
 
             echo "🏗️ Build project..."
             npm run build
