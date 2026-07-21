@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import SearchBar from '@/components/hotel/HotelListingSearch/SearchBar';
 import Link from 'next/link';
 import HotelFilters from '@/components/hotel/HotelListing/HotelFilters';
@@ -15,17 +16,100 @@ const HotelListContent = ({
   hotels,
   amenities,
   maxPrice,
+  initialName = '',
+  initialMinPrice,
+  initialMaxPrice,
+  initialStarRating = '',
+  initialAmenities = '',
+  initialSortBy = '',
 }) => {
-  const [priceRange, setPriceRange] = useState([0, maxPrice]);
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
-  const [selectedStars, setSelectedStars] = useState([]);
-  const [sortOption, setSortOption] = useState('recommended');
-  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
+  // Format today/tomorrow for fallback
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  const fmt = d => d.toISOString().split('T')[0];
+  const defaultCheckin = checkin || fmt(today);
+  const defaultCheckout = checkout || fmt(tomorrow);
+
+  // Parse initial filter values from server props
+  const parseInitialStars = () => {
+    if (!initialStarRating) return [];
+    return initialStarRating.split(',').map(Number).filter(s => s >= 1 && s <= 7);
+  };
+
+  const parseInitialAmenities = () => {
+    if (!initialAmenities) return [];
+    return initialAmenities.split(',').map(Number).filter(id => id > 0);
+  };
+
+  const parseInitialMinPrice = () => {
+    const val = parseInt(initialMinPrice);
+    return !isNaN(val) && val >= 0 ? val : 0;
+  };
+
+  const parseInitialMaxPrice = () => {
+    const val = parseInt(initialMaxPrice);
+    return !isNaN(val) && val > 0 ? val : maxPrice;
+  };
+
+  const [selectedAmenities, setSelectedAmenities] = useState(parseInitialAmenities());
+  const [selectedStars, setSelectedStars] = useState(parseInitialStars());
+  const [priceRange, setPriceRange] = useState([parseInitialMinPrice(), parseInitialMaxPrice()]);
+  const [sortOption, setSortOption] = useState(initialSortBy || 'recommended');
+  const [searchQuery, setSearchQuery] = useState(initialName || '');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const searchRef = useRef(null);
   const mobileFiltersRef = useRef(null);
+
+  const activePriceFilter = priceRange[0] > 0 || priceRange[1] < maxPrice;
+  const selectedFiltersCount =
+    selectedAmenities.length +
+    selectedStars.length +
+    (activePriceFilter ? 1 : 0) +
+    (searchQuery ? 1 : 0);
+  const hasActiveFilters = selectedFiltersCount > 0;
+
+  const buildParamsAndNavigate = (overrides = {}) => {
+    const params = new URLSearchParams();
+
+    if (locationID) params.set('locationID', locationID);
+    if (hotelID) params.set('hotelID', hotelID);
+    if (rooms) params.set('rooms', rooms);
+    if (adult) params.set('adult', adult);
+    params.set('checkin', defaultCheckin);
+    params.set('checkout', defaultCheckout);
+
+    const nameVal = overrides.name !== undefined ? overrides.name : searchQuery;
+    const starsVal = overrides.stars !== undefined ? overrides.stars : selectedStars;
+    const amVal = overrides.amenities !== undefined ? overrides.amenities : selectedAmenities;
+    const priceVal = overrides.priceRange !== undefined ? overrides.priceRange : priceRange;
+    const sortVal = overrides.sortOption !== undefined ? overrides.sortOption : sortOption;
+
+    if (nameVal.trim()) params.set('name', nameVal.trim());
+    if (starsVal.length > 0) params.set('star_rating', starsVal.join(','));
+    if (amVal.length > 0) params.set('amenities', amVal.join(','));
+    if (priceVal[0] > 0) params.set('min_price', priceVal[0]);
+    if (priceVal[1] < maxPrice) params.set('max_price', priceVal[1]);
+    if (sortVal && sortVal !== 'recommended') params.set('sort_by', sortVal);
+
+    const destinationUrl = `${window.location.pathname}?${params.toString()}`;
+    router.replace(destinationUrl);
+  };
+
+  const handleSearchSubmit = (event) => {
+    if (event?.preventDefault) event.preventDefault();
+    buildParamsAndNavigate({ name: searchQuery });
+  };
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSearchSubmit(event);
+    }
+  };
 
   // Close suggestions & mobile filter on outside click
   useEffect(() => {
@@ -51,7 +135,6 @@ const HotelListContent = ({
     return () => document.removeEventListener("mousedown", handleClick);
   }, [showMobileFilters]);
 
-  // Lock body scroll when mobile filter is open
   useEffect(() => {
     if (showMobileFilters) {
       document.body.style.overflow = "hidden";
@@ -61,52 +144,76 @@ const HotelListContent = ({
   }, [showMobileFilters]);
 
   const handleAmenityChange = (amenityId) => {
-    setSelectedAmenities((prev) =>
-      prev.includes(amenityId)
-        ? prev.filter((id) => id !== amenityId)
-        : [...prev, amenityId]
-    );
+    const updated = selectedAmenities.includes(amenityId)
+      ? selectedAmenities.filter(id => id !== amenityId)
+      : [...selectedAmenities, amenityId];
+    setSelectedAmenities(updated);
+    buildParamsAndNavigate({ amenities: updated });
   };
 
   const handleStarChange = (star) => {
-    setSelectedStars((prev) =>
-      prev.includes(star) ? prev.filter((s) => s !== star) : [...prev, star]
-    );
+    const updated = selectedStars.includes(star)
+      ? selectedStars.filter(s => s !== star)
+      : [...selectedStars, star];
+    setSelectedStars(updated);
+    buildParamsAndNavigate({ stars: updated });
   };
 
   const handleMinPriceChange = (e) => {
     const value = parseInt(e.target.value);
-    setPriceRange((prev) => [value, prev[1]]);
+    const newRange = [value, priceRange[1]];
+    setPriceRange(newRange);
+    buildParamsAndNavigate({ priceRange: newRange });
   };
 
   const handleMaxPriceChange = (e) => {
     const value = parseInt(e.target.value);
-    setPriceRange((prev) => [prev[0], value]);
+    const newRange = [priceRange[0], value];
+    setPriceRange(newRange);
+    buildParamsAndNavigate({ priceRange: newRange });
   };
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
+    buildParamsAndNavigate({ sortOption: e.target.value });
+  };
+
+  const resetSearchSuggestions = () => {
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
+
+  const updateSearchSuggestions = (query) => {
+    if (!query) {
+      resetSearchSuggestions();
+      return;
+    }
+
+    const matchedHotels = hotels
+      .filter((hotel) => hotel.name.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 5);
+
+    setSuggestions(matchedHotels);
+    setShowSuggestions(true);
   };
 
   const handleSearchChange = (e) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value;
     setSearchQuery(query);
 
     if (query.length > 0) {
-      const matchedHotels = hotels
-        .filter((hotel) => hotel.name.toLowerCase().includes(query))
-        .slice(0, 5);
-      setSuggestions(matchedHotels);
-      setShowSuggestions(true);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
+      updateSearchSuggestions(query);
+      return;
     }
+
+    resetSearchSuggestions();
+    buildParamsAndNavigate({ name: '' });
   };
 
   const selectSuggestion = (hotelName) => {
     setSearchQuery(hotelName);
-    setShowSuggestions(false);
+    resetSearchSuggestions();
+    buildParamsAndNavigate({ name: hotelName });
   };
 
   const resetAllFilters = () => {
@@ -114,52 +221,17 @@ const HotelListContent = ({
     setSelectedStars([]);
     setPriceRange([0, maxPrice]);
     setSearchQuery('');
-    setSuggestions([]);
-    setShowSuggestions(false);
+    resetSearchSuggestions();
+    setSortOption('recommended');
+
+    buildParamsAndNavigate({
+      amenities: [],
+      stars: [],
+      priceRange: [0, maxPrice],
+      name: '',
+      sortOption: 'recommended',
+    });
   };
-
-  const filteredHotels = hotels.filter((hotel) => {
-    const nameMatch =
-      searchQuery === '' ||
-      hotel.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const amenityMatch =
-      selectedAmenities.length === 0 ||
-      selectedAmenities.every(
-        (id) =>
-          hotel.summary?.some((a) => a.id === id) ||
-          hotel.facilities?.some((f) => f.id === id)
-      );
-
-    const priceMatch =
-      !hotel.hasPrice ||
-      (hotel.numericPrice >= priceRange[0] &&
-        hotel.numericPrice <= priceRange[1]);
-
-    const starMatch =
-      selectedStars.length === 0 || selectedStars.includes(hotel.starNumber);
-
-    return nameMatch && amenityMatch && priceMatch && starMatch;
-  });
-
-  const sortedHotels = [...filteredHotels].sort((a, b) => {
-    if (sortOption === 'recommended') return 0;
-
-    if (!a.hasPrice && !b.hasPrice) return 0;
-    if (!a.hasPrice) return 1;
-    if (!b.hasPrice) return -1;
-
-    switch (sortOption) {
-      case 'price-low-high':
-        return a.numericPrice - b.numericPrice;
-      case 'price-high-low':
-        return b.numericPrice - a.numericPrice;
-      case 'star-rating':
-        return b.starNumber - a.starNumber || a.numericPrice - b.numericPrice;
-      default:
-        return 0;
-    }
-  });
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-BD', {
@@ -176,8 +248,8 @@ const HotelListContent = ({
       <div className="mb-8 md:mb-8 rounded-xl">
         <SearchBar
           initialValues={{
-            checkin,
-            checkout,
+            checkin: defaultCheckin,
+            checkout: defaultCheckout,
             locationID,
             hotelID,
             rooms,
@@ -196,9 +268,9 @@ const HotelListContent = ({
           >
             <i className="fa-solid fa-sliders"></i>
             <span>Filters</span>
-            {(selectedAmenities.length > 0 || selectedStars.length > 0 || priceRange[1] < maxPrice || searchQuery) && (
+            {hasActiveFilters && (
               <span className="bg-white text-blue-600 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                {selectedAmenities.length + selectedStars.length + (priceRange[1] < maxPrice ? 1 : 0) + (searchQuery ? 1 : 0)}
+                {selectedFiltersCount}
               </span>
             )}
           </button>
@@ -221,6 +293,7 @@ const HotelListContent = ({
                 formatPrice={formatPrice}
                 searchQuery={searchQuery}
                 handleSearchChange={handleSearchChange}
+                handleSearchKeyDown={handleSearchKeyDown}
                 showSuggestions={showSuggestions}
                 setShowSuggestions={setShowSuggestions}
                 suggestions={suggestions}
@@ -250,6 +323,7 @@ const HotelListContent = ({
               formatPrice={formatPrice}
               searchQuery={searchQuery}
               handleSearchChange={handleSearchChange}
+              handleSearchKeyDown={handleSearchKeyDown}
               showSuggestions={showSuggestions}
               setShowSuggestions={setShowSuggestions}
               suggestions={suggestions}
@@ -261,34 +335,52 @@ const HotelListContent = ({
 
           {/* Hotels List */}
           <div className="w-full md:w-3/4">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-800">
-                {filteredHotels.length} {filteredHotels.length === 1 ? 'Hotel' : 'Hotels'} Found
-              </h2>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600 hidden md:inline">Sort by:</span>
-                <select
-                  className="text-sm border border-gray-300 rounded-md px-3 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={sortOption}
-                  onChange={handleSortChange}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800">
+                  {hotels.length} {hotels.length === 1 ? 'Hotel' : 'Hotels'} Found
+                </h2>
+                {selectedFiltersCount > 0 && (
+                  <p className="text-sm text-gray-600 mt-1">
+                    {selectedFiltersCount} active {selectedFiltersCount === 1 ? 'filter' : 'filters'}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={resetAllFilters}
+                  className="text-sm text-blue-600 border border-blue-600 rounded-md px-3 py-1 hover:bg-blue-50 transition-colors"
                 >
-                  <option value="recommended">Recommended</option>
-                  <option value="price-high-low">Price (High to Low)</option>
-                  <option value="price-low-high">Price (Low to High)</option>
-                  <option value="star-rating">Star Rating</option>
-                </select>
+                  Reset all
+                </button>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-600 hidden md:inline">Sort by:</span>
+                  <select
+                    className="text-sm border border-gray-300 rounded-md px-3 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={sortOption}
+                    onChange={handleSortChange}
+                  >
+                    <option value="recommended">Recommended</option>
+                    <option value="price_low">Price (Low to High)</option>
+                    <option value="price_high">Price (High to Low)</option>
+                    <option value="name_az">Name (A-Z)</option>
+                    <option value="name_za">Name (Z-A)</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            {sortedHotels.length > 0 ? (
+            {hotels.length > 0 ? (
               <div className="space-y-5">
-                {sortedHotels.map((hotel) => (
+                {hotels.map((hotel) => (
                   <HotelCard
                     key={hotel.id}
                     hotel={hotel}
                     amenities={amenities}
-                    checkin={checkin}
-                    checkout={checkout}
+                    checkin={defaultCheckin}
+                    checkout={defaultCheckout}
                     rooms={rooms}
                     adult={adult}
                     isHighlighted={hotelID == hotel.id}

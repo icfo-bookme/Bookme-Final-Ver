@@ -1,47 +1,63 @@
-export async function fetchHotelListingData(locationID) {
-  try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}`;
-    const hotelRes = await fetch(apiUrl, {
-      next: { revalidate: 43200 },
-    });
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
 
-    if (!hotelRes.ok) {
-      throw new Error('Failed to fetch hotels');
-    }
-    const hotelData = await hotelRes.json();
-    const processedHotels = hotelData.map(hotel => {
-      const price = hotel.price_after_discount || 0;
-      const numericPrice = typeof price === 'string'
-        ? parseFloat(price.replace(/[^0-9.]/g, '')) || 0
-        : price || 0;
-
-      return {
-        ...hotel,
-        numericPrice,
-        starNumber: parseInt(hotel.star) || 0,
-        hasPrice: numericPrice > 0
-      };
-    });
-
-    const pricedHotels = processedHotels.filter(hotel => hotel.hasPrice);
-    const maxPrice = pricedHotels.length > 0
-      ? Math.max(...pricedHotels.map(hotel => hotel.numericPrice))
-      : 10000;
-
-    const amenitiesRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/aminities`);
-    const amenitiesData = amenitiesRes.ok ? await amenitiesRes.json() : [];
-
-    return {
-      hotels: processedHotels,
-      amenities: amenitiesData,
-      maxPrice: Math.ceil(maxPrice / 1000) * 1000
-    };
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return {
-      hotels: [],
-      amenities: [],
-      maxPrice: 10000
-    };
+const appendSearchParam = (params, key, value) => {
+  if (value !== undefined && value !== '') {
+    params.append(key, value);
   }
-}
+};
+
+const buildSearchParams = ({ checkin, checkout, ...extraParams } = {}) => {
+  const params = new URLSearchParams();
+
+  appendSearchParam(params, 'checkin', checkin);
+  appendSearchParam(params, 'checkout', checkout);
+  appendSearchParam(params, 'name', extraParams.name);
+  appendSearchParam(params, 'min_price', extraParams.min_price);
+  appendSearchParam(params, 'max_price', extraParams.max_price);
+  appendSearchParam(params, 'star_rating', extraParams.star_rating);
+  appendSearchParam(params, 'amenities', extraParams.amenities);
+  appendSearchParam(params, 'sort_by', extraParams.sort_by);
+
+  return params;
+};
+
+const normalizeHotel = (hotel) => {
+  const price = hotel.price_after_discount || 0;
+  const numericPrice = typeof price === 'string'
+    ? parseFloat(price.replace(/[^0-9.]/g, '')) || 0
+    : price || 0;
+
+  return {
+    ...hotel,
+    numericPrice,
+    starNumber: parseInt(hotel.star) || 0,
+    hasPrice: numericPrice > 0,
+  };
+};
+
+const fetchHotelData = async (path, checkin, checkout, extraParams = {}) => {
+  const params = buildSearchParams({ checkin, checkout, ...extraParams });
+  const res = await fetch(`${baseUrl}${path}?${params.toString()}`);
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch hotels');
+  }
+
+  const data = await res.json();
+  return data.map(normalizeHotel);
+};
+
+export const fetchHotelsByLocation = (locationID, checkin, checkout, extraParams = {}) =>
+  fetchHotelData(`/api/hotel/listing/${locationID}`, checkin, checkout, extraParams);
+
+export const fetchHotelsById = (hotelID, checkin, checkout, extraParams = {}) =>
+  fetchHotelData(`/api/hotels/list/${hotelID}`, checkin, checkout, extraParams);
+
+export const fetchAmenities = async () => {
+  const res = await fetch(`${baseUrl}/api/aminities`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!res.ok) return [];
+  return res.json();
+};

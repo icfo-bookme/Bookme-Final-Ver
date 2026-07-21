@@ -15,6 +15,7 @@ const HotelFilters = ({
   formatPrice,
   searchQuery,
   handleSearchChange,
+  handleSearchKeyDown,
   showSuggestions,
   setShowSuggestions,
   suggestions,
@@ -75,8 +76,9 @@ const HotelFilters = ({
               placeholder="Enter hotel name..."
               value={searchQuery}
               onChange={handleSearchChange}
+              onKeyDown={handleSearchKeyDown}
               onFocus={() => searchQuery.length > 0 && setShowSuggestions(true)}
-              className="w-full px-4 py-2 text-sm border border-blue-800  rounded-md outline-none ring-2 ring-blue-500"
+              className="w-full px-4 py-2 text-sm border border-blue-800 rounded-md outline-none ring-2 ring-blue-500"
             />
             {searchQuery && (
               <button

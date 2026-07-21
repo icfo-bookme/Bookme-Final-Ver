@@ -19,10 +19,7 @@ const propertySummary = async ({
     });
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/ships/property/${locationId}?${params}`,
-      {
-        next: { revalidate: 43200 },
-      }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/ships/property/${locationId}?${params}`
     );
 
     return await res.json();

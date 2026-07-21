@@ -1,7 +1,8 @@
 import HotelListContent from "../list/HotelListContent";
+import { fetchHotelsByLocation, fetchHotelsById, fetchAmenities } from '@/services/hotel/hotelData';
 
 export async function generateMetadata({ params }) {
-  const { name } = await params;
+  const { name } = params;
 
   const title = name ? `${name} Hotels | BookMe` : "Hotels | BookMe";
 
@@ -32,55 +33,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-const fetchHotelsByLocation = async (locationID,checkin, checkout) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/listing/${locationID}?checkin=${checkin}&checkout=${checkout}`);
-  if (!res.ok) throw new Error('Failed to fetch hotels by location');
-  const data = await res.json();
-
-  return data.map(hotel => {
-    const price = hotel.price_after_discount || 0;
-    const numericPrice = typeof price === 'string'
-      ? parseFloat(price.replace(/[^0-9.]/g, '')) || 0
-      : price || 0;
-
-    return {
-      ...hotel,
-      numericPrice,
-      starNumber: parseInt(hotel.star) || 0,
-      hasPrice: numericPrice > 0
-    };
-  });
-};
-
-const fetchHotelsById = async (hotelID,checkin, checkout) => {
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/hotels/list/${hotelID}?checkin=${checkin}&checkout=${checkout}`);
-  if (!res.ok) throw new Error('Failed to fetch hotel by ID');
-  const data = await res.json();
-
-  return data.map(hotel => {
-    const price = hotel.price_after_discount || 0;
-    const numericPrice = typeof price === 'string'
-      ? parseFloat(price.replace(/[^0-9.]/g, '')) || 0
-      : price || 0;
-
-    return {
-      ...hotel,
-      numericPrice,
-      starNumber: parseInt(hotel.star) || 0,
-      hasPrice: numericPrice > 0
-    };
-  });
-};
-
-const fetchAmenities = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/aminities`, {
-    next: { revalidate: 3600 },
-  });
-  if (!res.ok) return [];
-  return await res.json();
-};
-
 export default async function HotelListPage({ searchParams }) {
   const {
     checkin,
@@ -89,7 +41,13 @@ export default async function HotelListPage({ searchParams }) {
     hotelID,
     rooms = '1',
     adult = '2',
-  } = await searchParams;
+    name,
+    min_price,
+    max_price,
+    star_rating,
+    amenities,
+    sort_by,
+  } = searchParams;
 
   if (!locationID && !hotelID) {
     return (
@@ -103,12 +61,26 @@ export default async function HotelListPage({ searchParams }) {
   try {
     let hotels = [];
     if (locationID) {
-      hotels = await fetchHotelsByLocation(locationID, checkin, checkout);
+      hotels = await fetchHotelsByLocation(locationID, checkin, checkout, {
+        name,
+        min_price,
+        max_price,
+        star_rating,
+        amenities,
+        sort_by,
+      });
     } else if (hotelID) {
-      hotels = await fetchHotelsById(hotelID, checkin, checkout);
+      hotels = await fetchHotelsById(hotelID, checkin, checkout, {
+        name,
+        min_price,
+        max_price,
+        star_rating,
+        amenities,
+        sort_by,
+      });
     }
 
-    const amenities = await fetchAmenities();
+    const amenitiesList = await fetchAmenities();
 
     const pricedHotels = hotels.filter(hotel => hotel.hasPrice);
     const maxPrice = pricedHotels.length > 0
@@ -124,8 +96,14 @@ export default async function HotelListPage({ searchParams }) {
         rooms={rooms}
         adult={adult}
         hotels={hotels}
-        amenities={amenities}
+        amenities={amenitiesList}
         maxPrice={maxPrice}
+        initialName={name || ''}
+        initialMinPrice={min_price}
+        initialMaxPrice={max_price}
+        initialStarRating={star_rating || ''}
+        initialAmenities={amenities || ''}
+        initialSortBy={sort_by || ''}
       />
     );
   } catch (error) {

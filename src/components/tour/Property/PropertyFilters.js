@@ -105,7 +105,7 @@ export default function PropertyFilters({ id }) {
             defaultValue={searchParams.get("sort") || ""}
             onChange={handleSortChange}
           >
-            <option value="">Most Popular</option>
+            <option value="popularity">Most Popular</option>
             <option value="price_low_to_high">Price: Low to High</option>
             <option value="price_high_to_low">Price: High to Low</option>
             {/* <option value="popularity">Most Popular</option> */}
