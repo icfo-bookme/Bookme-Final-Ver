@@ -25,10 +25,10 @@ export async function generateMetadata({ params }) {
     keywords,
   };
 }
-export default async function PackagesPage({ params }) {
+export default async function PackagesPage({ params, searchParams }) {
   const { id } = params;
 
-  const data = await getTourList({ id });
+  const data = await getTourList({ id, searchParams });
   if (!data) {
     throw new Error('Failed to fetch data');
   }

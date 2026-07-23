@@ -30,10 +30,10 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function PackagesPage({ params }) {
-  const { name, id } = await params;
+export default async function PackagesPage({ params, searchParams }) {
+  const { name, id } = params;
 
-  const data = await getActivitiesList({ id });
+  const data = await getActivitiesList({ id, searchParams });
   if (!data) {
     throw new Error('Failed to fetch data');
   }
