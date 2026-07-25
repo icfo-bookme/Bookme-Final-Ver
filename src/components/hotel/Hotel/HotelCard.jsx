@@ -58,7 +58,7 @@ export default function HotelCard({ hotelData = [] }) {
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <Link
-                        href={`/hotel/list/details/${slugify(
+                        href={`/hotels/list/details/${slugify(
                           hotel.hotel_name
                         )}/${hotel.hotel_id}`}
                       >
