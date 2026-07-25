@@ -86,7 +86,7 @@ export default function HotelCard({ hotelData = [] }) {
                         : "Contact for price"}
                     </p>
                     <Link
-                      href={`/hotel/list/details/${slugify(
+                      href={`/hotels/list/details/${slugify(
                         hotel.hotel_name
                       )}/${hotel.hotel_id}`}
                       className="px-4 py-2 rounded-lg text-sm font-medium text-white"
