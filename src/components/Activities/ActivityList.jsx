@@ -175,8 +175,8 @@ const ActivityList = ({ activities }) => {
 
   return (
     <div className="px-4 md:py-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <aside className="hidden md:block col-span-1">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:min-h-screen">
+        <aside className="sticky top-16 hidden md:block col-span-1 self-start">
           <FilterSection
             priceRanges={PRICE_RANGES}
             durationRanges={DURATION_RANGES}
