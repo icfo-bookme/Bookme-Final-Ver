@@ -6,9 +6,9 @@ export default function Hotel({ data = [] }) {
     <CommonSwiper
       data={data}
       title="Popular Hotels & Resorts"
-      seeMoreLink="/hotel"
+      seeMoreLink="/hotels"
       seeMoreText="Hotels"
-      basePath="/hotel/list/details"
+      basePath="/hotels/list/details"
       gradient="linear-gradient(90deg, #313881, #0678B4)"
       emptyMessage="No hotels available at the moment."
     />
