@@ -1,4 +1,6 @@
 
+import getContactNumber from '@/services/tour/getContactNumber';
+
 export const metadata = {
   title: "Terms & Conditions - BookMe",
   description: "Read the Terms & Conditions for using BookMe's services, including booking policies, payment terms, cancellation procedures, and user responsibilities.",
@@ -7,7 +9,10 @@ export const metadata = {
   },
 };
 
-export default function TermsAndConditions() {
+export default async function TermsAndConditions() {
+  const contactData = await getContactNumber();
+  const phone = contactData?.Phone || '01967776777';
+  const email = contactData?.Email || 'bookmebdltd@gmail.com';
   return (
     <div className="min-h-screen bg-gray-50 py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -281,7 +286,7 @@ export default function TermsAndConditions() {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900">Email</p>
-                      <a href="mailto:bookmebdltd@gmail.com" className="text-blue-600 hover:underline">bookmebdltd@gmail.com</a>
+                      <a href={`mailto:${email}`} className="text-blue-600 hover:underline">{email}</a>
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -292,7 +297,7 @@ export default function TermsAndConditions() {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900">Hotline</p>
-                      <a href="tel:01967776777" className="text-blue-600 hover:underline">01967776777</a>
+                      <a href={`tel:${phone}`} className="text-blue-600 hover:underline">{phone}</a>
                     </div>
                   </li>
                 </ul>

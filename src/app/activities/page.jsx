@@ -15,7 +15,8 @@ export const metadata = {
 
 
 export default async function HotelHome({ searchParams }) {
-  const page = searchParams?.page || 1;
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams?.page || 1;
   const data = await getProperty(6, page);
   const activities = data.data || [];
   const pagination = data.pagination;

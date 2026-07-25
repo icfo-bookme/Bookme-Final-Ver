@@ -5,7 +5,8 @@ import Pagination from "@/utils/Pagination";
 import getProperty from "@/services/getProperty";
 
 export default async function TourPackagesHome({ searchParams }) {
-const page = searchParams?.page || 1;
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams?.page || 1;
   const data = await getProperty(5, page);
   const packages = data.data || [];
   const pagination = data.pagination;

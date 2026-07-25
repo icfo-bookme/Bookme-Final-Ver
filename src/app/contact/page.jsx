@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaPhone, FaFacebookMessenger, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import Banner from '../../components/Home/Banner';
+import getContactNumber from '@/services/tour/getContactNumber';
 
 export const metadata = {
   title: "Contact Us - BookMe",
@@ -10,11 +11,12 @@ export const metadata = {
   },
 };
 
-const HotelDealsPage = () => {
+const HotelDealsPage = async () => {
+  const contactData = await getContactNumber();
   const contacts = {
-    phone: '+8801967776777',
-    whatsapp: '+8801967776777',
-    email: 'bookmebdltd@gmail.com',
+    phone: contactData?.Phone || '01967776777',
+    whatsapp: contactData?.Phone || '01967776777',
+    email: contactData?.Email || 'bookmebdltd@gmail.com',
     address: '123 Travel Street, Dhaka, Bangladesh'
   };
 

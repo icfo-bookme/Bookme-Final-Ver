@@ -1,6 +1,7 @@
+import { fetchJson } from '@/api/fetchData';
+
 export default async function getActivitiesList({ id, searchParams = {} }) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-  const url = new URL(`${baseUrl}/api/activities/propertyList/${id}`);
+  const params = {};
 
   Object.entries(searchParams || {}).forEach(([key, value]) => {
     if (value === undefined || value === null || value === "") return;
@@ -8,21 +9,21 @@ export default async function getActivitiesList({ id, searchParams = {} }) {
     if (Array.isArray(value)) {
       value.forEach((item) => {
         if (item !== undefined && item !== null && item !== "") {
-          url.searchParams.append(key, item);
+          const existing = params[key];
+          if (existing) {
+            params[key] = Array.isArray(existing) ? [...existing, item] : [existing, item];
+          } else {
+            params[key] = item;
+          }
         }
       });
     } else {
-      url.searchParams.set(key, value);
+      params[key] = value;
     }
   });
 
-  const res = await fetch(url.toString(), {
-    next: { revalidate: 43200 },
+  return fetchJson(`/api/activities/propertyList/${id}`, {
+    params,
+    throwOnError: true,
   });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch activities list: ${res.status}`);
-  }
-
-  return res.json();
 }

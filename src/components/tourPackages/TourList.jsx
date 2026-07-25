@@ -11,14 +11,14 @@ const PRICE_RANGES = [
   { label: 'Over BDT 50,000', min: 50000, max: Infinity },
 ];
 
-// const DURATION_BUCKETS = [
-//   { label: '1 Night', value: '1' },
-//   { label: '2 Nights', value: '2' },
-//   { label: '3 Nights', value: '3' },
-//   { label: '4 Nights', value: '4' },
-//   { label: '5 Nights', value: '5' },
-//   { label: 'More than 6 Nights', value: '6+' },
-// ];
+const DURATION_BUCKETS = [
+  { label: '1 Day', value: '1' },
+  { label: '2 Days', value: '2' },
+  { label: '3 Days', value: '3' },
+  { label: '4 Days', value: '4' },
+  { label: '5 Days', value: '5' },
+  { label: 'More than 6 Days', value: '6+' },
+];
 
 const parseRangeParam = (value) =>
   String(value ?? '')
@@ -31,23 +31,23 @@ const getSelectedPriceLabels = (priceRangesParam) => {
   return PRICE_RANGES.filter((range) => values.includes(`${range.min}-${range.max}`)).map((range) => range.label);
 };
 
-// const getSelectedDurationLabels = (durationsParam) => parseRangeParam(durationsParam);
+const getSelectedDurationLabels = (durationsParam) => parseRangeParam(durationsParam);
 
-// const getTourNights = (tour) => {
-//   const durationSummary = tour.summaries?.find((s) => s.icon_name === 'FaRegClock');
-//   if (!durationSummary) return null;
-//   const match = String(durationSummary.value).match(/(\d+)/);
-//   return match ? Number(match[1]) : null;
-// };
+const getTourNights = (tour) => {
+  const durationSummary = tour.summaries?.find((s) => s.icon_name === 'FaRegClock');
+  if (!durationSummary) return null;
+  const match = String(durationSummary.value).match(/(\d+)/);
+  return match ? Number(match[1]) : null;
+};
 
-// const matchesDuration = (tour, selectedDurations) => {
-//   const nights = getTourNights(tour);
-//   if (nights === null) return false;
-//   return selectedDurations.some((duration) => {
-//     if (duration === '6+') return nights >= 6;
-//     return nights === Number(duration);
-//   });
-// };
+const matchesDuration = (tour, selectedDurations) => {
+  const nights = getTourNights(tour);
+  if (nights === null) return false;
+  return selectedDurations.some((duration) => {
+    if (duration === '6+') return nights >= 6;
+    return nights === Number(duration);
+  });
+};
 
 const sortTours = (tours, sortOption) => {
   const items = [...tours];
@@ -78,11 +78,11 @@ const TourList = ({ tours }) => {
 
   const sortOption = searchParams.get('sort_by') ?? '';
   const priceRangesParam = searchParams.get('price_ranges') ?? '';
-  // const durationsParam = searchParams.get('durations') ?? '';
+  const durationsParam = searchParams.get('durations') ?? '';
 
   const selectedPriceRanges = useMemo(() => getSelectedPriceLabels(priceRangesParam), [priceRangesParam]);
-  // const selectedDurations = useMemo(() => getSelectedDurationLabels(durationsParam), [durationsParam]);
-  const activeFilterCount = selectedPriceRanges.length; // + selectedDurations.length;
+  const selectedDurations = useMemo(() => getSelectedDurationLabels(durationsParam), [durationsParam]);
+  const activeFilterCount = selectedPriceRanges.length + selectedDurations.length;
 
   const filteredTours = useMemo(() => {
     let result = [...tours];
@@ -96,9 +96,9 @@ const TourList = ({ tours }) => {
       );
     }
 
-    // if (selectedDurations.length > 0) {
-    //   result = result.filter((tour) => matchesDuration(tour, selectedDurations));
-    // }
+    if (selectedDurations.length > 0) {
+      result = result.filter((tour) => matchesDuration(tour, selectedDurations));
+    }
 
     return sortTours(result, sortOption);
   }, [tours, selectedPriceRanges, sortOption]);
@@ -152,10 +152,10 @@ const TourList = ({ tours }) => {
             tours={tours}
             filters={{
               priceRanges: selectedPriceRanges,
-              // durations: selectedDurations,
+              durations: selectedDurations,
             }}
             priceRanges={PRICE_RANGES}
-            // durationOptions={DURATION_BUCKETS}
+            durationOptions={DURATION_BUCKETS}
             onFilterChange={handleFilterChange}
             onResetFilters={resetFilters}
             activeFilterCount={activeFilterCount}

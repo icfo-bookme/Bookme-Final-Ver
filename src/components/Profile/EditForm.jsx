@@ -120,8 +120,6 @@ const EditForm = ({ data, user }) => {
     };
 
     const onSubmit = async (formData) => {
-        console.log('Form data to submit:', formData);
-
         try {
             // Create FormData for file upload (Laravel compatible)
             const submitData = new FormData();

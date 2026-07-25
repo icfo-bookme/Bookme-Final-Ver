@@ -405,7 +405,7 @@ const HotelListContent = ({
                   Clear Filters
                 </button>
                 <Link
-                  href="/hotel"
+                  href="/hotels"
                   className="mt-4 inline-block px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Modify Search

@@ -314,7 +314,7 @@ const SearchBar = ({ initialValues }) => {
     ...(!selectedHotelId && selectedLocationId && { locationID: String(selectedLocationId) })
   }).toString();
 
-  router.push(`/hotel/${slugify(slug)}?${queryParams}`);
+  router.push(`/hotels/${slugify(slug)}?${queryParams}`);
 };
 
   const handleDateChange = (update) => {

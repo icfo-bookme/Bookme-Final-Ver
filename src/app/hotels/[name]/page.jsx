@@ -47,7 +47,7 @@ export default async function HotelListPage({ searchParams }) {
     star_rating,
     amenities,
     sort_by,
-  } = searchParams;
+  } = await searchParams;
 
   if (!locationID && !hotelID) {
     return (

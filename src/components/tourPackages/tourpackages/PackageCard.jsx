@@ -12,7 +12,6 @@ import LazyLoader from "@/utils/LazyLoader";
 
 
 const TourPackageCard = ({ packageData = [] }) => {
-    console.log("Received package data:", packageData?.length);
     const [visibleCount, setVisibleCount] = useState(12);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
     const renderSummaryIcon = (iconName) => {

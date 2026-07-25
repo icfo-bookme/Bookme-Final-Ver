@@ -36,7 +36,6 @@ export default function TourPageUI({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-console.log("Schedules in UI:", schedules);
 
   return (
     <div className={`${roboto.className} pt-[50px] md:pt-[80px] bg-[#EBF0F4] pb-[20px] md:pb-[200px]`}>

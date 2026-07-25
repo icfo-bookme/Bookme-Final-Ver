@@ -1,8 +1,6 @@
 import { Inter } from "next/font/google";
 import Footer from "../components/shared/Footer/Footer";
 import "./globals.css";
-import { SearchProvider } from "@/context/SearchContext";
-import { PaginationProvider } from "@/context/usePagination";
 import HeaderWrapper from "../components/HeadWrapper/HeaderWrapper";
 import { UserProvider } from "@/context/UserContext";
 import Script from "next/script";
@@ -83,17 +81,13 @@ export default function Layout({ children }) {
           ></iframe>
         </noscript>
 
-        <PaginationProvider>
-          <SearchProvider>
-            <UserProvider>
-              <div className="bg-white">
-                <HeaderWrapper />
-                <main className="min-h-[100vh] py-[12px]">{children}</main>
-                <Footer />
-              </div>
-            </UserProvider>
-          </SearchProvider>
-        </PaginationProvider>
+        <UserProvider>
+          <div className="bg-white">
+            <HeaderWrapper />
+            <main className="min-h-[100vh] py-[12px]">{children}</main>
+            <Footer />
+          </div>
+        </UserProvider>
       </body>
     </html>
   );

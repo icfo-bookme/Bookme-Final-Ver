@@ -10,11 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      # 2️⃣ Deploy via SSH
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -35,18 +33,15 @@ jobs:
             git reset --hard origin/main
             git clean -fd
 
-            echo "🧹 Fix permissions & clean build cache..."
-            rm -rf .next
-
             echo "📦 Install dependencies..."
-            rm -rf node_modules
             npm ci
 
             echo "🏗️ Build project..."
             npm run build
 
-            echo "♻️ Restart PM2..."
-            pm2 restart ecosystem.config.js --name bookme --update-env || pm2 start ecosystem.config.js --name bookme
+            echo "♻️ Restart PM2 safely..."
+            # সঠিক PM2 রিস্টার্ট লজিক
+            pm2 startOrReload ecosystem.config.js --env production
 
             echo "💾 Save PM2 state..."
             pm2 save

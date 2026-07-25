@@ -68,7 +68,7 @@ const CarRentalSearchBar = ({ locationsData }) => {
           search_value: "car rental search",         
         });
       }
-    router.push(`/Car/list/${pickupId}?${params.toString()}`);
+    router.push(`/car/list/${pickupId}?${params.toString()}`);
   };
 
   const SearchableLocationField = ({ label, field }) => {

@@ -43,11 +43,12 @@ export default async function Home({ params, searchParams }) {
 
   const { name, id } = await params;
   const nameSlugify = slugify(name);
-  const page = searchParams?.page || 1;
-  const sort = searchParams?.sort || "";
-  const minPrice = searchParams?.min_price || "";
-  const maxPrice = searchParams?.max_price || "";
-  const search = searchParams?.search || "";
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams?.page || 1;
+  const sort = resolvedSearchParams?.sort || "";
+  const minPrice = resolvedSearchParams?.min_price || "";
+  const maxPrice = resolvedSearchParams?.max_price || "";
+  const search = resolvedSearchParams?.search || "";
 
   const result = await propertySummary({
     locationId: id,

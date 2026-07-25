@@ -184,7 +184,7 @@ const VehicleCard = ({ vehicle }) => {
               {/* Phone Button - md and up */}
               <div className="mr-[5px] mt-[10px] hidden md:flex">
                 <a
-                  href={`tel:${contactNumber?.Phone || '8801967776777'}`}
+                  href={`tel:${contactNumber?.Phone || '+8801967776777'}`}
                   className="mx-[10px]"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -198,7 +198,7 @@ const VehicleCard = ({ vehicle }) => {
               {/* WhatsApp Button - md and up */}
               <div className="mr-[5px] mt-[10px] hidden md:flex">
                 <a
-                  href={`https://wa.me/${contactNumber?.Phone || '880196777677'}`}
+                  href={`https://wa.me/${contactNumber?.Phone || '+8801967776777'}`}
                   className="mx-[10px]"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -244,7 +244,7 @@ const VehicleCard = ({ vehicle }) => {
               </span>
               <div className="mr-[5px] mt-[10px]">
                 <a
-                  href={`tel:${contactNumber?.Phone || '8801967776777'}`}
+                  href={`tel:${contactNumber?.Phone || '+8801967776777'}`}
                   className="mx-[10px]"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -256,7 +256,7 @@ const VehicleCard = ({ vehicle }) => {
               </div>
               <div className="mt-3">
                 <a
-                  href={`https://wa.me/${contactNumber?.Phone || '880196777677'}`}
+                  href={`https://wa.me/${contactNumber?.Phone || '+8801967776777'}`}
                   className="mx-[10px]"
                   target="_blank"
                   rel="noopener noreferrer"

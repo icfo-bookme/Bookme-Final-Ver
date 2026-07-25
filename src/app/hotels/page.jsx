@@ -15,20 +15,20 @@ export const metadata = {
 };
 
 export default async function HotelHome({ searchParams }) {
-  const page = searchParams?.page || 1;
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams?.page || 1;
 
   let hotelData = [];
   let pagination = null;
 
- const hotelResult = await getHotels(page);
- hotelData = hotelResult?.data || [];
-    pagination = hotelResult?.pagination;
-
+  const hotelResult = await getHotels(page);
+  hotelData = hotelResult?.data || [];
+  pagination = hotelResult?.pagination;
 
   return (
     <div className="min-h-screen">
       <HotelHeroSection />
-    
+
       <div className="" id="list-start"></div>
       <main className="container mx-auto">
         <section className="mt-12">
@@ -39,7 +39,7 @@ export default async function HotelHome({ searchParams }) {
           <HotelCard hotelData={hotelData} />
 
           {/* Pagination UI . */}
-         <Pagination pagination={pagination} page={page} route="/hotel" />
+          <Pagination pagination={pagination} page={page} route="/hotel" />
           {hotelData.length === 0 && (
             <div className="text-center text-gray-500 mt-8">
               No hotels found. Please try a different search.

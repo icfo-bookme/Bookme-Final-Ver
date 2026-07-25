@@ -3,7 +3,7 @@ import TourList from '@/components/tourPackages/TourList';
 import getTourList from '@/services/packages/getPropertyList';
 
 export async function generateMetadata({ params }) {
-  const { name } = params;
+  const { name } = await params;
   const title = `${name} Tour Packages | BookMe`;
   const description = `Explore the best tour packages in ${name} with BookMe. Choose from a variety of curated experiences including sightseeing tours, island trips, river cruises, cultural excursions, and adventure packages. Whether you're planning a family getaway, a solo adventure, or a group trip, our flexible and personalized tour packages ensure an unforgettable journey. Book your ${name} tour package now and make your visit hassle-free, memorable, and truly special.`;
   const keywords = [
@@ -26,9 +26,10 @@ export async function generateMetadata({ params }) {
   };
 }
 export default async function PackagesPage({ params, searchParams }) {
-  const { id } = params;
+  const { id } = await params;
+  const resolvedSearchParams = await searchParams;
 
-  const data = await getTourList({ id, searchParams });
+  const data = await getTourList({ id, searchParams: resolvedSearchParams });
   if (!data) {
     throw new Error('Failed to fetch data');
   }

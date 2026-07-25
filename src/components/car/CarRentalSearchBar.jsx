@@ -73,7 +73,7 @@ const CarRentalSearchBar = ({ locationsData, initialParams }) => {
         params.set("date", searchParamsState.pickupDate);
         params.set("time", searchParamsState.pickupTime);
 
-        router.push(`/Car/list/${pickupId}?${params.toString()}`);
+        router.push(`/car/list/${pickupId}?${params.toString()}`);
         setShowMobileModal(false); // Close modal if open
     };
 

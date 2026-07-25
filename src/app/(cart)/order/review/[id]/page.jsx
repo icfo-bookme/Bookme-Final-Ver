@@ -9,7 +9,6 @@ export const metadata = {
 export default async function BookingReviewPage({ params }) {
   const id = await params.id;
   const BookingData = await getcartsession(id);
-  console.log(BookingData);
   return (
     <>
       <BookingClient bookingData={BookingData} />;

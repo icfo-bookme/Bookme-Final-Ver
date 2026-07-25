@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import getContactNumber from '@/services/tour/getContactNumber';
 import * as IoIcons from "react-icons/io5";
 import * as FaIcons from "react-icons/fa";
 import * as PiIcons from "react-icons/pi";
@@ -9,7 +10,16 @@ import Link from 'next/link';
 
 export default function PropertySummary({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [contactNumber, setContactNumber] = useState(null);
     const modalRef = useRef(null);
+
+    useEffect(() => {
+        getContactNumber().then(data => {
+            if (Array.isArray(data) && data.length > 0) setContactNumber(data[0]);
+            else if (data?.Phone) setContactNumber(data);
+        }).catch(() => {});
+    }, []);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -94,7 +104,7 @@ export default function PropertySummary({ data }) {
                         </span>
                         <div className="mr-[5px] mt-[10px]">
                             <a
-                                href={`tel:8801967776777`}
+                                href={`tel:${contactNumber?.Phone || '+8801967776777'}`}
                                 className="mx-[10px]"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -106,7 +116,7 @@ export default function PropertySummary({ data }) {
                         </div>
                         <div>
                             <Link
-                                href={`https://wa.me/880196777677`}
+                                href={`https://wa.me/${contactNumber?.Phone || '+8801967776777'}`}
                                 className="mx-[10px]"
                                 target="_blank"
                                 rel="noopener noreferrer"

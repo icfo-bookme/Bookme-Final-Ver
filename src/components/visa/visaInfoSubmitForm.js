@@ -21,12 +21,6 @@ export default function VisaInfoSubmitForm({ property_name }) {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      console.log("Submitting:", {
-        ...data,
-        category: "visa",
-        property_name: property_name
-      });
-
       const apiResponse = await postPackageInfo({
         ...data,
         category: "visa",

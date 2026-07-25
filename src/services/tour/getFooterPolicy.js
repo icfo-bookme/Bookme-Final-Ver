@@ -1,21 +1,7 @@
-const getFooterPolicy = async () => {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/footer-policies `,
-        {
-          next: { revalidate: 43200 },
-        }
-      );
-      const data = await res.json();
-             
-    return data;
-      
-       
+import { fetchJson } from '@/api/fetchData';
 
-    } catch (error) {
-      return [];
-    }
-  };
-  
-  export default getFooterPolicy;
-  
+const getFooterPolicy = async () => {
+  return fetchJson('/api/footer-policies');
+};
+
+export default getFooterPolicy;

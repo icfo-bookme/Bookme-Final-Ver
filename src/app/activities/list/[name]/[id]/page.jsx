@@ -4,7 +4,7 @@ import getActivitiesList from '@/services/Activities/getActivitiesList';
 
 // Dynamic metadata
 export async function generateMetadata({ params }) {
-  const { name } = params;
+  const { name } = await params;
 
   const title = `${name} Activities | BookMe`;
 
@@ -31,9 +31,10 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PackagesPage({ params, searchParams }) {
-  const { name, id } = params;
+  const { name, id } = await params;
+  const resolvedSearchParams = await searchParams;
 
-  const data = await getActivitiesList({ id, searchParams });
+  const data = await getActivitiesList({ id, searchParams: resolvedSearchParams });
   if (!data) {
     throw new Error('Failed to fetch data');
   }

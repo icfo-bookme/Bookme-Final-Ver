@@ -79,7 +79,7 @@ const SearchForm = ({ destinations, hotels, defaultDestination }) => {
 
         });
       }
-      router.push(`/hotel/${hotelName}?${query}`);
+      router.push(`/hotels/${hotelName}?${query}`);
 
     } else {
       // Use location search
@@ -107,7 +107,7 @@ const SearchForm = ({ destinations, hotels, defaultDestination }) => {
 
         });
       }
-      router.push(`/hotel/${destinationName}?${query}`);
+      router.push(`/hotels/${destinationName}?${query}`);
     }
   };
 

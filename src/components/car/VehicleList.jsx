@@ -6,12 +6,11 @@ import VehicleCard from './VehicleCard';
 
 const VehicleList = ({ vehicles, models, brands }) => {
   const [filters, setFilters] = useState({
-    search: '',
     seats: [],
     brands: [],
     models: []
   });
-  
+
   const [showModal, setShowModal] = useState(false);
   const [tempFilters, setTempFilters] = useState(filters);
 
@@ -35,10 +34,6 @@ const VehicleList = ({ vehicles, models, brands }) => {
 
   const filteredVehicles = useMemo(() => {
     return vehicles.filter(vehicle => {
-      if (filters.search && !vehicle.property_name.toLowerCase().includes(filters.search.toLowerCase())) {
-        return false;
-      }
-
       // Seat filter
       if (filters.seats.length > 0) {
         const seatingSummary = vehicle.summaries?.find(s =>
@@ -90,17 +85,6 @@ const VehicleList = ({ vehicles, models, brands }) => {
     });
   }, [vehicles, filters]);
 
-  const handleSearchChange = (value) => {
-    setFilters(prev => ({
-      ...prev,
-      search: value
-    }));
-    setTempFilters(prev => ({
-      ...prev,
-      search: value
-    }));
-  };
-
   const handleCheckboxChange = (filterType, value) => {
     setFilters(prev => {
       const currentValues = prev[filterType];
@@ -131,13 +115,11 @@ const VehicleList = ({ vehicles, models, brands }) => {
 
   const clearFilters = () => {
     setFilters({
-      search: '',
       seats: [],
       brands: [],
       models: []
     });
     setTempFilters({
-      search: '',
       seats: [],
       brands: [],
       models: []
@@ -155,17 +137,16 @@ const VehicleList = ({ vehicles, models, brands }) => {
   };
 
   // Check if any filter is active
-  const isFilterActive = filters.search ||
-    filters.seats.length > 0 ||
+  const isFilterActive = filters.seats.length > 0 ||
     filters.brands.length > 0 ||
     filters.models.length > 0;
 
   // Filter sidebar component
   const FilterSidebar = ({ isModal = false, filtersToUse, onCheckboxChange }) => (
     <div className={`bg-white p-4 rounded-lg shadow-sm border border-gray-200 ${!isModal ? 'sticky top-16 h-[calc(100vh-120px)] overflow-y-auto' : 'h-full'}`}>
-      
+
       <div className="flex justify-between items-center mb-4">
-      <h1 className="text-blue-950 md:block hidden font-bold">Filter</h1>
+        <h1 className="text-blue-950 md:block hidden font-bold">Filter</h1>
         {isFilterActive && !isModal && (
           <button
             onClick={clearFilters}
@@ -174,18 +155,6 @@ const VehicleList = ({ vehicles, models, brands }) => {
             Clear All
           </button>
         )}
-      </div>
-
-      {/* Search Filter */}
-      <div className="mb-6">
-        <label className="block font-bold text-blue-950 mb-1">Search by car name</label>
-        <input
-          type="text"
-          placeholder="Search vehicles..."
-          value={filtersToUse.search}
-          onChange={(e) => isModal ? setTempFilters({...tempFilters, search: e.target.value}) : handleSearchChange(e.target.value)}
-          className="w-full p-2 border-2 rounded-md ring-blue-500 border-blue-500"
-        />
       </div>
 
       {/* Seat Filter */}
@@ -280,7 +249,7 @@ const VehicleList = ({ vehicles, models, brands }) => {
             <div className="flex-1 overflow-y-auto">
               <FilterSidebar isModal={true} filtersToUse={tempFilters} onCheckboxChange={handleTempCheckboxChange} />
             </div>
-            
+
             {/* Fixed Bottom Buttons */}
             <div className="p-4 border-t bg-white">
               <div className="flex gap-3">
@@ -314,21 +283,10 @@ const VehicleList = ({ vehicles, models, brands }) => {
           {isFilterActive && (
             <div className="bg-blue-50 p-3 rounded-lg mb-6 flex flex-wrap items-center">
               <span className="text-sm text-gray-700 mr-2">Active filters:</span>
-              {filters.search && (
-                <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2 mb-2">
-                  Search: {filters.search}
-                  <button 
-                    onClick={() => handleSearchChange('')}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
-                  >
-                    ×
-                  </button>
-                </span>
-              )}
               {filters.seats.map(seat => (
                 <span key={seat} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2 mb-2">
                   {seatOptions.find(o => o.value === seat)?.label}
-                  <button 
+                  <button
                     onClick={() => handleCheckboxChange('seats', seat)}
                     className="ml-1 text-blue-600 hover:text-blue-800"
                   >
@@ -341,7 +299,7 @@ const VehicleList = ({ vehicles, models, brands }) => {
                 return brand ? (
                   <span key={brandId} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2 mb-2">
                     Brand: {brand.name}
-                    <button 
+                    <button
                       onClick={() => handleCheckboxChange('brands', brandId)}
                       className="ml-1 text-blue-600 hover:text-blue-800"
                     >
@@ -355,7 +313,7 @@ const VehicleList = ({ vehicles, models, brands }) => {
                 return model ? (
                   <span key={modelId} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2 mb-2">
                     Model: {model.model_name}
-                    <button 
+                    <button
                       onClick={() => handleCheckboxChange('models', modelId)}
                       className="ml-1 text-blue-600 hover:text-blue-800"
                     >
@@ -367,7 +325,7 @@ const VehicleList = ({ vehicles, models, brands }) => {
             </div>
           )}
 
-         {filteredVehicles.length > 0 ? (
+          {filteredVehicles.length > 0 ? (
             <div className="space-y-6">
               {filteredVehicles.map((vehicle) => (
                 <VehicleCard key={vehicle.id} vehicle={vehicle} />

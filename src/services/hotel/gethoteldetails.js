@@ -1,14 +1,7 @@
+import { fetchJson } from '@/api/fetchData';
+
 const getHotelDetails = async (hotelId) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/details/${hotelId}`,{
-        next: { revalidate: 43200 },
-      }
-    );
-    return await response.json();
-  } catch (error) {
-    return [];
-  }
+  return fetchJson(`/api/hotel/details/${hotelId}`);
 };
 
 export default getHotelDetails;

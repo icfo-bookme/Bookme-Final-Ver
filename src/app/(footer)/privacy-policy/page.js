@@ -1,4 +1,5 @@
 import React from 'react';
+import getContactNumber from '@/services/tour/getContactNumber';
 
 export const metadata = {
   title: "Privacy Policy - BookMe",
@@ -8,7 +9,11 @@ export const metadata = {
   },
 };
 
-export default function PrivacyPolicy() {
+export default async function PrivacyPolicy() {
+  const contactData = await getContactNumber();
+  const phone = contactData?.Phone || '01967776777';
+  const email = contactData?.Email || 'bookmebdltd@gmail.com';
+
   return (
     <div className="min-h-screen bg-gray-50 py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +28,7 @@ export default function PrivacyPolicy() {
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="p-8">
             <p className="mb-8 text-gray-700 leading-relaxed border-l-4 border-blue-600 pl-4 italic">
-              Bookme Ltd. (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy describes how we collect, use, process, and protect your information when you use our website, mobile app, or any of our services. By using Bookme&apos;s services, you agree to the terms outlined in this Privacy Policy.
+              Bookme Ltd. (&ldquo;we&rdquo;, &ldquo;our&rdquo;, &ldquo;us&rdquo;) respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy describes how we collect, use, process, and protect your information when you use our website, mobile app, or any of our services. By using Bookme&rsquo;s services, you agree to the terms outlined in this Privacy Policy.
             </p>
 
             {/* Information We Collect */}
@@ -105,7 +110,7 @@ export default function PrivacyPolicy() {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900">Email</p>
-                      <a href="mailto:bookmebdltd@gmail.com" className="text-blue-600 hover:underline">bookmebdltd@gmail.com</a>
+                      <a href={`mailto:${email}`} className="text-blue-600 hover:underline">{email}</a>
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -116,7 +121,7 @@ export default function PrivacyPolicy() {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-900">Phone</p>
-                      <a href="tel:01967776777" className="text-blue-600 hover:underline">01967776777</a>
+                      <a href={`tel:${phone}`} className="text-blue-600 hover:underline">{phone}</a>
                     </div>
                   </li>
                   <li className="flex items-start">

@@ -29,7 +29,5 @@ export default function CarRentalToDataLayer(carData) {
             models: models,
             pricing: pricing
         });
-
-        console.log("Car rental pushed:", { models, pricing });
     }
 }

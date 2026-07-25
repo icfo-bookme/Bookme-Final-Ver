@@ -12,7 +12,6 @@ const Page = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const { user } = useUser();
-    console.log(user);
     useEffect(() => {
 
         if (!user?.phone) {

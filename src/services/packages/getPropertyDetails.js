@@ -1,19 +1,9 @@
+import { fetchJson } from '@/api/fetchData';
+
 export default async function getPropertyDetails({ id }) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tourpackages/propertydetails/${id}`,{
-      next: { revalidate: 43200 },
-    });
-    if (!res.ok) {
-      return [];
-    }
+    const property = await fetchJson(`/api/tourpackages/propertydetails/${id}`);
 
-    let property;
-    try {
-      property = await res.json();
-    } catch (jsonError) {
-      console.error("Error parsing JSON:", jsonError);
-      return [];
-    }
     if (
       property == null ||
       (typeof property === 'object' && Object.keys(property).length === 0)

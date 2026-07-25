@@ -1,15 +1,8 @@
 
+import { fetchJson } from '@/api/fetchData';
+
 const getHotelCategories = async () => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/hotel/categories`,{
-        next: { revalidate: 43200 },
-      }
-    );
-    return await response.json();
-  } catch (error) {
-    return [];
-  }
+  return fetchJson('/api/hotel/categories');
 };
 
 export default getHotelCategories;

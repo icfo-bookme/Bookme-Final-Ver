@@ -1,17 +1,12 @@
 export const runtime = 'edge';
 import PromotionsPage from "./PromotionsPage";
+import getPromotion from "@/services/homepage/getPromotion";
 
 export const revalidate = 43200; 
 
 export default async function PromotionsMain() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/homepage/hot-package`, {
-      next: { revalidate: 43200 },
-    });
-
-    if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`);
-    const result = await res.json();
-    const promotions = result.data || [];
+    const promotions = await getPromotion();
 
     return <PromotionsPage promotions={promotions} />;
   } catch (error) {

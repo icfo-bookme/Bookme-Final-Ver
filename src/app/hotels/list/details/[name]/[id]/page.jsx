@@ -52,16 +52,17 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function HotelDetailsPage({ params, searchParams }) {
+  const { id } = await params;
+  const { checkin, checkout, rooms, adult } = await searchParams;
 
-  const hotelDetails = await getHotelDetails(params.id);
-  const  allRooms = await getRooms(params.id);
-  const { checkin, checkout, rooms, adult } = searchParams;
+  const hotelDetails = await getHotelDetails(id);
+  const  allRooms = await getRooms(id);
 
   return (
     <div className=" pt-16 min-h-screen bg-gray-200">
       <HotelDetailsTracker hotel={hotelDetails} rooms={allRooms} />
       <div className=" ">
-        <HotelHashRoute hotelId={params.id} initialHotelDetails={hotelDetails} checkin={checkin}
+        <HotelHashRoute hotelId={id} initialHotelDetails={hotelDetails} checkin={checkin}
           checkout={checkout} />
       </div>
 

@@ -1,16 +1,7 @@
+import { fetchJson } from '@/api/fetchData';
+
 const getAllVisa = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/countries/visa`, {
-          next: { revalidate: 43200 },
-        }
-      );
-      const propertyPackages = await response.json();     
-      return propertyPackages;
-    } catch (error) {
-      return [];
-    }
-  };
-  
-  export default getAllVisa;
-  
+  return fetchJson('/api/countries/visa');
+};
+
+export default getAllVisa;

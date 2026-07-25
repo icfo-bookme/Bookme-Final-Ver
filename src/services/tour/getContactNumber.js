@@ -1,16 +1,7 @@
+import { fetchJson } from '@/api/fetchData';
+
 const getContactNumber = async () => {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact-attributes `,
-      {
-        next: { revalidate: 43200 },
-      }
-    );
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    return [];
-  }
+  return fetchJson('/api/contact-attributes');
 };
 
 export default getContactNumber;

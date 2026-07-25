@@ -4,10 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Roboto } from "next/font/google";
 import { useForm } from "react-hook-form";
-import { useSearch } from "@/context/SearchContext";
 import getContactNumber from "@/services/tour/getContactNumber";
 import { FaPhone, FaWhatsapp, FaBars, FaTimes, FaChevronRight, FaChevronDown, FaUser, FaSignOutAlt } from "react-icons/fa";
-import { usePagination } from "@/context/usePagination";
 import { useRouter } from "next/navigation";
 import getTourDestination from "@/services/getTourDestination";
 import { Avatar, Dropdown } from "flowbite-react";
@@ -19,13 +17,11 @@ import { usePathname } from "next/navigation";
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
 
 const BookMeHeader = () => {
-  const { searchTerm, setSearchTerm } = useSearch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPackageTourOpen, setIsPackageTourOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [contactNumber, setContactNumber] = useState([]);
   const [destinations, setDestinations] = useState([]);
-  const { currentPage, handlePageChange } = usePagination();
   const router = useRouter();
   const packageTourRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -36,9 +32,9 @@ const BookMeHeader = () => {
   // Determine which phone number to use based on pathname
   const getPhoneNumber = useCallback(() => {
     if (pathname === '/Property/Bay-Cruiser-1/293' || pathname === '/Property/MV-Teknaf/819') {
-      return '8801841333322'; // Specific number for this path
+      return '8801841333322';
     }
-    return contactNumber?.Phone; // Default number
+    return contactNumber?.Phone; 
   }, [pathname, contactNumber?.Phone]);
 
   const phoneNumber = getPhoneNumber();
@@ -102,9 +98,6 @@ const BookMeHeader = () => {
     };
   }, []);
 
-  const onSubmit = (data) => {
-    setSearchTerm(data.property);
-  };
 
   const closeAllMenus = useCallback(() => {
     setIsMobileMenuOpen(false);
@@ -146,8 +139,8 @@ const BookMeHeader = () => {
           <ul className="space-y-1 px-2">
             <li>
               <Link
-                href="/hotel"
-                className={`${pathname == "/hotel" ? "active" : ""
+                href="/hotels"
+                className={`${pathname == "/hotels" ? "active" : ""
                   } flex items-center justify-between text-blue-950 py-3 px-4  text-sm hover:bg-blue-50 rounded-lg transition-colors duration-200 group`}
 
                 onClick={closeAllMenus}
@@ -341,8 +334,8 @@ const BookMeHeader = () => {
               {/* Desktop Navigation */}
               <div className="hidden lg:flex items-center gap-6">
                 <Link
-                  href="/hotel"
-                  className={`${pathname == "/hotel" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
+                  href="/hotels"
+                  className={`${pathname == "/hotels" ? "activeLg" : ""} text-sm text-[#00026E] hover:text-blue-600 font-medium transition-colors duration-200`}
                   prefetch
                 >
                   HOTELS

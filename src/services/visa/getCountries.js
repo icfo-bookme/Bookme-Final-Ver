@@ -1,14 +1,11 @@
+import { fetchJson } from '@/api/fetchData';
+
 const getCountries = async () => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/countries`, {
-        next: { revalidate: 43200 },
-      }
-    );
-    const countries = await response.json(); 
-    return { data: countries }; 
+    const countries = await fetchJson('/api/countries');
+    return { data: countries };
   } catch (error) {
-    return { data: [] }; 
+    return { data: [] };
   }
 };
 

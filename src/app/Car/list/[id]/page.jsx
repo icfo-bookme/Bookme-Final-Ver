@@ -1,4 +1,3 @@
-
 import CarRentalSearchBar from '@/components/car/CarRentalSearchBar';
 import VehicleList from '@/components/car/VehicleList';
 import getCarBrand from '@/services/Car/getCarBrand';
@@ -7,23 +6,25 @@ import getCarModel from '@/services/Car/getCarModel';
 import getDestination from '@/services/Car/getDestination';
 
 export default async function page({ params, searchParams }) {
-  const id = params.id; 
-  const dropoffId = searchParams.dropoff;
-  const pickupDate = searchParams.date;
-  const pickupTime = searchParams.time;
+  const { id } = await params;
+  const resolvedSearchParams = await searchParams;
+  const { dropoff: dropoffId, date: pickupDate, time: pickupTime } = resolvedSearchParams;
   
-  const data = await getCarList({ id });
-  const brands = await getCarBrand();
-  const models = await getCarModel();
-  const destination = await getDestination();
+
+  const [data, brands, models, destination] = await Promise.all([
+    getCarList({ id, searchParams: resolvedSearchParams }),
+    getCarBrand(),
+    getCarModel(),
+    getDestination(),
+  ]);
   
   if (!data) {
     throw new Error('Failed to fetch data');
   }
 
   const initialSearchParams = {
-    pickupId: parseInt(id),
-    dropoffId: parseInt(dropoffId),
+    pickupId: id ? parseInt(id, 10) : null,
+    dropoffId: dropoffId ? parseInt(dropoffId, 10) : null,
     pickupDate: pickupDate,
     pickupTime: pickupTime
   };
@@ -37,7 +38,7 @@ export default async function page({ params, searchParams }) {
             initialParams={initialSearchParams} 
           />
         </div>
-        <div className='bg-blue-100  mx-auto rounded-md '>
+        <div className='bg-blue-100 mx-auto rounded-md'>
           <VehicleList vehicles={data} models={models} brands={brands} />
         </div>
       </div>

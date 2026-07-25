@@ -10,65 +10,59 @@ import LoadingSpinner from "../components/SearchBar/Hotels/LoadingSpinner";
 
 import getServicesData from "@/services/homepage/getServicesData";
 
-const VisaMain = nextDynamic(() => import("../components/Home/Visa/Main"), { ssr: true });
-const HotelMain = nextDynamic(() => import("../components/Home/Hotel/Main"), { ssr: true });
-const TangourMain = nextDynamic(() => import("../components/Home/Tangour/Main"), { ssr: true });
-const Sundarban = nextDynamic(() => import("../components/Home/sundarban/Main"), { ssr: true });
-const SaintMartin = nextDynamic(() => import("../components/Home/Saintmartin/Main"), { ssr: true });
-const CTASection = nextDynamic(() => import("../components/Home/CTASection/CTASection"), { ssr: true });
-const Faq = nextDynamic(() => import("../components/Faq/Faq"), { ssr: true });
-const FlightRoute = nextDynamic(() => import("../components/Home/Flight/FlightRoute"), { ssr: true });
-const HomepageBlog = nextDynamic(() => import("../components/pre-footer-content/Homepage"), { ssr: true });
+// Skeleton Placeholder Component
+const Skeleton = ({ className = "h-40" }) => (
+  <div className={`w-full bg-gray-200 animate-pulse rounded-lg ${className}`} />
+);
 
-export const dynamic = "force-dynamic"; 
+// Dynamic Imports with Skeleton Fallbacks
+const VisaMain = nextDynamic(() => import("../components/Home/Visa/Main"), { loading: () => <Skeleton height="h-60" /> });
+const HotelMain = nextDynamic(() => import("../components/Home/Hotel/Main"), { loading: () => <Skeleton height="h-60" /> });
+const TangourMain = nextDynamic(() => import("../components/Home/Tangour/Main"));
+const Sundarban = nextDynamic(() => import("../components/Home/sundarban/Main"));
+const SaintMartin = nextDynamic(() => import("../components/Home/Saintmartin/Main"));
 
-const roboto = Roboto({ subsets: ["latin"], weight: ["400"] });
+const FlightRoute = nextDynamic(() => import("../components/Home/Flight/FlightRoute"));
+const CTASection = nextDynamic(() => import("../components/Home/CTASection/CTASection"));
+const Faq = nextDynamic(() => import("../components/Faq/Faq"));
+const HomepageBlog = nextDynamic(() => import("../components/pre-footer-content/Homepage"));
+
+export const dynamic = "force-dynamic";
+
+const roboto = Roboto({ subsets: ["latin"], weight: ["400"], display: "swap" });
+
+// Clean Component Lookup Registry
+const SERVICE_COMPONENTS = {
+  Visa: VisaMain,
+  Hotel: HotelMain,
+  "Tanguar Haor": TangourMain,
+  Sundarban: Sundarban,
+  "Saint Martin": SaintMartin,
+};
 
 export default async function Home({ searchParams }) {
-  
   let servicesData = [];
 
   try {
-    servicesData = await getServicesData();
+    servicesData = (await getServicesData()) || [];
   } catch (error) {
     console.error("Error fetching services data:", error);
   }
 
   const sortedServices = servicesData
-    .map((service) => ({
-      ...service,
-      serialno: service.serialno ? parseInt(service.serialno) : Infinity,
-    }))
-    .sort((a, b) => a.serialno - b.serialno);
-
-  const visibleServices = sortedServices.filter((service) => service.isShow === "yes");
-
-  const ShipsSubComponents = {
-    "Tanguar Haor": TangourMain,
-    Sundarban,
-    "Saint Martin": SaintMartin,
-  };
-
-  //  Main Components Mapping
-  const mainComponentMap = {
-    Visa: VisaMain,
-    Hotel: HotelMain,
-    Ships: null, 
-    Flight: null, 
-  };
+    .filter((s) => s.isShow === "yes")
+    .sort((a, b) => Number(a.serialno || 999) - Number(b.serialno || 999));
 
   return (
-    <main className={`${roboto.className} bg-blue-50`}>
+    <main className={`${roboto.className} bg-blue-50 min-h-screen`}>
       {/* Hero Section */}
       <section className="relative w-full min-h-[60vh]">
-        {/* Background Banner */}
         <div className="absolute inset-0 z-0">
-          <Suspense fallback={<div className="h-60 bg-gray-200 animate-pulse" />}>
+          <Suspense fallback={<Skeleton className="h-60" />}>
             <Banner />
           </Suspense>
         </div>
 
-        {/* Search Tabs Overlay */}
         <div className="absolute top-28 inset-0 z-10 flex items-center justify-center px-4">
           <div className="w-full max-w-5xl mx-auto">
             <Suspense fallback={<LoadingSpinner />}>
@@ -78,7 +72,7 @@ export default async function Home({ searchParams }) {
         </div>
       </section>
 
-      {/*  Services Section  */}
+      {/* Dynamic Services Section */}
       <section className="py-10">
         <div className="max-w-screen-xl mx-auto px-4 space-y-10">
           {servicesData.length === 0 ? (
@@ -89,58 +83,36 @@ export default async function Home({ searchParams }) {
             <>
               <PromotionsMain servicesData={servicesData} />
 
-              {visibleServices.map((service) => {
-                const { category_name } = service;
+              {/* Render dynamic components without extra nested loops */}
+              {sortedServices.map((service) => {
+                const Component = SERVICE_COMPONENTS[service.category_name];
+                if (!Component) return null;
 
-                // Ships section with subcategories
-                if (category_name === "Ships") {
-                  const shipsToShow = sortedServices.filter(
-                    (s) => ShipsSubComponents[s.category_name] && s.isShow === "yes"
-                  );
-
-                  return shipsToShow.map((subCategory) => {
-                    const SubComponent = ShipsSubComponents[subCategory.category_name];
-                    return (
-                      <LazySection
-                        key={subCategory.category_name}
-                        placeholder={<div className="h-40 bg-gray-200 animate-pulse rounded-lg" />}
-                      >
-                        <SubComponent />
-                      </LazySection>
-                    );
-                  });
-                }
-
-                // Regular mapped components
-                const Component = mainComponentMap[category_name];
-                return Component ? (
-                  <LazySection
-                    key={category_name}
-                    placeholder={<div className="h-40 bg-gray-200 animate-pulse rounded-lg" />}
-                  >
+                return (
+                  <LazySection key={service.id || service.category_name} placeholder={<Skeleton />}>
                     <Component />
                   </LazySection>
-                ) : null;
+                );
               })}
             </>
           )}
         </div>
       </section>
 
-      {/* Lazy Loaded Below-the-Fold Sections  */}
-      <LazySection placeholder={<div className="h-40 bg-gray-200 animate-pulse" />}>
+      {/* Below-the-Fold Sections */}
+      <LazySection placeholder={<Skeleton className="h-40" />}>
         <FlightRoute />
       </LazySection>
 
-      <LazySection placeholder={<div className="h-60 bg-gray-200 animate-pulse" />}>
+      <LazySection placeholder={<Skeleton className="h-60" />}>
         <CTASection />
       </LazySection>
 
-      <LazySection placeholder={<div className="h-60 bg-gray-200 animate-pulse" />}>
+      <LazySection placeholder={<Skeleton className="h-60" />}>
         <Faq />
       </LazySection>
 
-      <LazySection placeholder={<div className="h-60 bg-gray-200 animate-pulse" />}>
+      <LazySection placeholder={<Skeleton className="h-60" />}>
         <HomepageBlog />
       </LazySection>
     </main>

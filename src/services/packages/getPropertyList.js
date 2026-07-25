@@ -1,3 +1,5 @@
+import { fetchJson } from '@/api/fetchData';
+
 const normalizeSortParams = (sortValue) => {
   if (sortValue === 'price_low' || sortValue === 'price_low_to_high') {
     return { sort_by: 'price', sort_order: 'asc' };
@@ -27,13 +29,32 @@ const normalizeDurationParam = (value) => {
 };
 
 export default async function getTourList({ id, searchParams = {} }) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-  const url = new URL(`${baseUrl}/api/tourpackages/propertySummary/${id}`);
+  const params = {};
+
+  const { sort_by, sort_order } = normalizeSortParams(String(searchParams.sort_by ?? ''));
+  if (sort_by) {
+    params.sort_by = sort_by;
+    params.sort_order = sort_order;
+  }
 
   const priceRanges = String(searchParams.price_ranges ?? searchParams.priceRanges ?? '')
     .split(',')
     .map((item) => item.trim())
     .filter(Boolean);
+
+  priceRanges.forEach((range, index) => {
+    const [minRaw, maxRaw] = range.split('-');
+    const min = Number(minRaw);
+    const max = maxRaw === 'Infinity' ? Infinity : Number(maxRaw);
+
+    if (!Number.isNaN(min) && Number.isFinite(min)) {
+      params[`price_ranges[${index}][min]`] = String(min);
+    }
+
+    if (!Number.isNaN(max) && Number.isFinite(max)) {
+      params[`price_ranges[${index}][max]`] = String(max);
+    }
+  });
 
   const durations = String(searchParams.durations ?? '')
     .split(',')
@@ -42,38 +63,12 @@ export default async function getTourList({ id, searchParams = {} }) {
     .map((item) => normalizeDurationParam(item))
     .filter(Boolean);
 
-  const { sort_by, sort_order } = normalizeSortParams(String(searchParams.sort_by ?? ''));
-
-  if (sort_by) {
-    url.searchParams.set('sort_by', sort_by);
-    url.searchParams.set('sort_order', sort_order);
-  }
-
-  priceRanges.forEach((range, index) => {
-    const [minRaw, maxRaw] = range.split('-');
-    const min = Number(minRaw);
-    const max = maxRaw === 'Infinity' ? Infinity : Number(maxRaw);
-
-    if (!Number.isNaN(min) && Number.isFinite(min)) {
-      url.searchParams.set(`price_ranges[${index}][min]`, String(min));
-    }
-
-    if (!Number.isNaN(max) && Number.isFinite(max)) {
-      url.searchParams.set(`price_ranges[${index}][max]`, String(max));
-    }
-  });
-
   durations.forEach((duration, index) => {
-    url.searchParams.set(`durations[${index}]`, duration);
+    params[`durations[${index}]`] = duration;
   });
 
-  const res = await fetch(url.toString(), {
-    next: { revalidate: 43200 },
+  return fetchJson(`/api/tourpackages/propertySummary/${id}`, {
+    params,
+    throwOnError: true,
   });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch tour packages: ${res.status}`);
-  }
-
-  return res.json();
 }
