@@ -24,7 +24,7 @@ const HotelCard = ({
 
   return (
     <Link
-      href={`/hotel/list/details/${slugify(hotel.name)}/${hotel.id}?checkin=${checkin}&checkout=${checkout}&rooms=${rooms}&adult=${adult}`}
+      href={`/hotels/list/details/${slugify(hotel.name)}/${hotel.id}?checkin=${checkin}&checkout=${checkout}&rooms=${rooms}&adult=${adult}`}
       className="block"
     >
       <div className={`group relative flex flex-col md:flex-row gap-5 p-5 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 ${isHighlighted ? 'bg-yellow-100' : 'bg-white'
