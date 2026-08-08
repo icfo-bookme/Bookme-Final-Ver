@@ -235,6 +235,7 @@ export default function TourSwiper({
                     <Link 
                       aria-label={`View ${property.property_name} details`}
                       href={`/Property/${slugify(property.property_name)}/${property.property_id}`}
+                      prefetch
                       className="cursor-pointer"
                     >
                       <h3 className="text-lg md:text-xl h-14 font-bold text-[#00026E] mb-2 hover:text-blue-700 transition-colors line-clamp-2">

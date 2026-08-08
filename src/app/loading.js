@@ -1,6 +1,4 @@
-// checked
 import GlobalLoader from "@/utils/GlobalLoader";
-import HotelLoadingSkeleton from "../components/hotel/Hotel/HotelLoadingSkeleton";
 
 export default function Loading() {
   return (
@@ -9,3 +7,4 @@ export default function Loading() {
     </div>
   );
 }
+

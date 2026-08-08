@@ -41,7 +41,7 @@ const GlobalLoader = () => {
           <div style={styles.textContainer}>
             <div style={styles.brandName}>
               {/* Option 1: Use regular img tag (simpler) */}
-              <img 
+              <Image
                 src="/assets/images/logo.png" 
                 alt="BookMe Logo" 
                 style={styles.brandLogo} 

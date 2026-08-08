@@ -6,7 +6,7 @@ import PropertyAmenities from "./PropertyAmenities";
 import PropertyContactButtons from "./PropertyContactButtons";
 import slugify from "@/utils/slugify";
 
-export default function PropertyCard({ property, index, onCardClick, contact }) {
+export default function PropertyCard({ property, index, contact }) {
 
   const containsBangla = (text) => /[\u0980-\u09FF]/.test(text);
 
@@ -49,7 +49,6 @@ export default function PropertyCard({ property, index, onCardClick, contact }) 
           {/* Title */}
           <Link
             href={`/Property/${propertySlug}/${property.property_id}`}
-            onClick={() => onCardClick(index)}
           >
             <h1 className="font-heading font-semibold text-lg text-[#00026E]">
               {property.property_name}
@@ -94,7 +93,6 @@ export default function PropertyCard({ property, index, onCardClick, contact }) 
 
                   <Link
                     href={`/Property/${propertySlug}/${property.property_id}`}
-                    onClick={() => onCardClick(index)}
                     className="text-white font-medium py-2 px-4 rounded-md text-sm text-center transition-all duration-300 transform hover:scale-[1.03] shadow-md hover:shadow-lg flex items-center"
                     style={{
                       background: "linear-gradient(90deg, #313881, #0678B4)",
@@ -105,7 +103,6 @@ export default function PropertyCard({ property, index, onCardClick, contact }) 
 
                   <Link
                     href={`/Property/${propertySlug}/${property.property_id}`}
-                    onClick={() => onCardClick(index)}
                     className="ml-2 text-white font-medium py-2 px-4 rounded-md text-sm text-center transition-all duration-300 transform hover:scale-[1.03] shadow-md hover:shadow-lg flex items-center"
                     style={{
                       background: "linear-gradient(90deg, #313881, #0678B4)",

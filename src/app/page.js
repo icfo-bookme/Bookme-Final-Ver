@@ -1,27 +1,22 @@
 import { Roboto } from "next/font/google";
 import { Suspense } from "react";
 import nextDynamic from "next/dynamic";
-
 import Banner from "../components/Home/Banner";
 import TravelBookingTabs from "../components/SearchBar/SearchBar";
 import PromotionsMain from "../components/Home/Promotion/main";
 import LazySection from "../components/shared/LazySection";
 import LoadingSpinner from "../components/SearchBar/Hotels/LoadingSpinner";
-
 import getServicesData from "@/services/homepage/getServicesData";
 
-// Skeleton Placeholder Component
 const Skeleton = ({ className = "h-40" }) => (
   <div className={`w-full bg-gray-200 animate-pulse rounded-lg ${className}`} />
 );
-
 // Dynamic Imports with Skeleton Fallbacks
 const VisaMain = nextDynamic(() => import("../components/Home/Visa/Main"), { loading: () => <Skeleton height="h-60" /> });
 const HotelMain = nextDynamic(() => import("../components/Home/Hotel/Main"), { loading: () => <Skeleton height="h-60" /> });
 const TangourMain = nextDynamic(() => import("../components/Home/Tangour/Main"));
 const Sundarban = nextDynamic(() => import("../components/Home/sundarban/Main"));
 const SaintMartin = nextDynamic(() => import("../components/Home/Saintmartin/Main"));
-
 const FlightRoute = nextDynamic(() => import("../components/Home/Flight/FlightRoute"));
 const CTASection = nextDynamic(() => import("../components/Home/CTASection/CTASection"));
 const Faq = nextDynamic(() => import("../components/Faq/Faq"));
@@ -31,7 +26,6 @@ export const dynamic = "force-dynamic";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400"], display: "swap" });
 
-// Clean Component Lookup Registry
 const SERVICE_COMPONENTS = {
   Visa: VisaMain,
   Hotel: HotelMain,
