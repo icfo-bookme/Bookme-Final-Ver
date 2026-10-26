@@ -40,23 +40,13 @@ const GlobalLoader = () => {
           
           <div style={styles.textContainer}>
             <div style={styles.brandName}>
-              {/* Option 1: Use regular img tag (simpler) */}
               <Image
                 src="/assets/images/logo.png" 
                 alt="BookMe Logo" 
+                width={1080}
+                height={306}
                 style={styles.brandLogo} 
               />
-              
-              {/* Option 2: If you want to use Next.js Image (requires width/height) */}
-              {/* 
-              <Image 
-                src="/assets/images/logo.png" 
-                alt="BookMe Logo" 
-                width={120} 
-                height={40} 
-                style={styles.brandLogo}
-              /> 
-              */}
               
               <span style={styles.cursor}>|</span>
               <span style={styles.dots}>
