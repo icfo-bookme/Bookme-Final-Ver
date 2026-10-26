@@ -12,7 +12,7 @@ const getAllHotels = async (page = 1) => {
   const checkoutDate = formatDate(tomorrow);
 
   try {
-    return await fetchJson('/api/hotels5', {
+    return await fetchJson('/api/hotels', {
       params: { checkin: checkinDate, checkout: checkoutDate, page },
       revalidate: 86400,
     });
