@@ -14,8 +14,7 @@ const getAllHotels = async (page = 1) => {
   try {
     return await fetchJson('/api/hotels', {
       params: { checkin: checkinDate, checkout: checkoutDate, page },
-      fetchOptions: { cache: 'no-store' },
-      revalidate: 0,
+      revalidate: 86400,
     });
   } catch (error) {
     return [];

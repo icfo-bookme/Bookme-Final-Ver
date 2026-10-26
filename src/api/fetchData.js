@@ -1,5 +1,5 @@
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
-const DEFAULT_REVALIDATE = 43200; // 12 hours
+const DEFAULT_REVALIDATE = 86400; // 24 hours
 
 /**
  * Build a URL with query parameters
@@ -30,7 +30,7 @@ function buildUrl(endpoint, params) {
  * Core fetch function for SSR data fetching
  * @param {string} endpoint - API endpoint path (e.g. '/api/activities')
  * @param {object} options
- * @param {number} options.revalidate - Next.js revalidation time in seconds (default: 43200)
+ * @param {number} options.revalidate - Next.js revalidation time in seconds (default: 86400)
  * @param {object} options.params - Query parameters
  * @param {object} options.fetchOptions - Additional fetch options (e.g. { cache: 'no-store' })
  * @param {boolean} options.throwOnError - If true, throws instead of returning fallback
